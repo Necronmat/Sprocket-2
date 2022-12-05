@@ -1,0 +1,14 @@
+{
+	"Targets": [
+		{
+			"Name": "Sprocket",
+			"Path": "C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
+			"Type": "Game"
+		},
+		{
+			"Name": "SprocketEditor",
+			"Path": "C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs",
+			"Type": "Editor"
+		}
+	]
+}
