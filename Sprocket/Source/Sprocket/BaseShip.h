@@ -6,6 +6,11 @@
 #include "GameFramework/Pawn.h"
 #include "BaseShip.generated.h"
 
+class UStaticMeshComponent;
+class USpringArmComponent;
+class UCameraComponent;
+class UPawnMovementComponent;
+
 UCLASS()
 class SPROCKET_API ABaseShip : public APawn
 {
@@ -26,4 +31,32 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+private:
+
+	UPROPERTY(EditAnywhere)
+		UStaticMeshComponent* mShipMesh;
+
+	UPROPERTY(EditAnywhere)
+		USpringArmComponent* mSpringArm;
+
+	UPROPERTY(EditAnywhere)
+		UCameraComponent* mCamera;
+
+	//UPROPERTY(EditAnywhere)
+		//UPawnMovementComponent* mMovement;
+
+	//The current speed of the thrusters
+	float mThrusterSpeed = 0.0f;
+
+	//Speed of the strafe thrusters
+	UPROPERTY(EditAnywhere)
+		float mStrafeSpeed = 10.0f;
+
+	//Player control funtions
+	void Throttle(float AxisAmount);
+	void Pitch(float AxisAmount);
+	void Yaw(float AxisAmount);
+	void Roll(float AxisAmount);
+	void StrafeHorizontal(float AxisAmount);
+	void StrafeVertical(float AxisAmount);
 };
