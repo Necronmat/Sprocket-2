@@ -23,6 +23,15 @@
     <None Include="..\..\Config\DefaultGame.ini">
       <Filter>Config</Filter>
     </None>
+    <None Include="..\..\Config\DefaultInput.ini">
+      <Filter>Config</Filter>
+    </None>
+    <Filter Include="Config\HoloLens">
+      <UniqueIdentifier>{4C8DD267-CDE7-336F-8602-F5F485D22BAB}</UniqueIdentifier>
+    </Filter>
+    <None Include="..\..\Config\HoloLens\HoloLensEngine.ini">
+      <Filter>Config\HoloLens</Filter>
+    </None>
     <Filter Include="Source\Sprocket">
       <UniqueIdentifier>{0B116390-6A3A-3B80-BE6B-2289411527DC}</UniqueIdentifier>
     </Filter>
@@ -30,6 +39,12 @@
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Sprocket\BaseShip.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\BaseShipController.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\BaseShipController.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Sprocket\BaseShipMovementComponent.cpp">
