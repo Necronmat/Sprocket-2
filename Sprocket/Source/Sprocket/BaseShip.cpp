@@ -62,9 +62,13 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ABaseShip::Throttle(float AxisAmount)
 {
-	mThrusterSpeed += AxisAmount;
+	mThrusterSpeed += AxisAmount * mMaxAcceleration * GetWorld()->DeltaTimeSeconds;
 
-	if (mThrusterSpeed < 0)
+	if (mThrusterSpeed > mMaxSpeed)
+	{
+		mThrusterSpeed = mMaxSpeed;
+	}
+	else if (mThrusterSpeed < 0)
 	{
 		mThrusterSpeed = 0.0f;
 	}
@@ -73,6 +77,7 @@ void ABaseShip::Throttle(float AxisAmount)
 void ABaseShip::Pitch(float AxisAmount)
 {
 	AddControllerPitchInput(AxisAmount);
+	GetController();
 }
 
 void ABaseShip::Yaw(float AxisAmount)
@@ -87,13 +92,13 @@ void ABaseShip::Roll(float AxisAmount)
 
 void ABaseShip::StrafeHorizontal(float AxisAmount)
 {
-	SetActorLocation(GetActorLocation() + (GetActorRightVector() * AxisAmount * mStrafeSpeed));
+	SetActorLocation(GetActorLocation() + (GetActorRightVector() * AxisAmount * mStrafeSpeed * mMaxAcceleration * GetWorld()->DeltaTimeSeconds));
 
 }
 
 void ABaseShip::StrafeVertical(float AxisAmount)
 {
-	SetActorLocation(GetActorLocation() + (GetActorUpVector() * AxisAmount * mStrafeSpeed));
+	SetActorLocation(GetActorLocation() + (GetActorUpVector() * AxisAmount * mStrafeSpeed * mMaxAcceleration * GetWorld()->DeltaTimeSeconds));
 
 }
 
