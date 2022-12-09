@@ -43,7 +43,7 @@ void ABaseShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	SetActorLocation(GetActorLocation() + (GetActorForwardVector().Normalize() * mThrusterSpeed * DeltaTime));
+	SetActorLocation(GetActorLocation() + (GetActorForwardVector() * mThrusterSpeed * DeltaTime));
 }
 
 // Called to bind functionality to input
@@ -63,6 +63,11 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 void ABaseShip::Throttle(float AxisAmount)
 {
 	mThrusterSpeed += AxisAmount;
+
+	if (mThrusterSpeed < 0)
+	{
+		mThrusterSpeed = 0.0f;
+	}
 }
 
 void ABaseShip::Pitch(float AxisAmount)
@@ -82,13 +87,13 @@ void ABaseShip::Roll(float AxisAmount)
 
 void ABaseShip::StrafeHorizontal(float AxisAmount)
 {
-	SetActorLocation(GetActorLocation() + (GetActorRightVector().Normalize() * AxisAmount * mStrafeSpeed));
+	SetActorLocation(GetActorLocation() + (GetActorRightVector() * AxisAmount * mStrafeSpeed));
 
 }
 
 void ABaseShip::StrafeVertical(float AxisAmount)
 {
-	SetActorLocation(GetActorLocation() + (GetActorUpVector().Normalize() * AxisAmount * mStrafeSpeed));
+	SetActorLocation(GetActorLocation() + (GetActorUpVector() * AxisAmount * mStrafeSpeed));
 
 }
 
