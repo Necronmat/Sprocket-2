@@ -77,7 +77,8 @@ void ABaseShip::Throttle(float AxisAmount)
 void ABaseShip::Pitch(float AxisAmount)
 {
 	AddControllerPitchInput(AxisAmount);
-	GetController();
+
+	//AddActorLocalRotation(FRotator(0.0f, AxisAmount * mThrusterSpeed, 0.0f));	
 }
 
 void ABaseShip::Yaw(float AxisAmount)
