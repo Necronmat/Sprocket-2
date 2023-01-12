@@ -44,6 +44,11 @@ void ABaseShip::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	SetActorLocation(GetActorLocation() + (GetActorForwardVector() * mThrusterSpeed * DeltaTime));
+
+	FRotator DeltaRotation = GetActorRotation();
+	SetActorRotation(FRotator((DeltaRotation.Pitch > 180) ? DeltaRotation.Pitch - 360 : DeltaRotation.Pitch,
+					(DeltaRotation.Yaw > 180) ? DeltaRotation.Yaw - 360 : DeltaRotation.Yaw,
+					(DeltaRotation.Roll > 180) ? DeltaRotation.Roll - 360 : DeltaRotation.Roll));
 }
 
 // Called to bind functionality to input
@@ -76,14 +81,50 @@ void ABaseShip::Throttle(float AxisAmount)
 
 void ABaseShip::Pitch(float AxisAmount)
 {
-	AddControllerPitchInput(AxisAmount);
+	FRotator DeltaRotation = GetActorRotation();
 
-	//AddActorLocalRotation(FRotator(0.0f, AxisAmount * mThrusterSpeed, 0.0f));	
+	if (DeltaRotation.Roll > 45 && DeltaRotation.Roll < 135)
+	{
+		AddControllerYawInput(-AxisAmount);
+	}
+	else if (DeltaRotation.Roll < -45 && DeltaRotation.Roll > -135)
+	{
+		AddControllerYawInput(AxisAmount);
+	}
+	else if (DeltaRotation.Roll >= 135 || DeltaRotation.Roll <= -135)
+	{
+		AddControllerPitchInput(AxisAmount);
+	}
+	else
+	{
+		AddControllerPitchInput(AxisAmount);
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
 }
 
 void ABaseShip::Yaw(float AxisAmount)
 {
-	AddControllerYawInput(AxisAmount);
+	FRotator DeltaRotation = GetActorRotation();
+
+	if (DeltaRotation.Roll > 45 && DeltaRotation.Roll < 135)
+	{
+		AddControllerPitchInput(AxisAmount);
+	}
+	else if (DeltaRotation.Roll < -45 && DeltaRotation.Roll > -135)
+	{
+		AddControllerPitchInput(AxisAmount);
+	}
+	else if (DeltaRotation.Roll >= 135 || DeltaRotation.Roll <= -135)
+	{
+		AddControllerYawInput(-AxisAmount);
+	}
+	else
+	{
+		AddControllerYawInput(AxisAmount);
+	}
+
+	UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
 }
 
 void ABaseShip::Roll(float AxisAmount)
