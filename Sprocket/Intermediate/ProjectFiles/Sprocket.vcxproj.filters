@@ -53,6 +53,24 @@
     <ClInclude Include="..\..\Source\Sprocket\BaseShipMovementComponent.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\Earth.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\Earth.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\MainMenuControllerController.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\MainMenuControllerController.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\MainMenuGameMode.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\MainMenuGameMode.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
     <None Include="..\..\Source\Sprocket\Sprocket.Build.cs">
       <Filter>Source\Sprocket</Filter>
     </None>
