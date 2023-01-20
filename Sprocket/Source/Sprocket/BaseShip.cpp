@@ -14,10 +14,8 @@ ABaseShip::ABaseShip()
 	PrimaryActorTick.bCanEverTick = true;
 
 	mShipMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ship Mesh"));
+	//mShipMesh->SetupAttachment(RootComponent);
 	SetRootComponent(mShipMesh);
-
-	//mMovement = CreateDefaultSubobject<UPawnMovementComponent>(TEXT("MovementComponent"));
-	//mMovement->UpdatedComponent = RootComponent;
 
 	//Setiting up the spring arm
 	mSpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraAttachmentArm"));
@@ -43,12 +41,23 @@ void ABaseShip::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
-	SetActorLocation(GetActorLocation() + (GetActorForwardVector() * mThrusterSpeed * DeltaTime));
+	mShipMesh->AddImpulse(GetActorForwardVector() * mThrusterSpeed * DeltaTime);
+	UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
 
 	FRotator DeltaRotation = GetActorRotation();
 	SetActorRotation(FRotator((DeltaRotation.Pitch > 180) ? DeltaRotation.Pitch - 360 : DeltaRotation.Pitch,
 					(DeltaRotation.Yaw > 180) ? DeltaRotation.Yaw - 360 : DeltaRotation.Yaw,
 					(DeltaRotation.Roll > 180) ? DeltaRotation.Roll - 360 : DeltaRotation.Roll));
+
+	if (mCooldown)
+	{
+		mStrafeCooldown -= 1 * DeltaTime;
+
+		if (mStrafeCooldown <= 0.0f)
+		{
+			mCooldown = false;
+		}
+	}
 }
 
 // Called to bind functionality to input
@@ -67,7 +76,13 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 void ABaseShip::Throttle(float AxisAmount)
 {
-	mThrusterSpeed += AxisAmount * mMaxAcceleration * GetWorld()->DeltaTimeSeconds;
+	if (mThrusterSpeed <= 0 && AxisAmount > 0)
+	{
+		mShipMesh->AddImpulse(GetActorForwardVector() * mMaxSpeed);
+		mThrusterSpeed = mMaxSpeed / 3;
+	}
+
+	mThrusterSpeed += AxisAmount * mAcceleration;
 
 	if (mThrusterSpeed > mMaxSpeed)
 	{
@@ -100,7 +115,7 @@ void ABaseShip::Pitch(float AxisAmount)
 		AddControllerPitchInput(AxisAmount);
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
+	//UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
 }
 
 void ABaseShip::Yaw(float AxisAmount)
@@ -124,7 +139,7 @@ void ABaseShip::Yaw(float AxisAmount)
 		AddControllerYawInput(AxisAmount);
 	}
 
-	UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
+	//UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
 }
 
 void ABaseShip::Roll(float AxisAmount)
@@ -134,13 +149,22 @@ void ABaseShip::Roll(float AxisAmount)
 
 void ABaseShip::StrafeHorizontal(float AxisAmount)
 {
-	SetActorLocation(GetActorLocation() + (GetActorRightVector() * AxisAmount * mStrafeSpeed * mMaxAcceleration * GetWorld()->DeltaTimeSeconds));
-
+	if (mStrafeCooldown <= 0.0f && abs(AxisAmount) > 0)
+	{
+		mShipMesh->AddImpulse(GetActorRightVector() * AxisAmount * mStrafeSpeed);
+		mStrafeCooldown = 2.0f;
+		mCooldown = true;
+	}	
 }
 
 void ABaseShip::StrafeVertical(float AxisAmount)
 {
-	SetActorLocation(GetActorLocation() + (GetActorUpVector() * AxisAmount * mStrafeSpeed * mMaxAcceleration * GetWorld()->DeltaTimeSeconds));
+	if (mStrafeCooldown <= 0.0f && abs(AxisAmount) > 0)
+	{
+		mShipMesh->AddImpulse(GetActorUpVector() * AxisAmount * mStrafeSpeed);
+		mStrafeCooldown = 2.0f;
+		mCooldown = true;
+	}
 
 }
 

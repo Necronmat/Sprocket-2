@@ -9,7 +9,6 @@
 class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
-class UPawnMovementComponent;
 
 UCLASS()
 class SPROCKET_API ABaseShip : public APawn
@@ -40,6 +39,9 @@ private:
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* mShipMesh;
 
+	//UPROPERTY(EditAnywhere)
+		//UPrimitiveComponent* mShipCollider;
+
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent* mSpringArm;
 
@@ -54,10 +56,10 @@ private:
 	//Ship Stats
 
 	UPROPERTY(EditAnywhere)
-		float mMaxAcceleration = 100.0f;
+		float mAcceleration = 200.0f;
 
 	UPROPERTY(EditAnywhere)
-		float mMaxSpeed = 1000.0f;
+		float mMaxSpeed = 200000.0f;
 
 	UPROPERTY(EditAnywhere)
 		float mMaxShields = 10.0f;
@@ -76,7 +78,7 @@ private:
 
 	//Speed of the strafe thrusters
 	UPROPERTY(EditAnywhere)
-		float mStrafeSpeed = 10.0f;
+		float mStrafeSpeed = 200000.0f;
 
 	//********************************************************************************************************
 	//********************************************************************************************************
@@ -91,6 +93,15 @@ private:
 
 	float mPowerUsage = 0.0f;
 
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Timers
+
+	float mStrafeCooldown = 0.0f;
+
+	float mThrusterTimer = 0.0f;
+
+	bool mCooldown = false;
 	
 	//********************************************************************************************************
 	//********************************************************************************************************

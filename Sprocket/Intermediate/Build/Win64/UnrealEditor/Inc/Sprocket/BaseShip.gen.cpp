@@ -44,9 +44,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_mCamera;
 #if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam NewProp_mMaxAcceleration_MetaData[];
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_mAcceleration_MetaData[];
 #endif
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_mMaxAcceleration;
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_mAcceleration;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mMaxSpeed_MetaData[];
 #endif
@@ -103,8 +103,10 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData[] = {
 		{ "Category", "BaseShip" },
+		{ "Comment", "//UPROPERTY(EditAnywhere)\n//UPrimitiveComponent* mShipCollider;\n" },
 		{ "EditInline", "true" },
 		{ "ModuleRelativePath", "BaseShip.h" },
+		{ "ToolTip", "UPROPERTY(EditAnywhere)\nUPrimitiveComponent* mShipCollider;" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm = { "mSpringArm", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mSpringArm), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData)) };
@@ -117,14 +119,14 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera = { "mCamera", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mCamera), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera_MetaData)) };
 #if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxAcceleration_MetaData[] = {
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration_MetaData[] = {
 		{ "Category", "BaseShip" },
 		{ "Comment", "//********************************************************************************************************\n//********************************************************************************************************\n//Ship Stats\n" },
 		{ "ModuleRelativePath", "BaseShip.h" },
 		{ "ToolTip", "Ship Stats" },
 	};
 #endif
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxAcceleration = { "mMaxAcceleration", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mMaxAcceleration), METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxAcceleration_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxAcceleration_MetaData)) };
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration = { "mAcceleration", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mAcceleration), METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxSpeed_MetaData[] = {
 		{ "Category", "BaseShip" },
@@ -180,7 +182,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mShipMesh,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera,
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxAcceleration,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxSpeed,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxShields,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxHull,
@@ -225,9 +227,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 4071237031U) },
+		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 3634034743U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_1853846026(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_1410711991(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
