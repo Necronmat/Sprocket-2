@@ -13,5 +13,10 @@ UCLASS()
 class SPROCKET_API ABaseShipController : public APlayerController
 {
 	GENERATED_BODY()
+
+		
+	void Pitch(float AxisAmount);
+	void Yaw(float AxisAmount);
+	void Roll(float AxisAmount);
 	
 };
