@@ -44,11 +44,6 @@ void ABaseShip::Tick(float DeltaTime)
 	mShipMesh->AddImpulse(GetActorForwardVector() * mThrusterSpeed * DeltaTime);
 	UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
 
-	FRotator DeltaRotation = GetActorRotation();
-	SetActorRotation(FRotator((DeltaRotation.Pitch > 180) ? DeltaRotation.Pitch - 360 : DeltaRotation.Pitch,
-					(DeltaRotation.Yaw > 180) ? DeltaRotation.Yaw - 360 : DeltaRotation.Yaw,
-					(DeltaRotation.Roll > 180) ? DeltaRotation.Roll - 360 : DeltaRotation.Roll));
-
 	if (mCooldown)
 	{
 		mStrafeCooldown -= 1 * DeltaTime;
@@ -96,55 +91,21 @@ void ABaseShip::Throttle(float AxisAmount)
 
 void ABaseShip::Pitch(float AxisAmount)
 {
-	FRotator DeltaRotation = GetActorRotation();
-
-	if (DeltaRotation.Roll > 45 && DeltaRotation.Roll < 135)
-	{
-		AddControllerYawInput(-AxisAmount);
-	}
-	else if (DeltaRotation.Roll < -45 && DeltaRotation.Roll > -135)
-	{
-		AddControllerYawInput(AxisAmount);
-	}
-	else if (DeltaRotation.Roll >= 135 || DeltaRotation.Roll <= -135)
-	{
-		AddControllerPitchInput(AxisAmount);
-	}
-	else
-	{
-		AddControllerPitchInput(AxisAmount);
-	}
+	AddActorLocalRotation(FRotator(-AxisAmount, 0, 0));
 
 	//UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
 }
 
 void ABaseShip::Yaw(float AxisAmount)
 {
-	FRotator DeltaRotation = GetActorRotation();
-
-	if (DeltaRotation.Roll > 45 && DeltaRotation.Roll < 135)
-	{
-		AddControllerPitchInput(AxisAmount);
-	}
-	else if (DeltaRotation.Roll < -45 && DeltaRotation.Roll > -135)
-	{
-		AddControllerPitchInput(AxisAmount);
-	}
-	else if (DeltaRotation.Roll >= 135 || DeltaRotation.Roll <= -135)
-	{
-		AddControllerYawInput(-AxisAmount);
-	}
-	else
-	{
-		AddControllerYawInput(AxisAmount);
-	}
+	AddActorLocalRotation(FRotator(0, AxisAmount, 0));
 
 	//UE_LOG(LogTemp, Warning, TEXT("Roll is %f"), float(DeltaRotation.Roll));
 }
 
 void ABaseShip::Roll(float AxisAmount)
 {
-	AddControllerRollInput(AxisAmount);
+	AddActorLocalRotation(FRotator(0, 0, AxisAmount));
 }
 
 void ABaseShip::StrafeHorizontal(float AxisAmount)
