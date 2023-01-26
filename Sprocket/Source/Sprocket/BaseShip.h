@@ -9,7 +9,6 @@
 class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
-class UPawnMovementComponent;
 
 UCLASS()
 class SPROCKET_API ABaseShip : public APawn
@@ -33,8 +32,15 @@ public:
 
 private:
 
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//BLueprint componenets
+
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* mShipMesh;
+
+	//UPROPERTY(EditAnywhere)
+		//UPrimitiveComponent* mShipCollider;
 
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent* mSpringArm;
@@ -45,14 +51,62 @@ private:
 	//UPROPERTY(EditAnywhere)
 		//UPawnMovementComponent* mMovement;
 
-	//The current speed of the thrusters
-	float mThrusterSpeed = 0.0f;
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Ship Stats
+
+	UPROPERTY(EditAnywhere)
+		float mAcceleration = 200.0f;
+
+	UPROPERTY(EditAnywhere)
+		float mMaxSpeed = 200000.0f;
+
+	UPROPERTY(EditAnywhere)
+		float mMaxShields = 10.0f;
+
+	UPROPERTY(EditAnywhere)
+		float mMaxHull = 10.0f;
+
+	UPROPERTY(EditAnywhere)
+		float mShipSize = 10.0f;
+
+	UPROPERTY(EditAnywhere)
+		float mShipWeight = 10.0f;
+
+	UPROPERTY(EditAnywhere)
+		float mMaxPower = 10.0f;
 
 	//Speed of the strafe thrusters
 	UPROPERTY(EditAnywhere)
-		float mStrafeSpeed = 10.0f;
+		float mStrafeSpeed = 200000.0f;
 
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Current Ship Speed
+	
+	//The current speed of the thrusters
+	float mThrusterSpeed = 0.0f;
+
+	float mHull = 10.0f;
+
+	float mShields = 10.0f;
+
+	float mPowerUsage = 0.0f;
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Timers
+
+	float mStrafeCooldown = 0.0f;
+
+	float mThrusterTimer = 0.0f;
+
+	bool mCooldown = false;
+	
+	//********************************************************************************************************
+	//********************************************************************************************************
 	//Player control funtions
+
 	void Throttle(float AxisAmount);
 	void Pitch(float AxisAmount);
 	void Yaw(float AxisAmount);

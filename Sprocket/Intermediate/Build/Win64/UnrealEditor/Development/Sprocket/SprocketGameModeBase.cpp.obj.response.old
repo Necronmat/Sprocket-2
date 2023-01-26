@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameModeBase.cpp"
+=======
+"C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameModeBase.cpp"
+>>>>>>> Matts-Branch
 /I .
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine
 /I Runtime
@@ -251,8 +255,13 @@
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController
 /I Developer\AnimationDataController\Public
+<<<<<<< HEAD
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket"
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source"
+=======
+/I "C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket"
+/I "C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source"
+>>>>>>> Matts-Branch
 /I ThirdParty\mimalloc\include
 /I ThirdParty\LibTiff\Source\Win64
 /I ThirdParty\LibTiff\Source
@@ -267,6 +276,7 @@
 /I ThirdParty\PhysX3\PhysX_3.4\Include\common
 /I ThirdParty\PhysX3\PhysX_3.4\Include\extensions
 /I ThirdParty\PhysX3\PhysX_3.4\Include\geometry
+<<<<<<< HEAD
 /I "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt"
@@ -279,6 +289,20 @@
 /Fp"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
 /Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\SprocketGameModeBase.cpp.obj"
 /sourceDependencies "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\SprocketGameModeBase.cpp.json"
+=======
+/I "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.34.31933\INCLUDE"
+/I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22000.0\ucrt"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22000.0\shared"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22000.0\um"
+/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.22000.0\winrt"
+/FI"C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/FI"C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
+/Yu"C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+/Fo"C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\SprocketGameModeBase.cpp.obj"
+/sourceDependencies "C:\Users\elsmi\Desktop\Uni Work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\SprocketGameModeBase.cpp.json"
+>>>>>>> Matts-Branch
 /Zc:inline
 /nologo
 /Oi
