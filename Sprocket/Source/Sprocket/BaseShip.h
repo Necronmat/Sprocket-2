@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
+class UCableComponent;
 
 UCLASS()
 class SPROCKET_API ABaseShip : public APawn
@@ -39,17 +40,14 @@ private:
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* mShipMesh;
 
-	//UPROPERTY(EditAnywhere)
-		//UPrimitiveComponent* mShipCollider;
-
 	UPROPERTY(EditAnywhere)
 		USpringArmComponent* mSpringArm;
 
 	UPROPERTY(EditAnywhere)
 		UCameraComponent* mCamera;
 
-	//UPROPERTY(EditAnywhere)
-		//UPawnMovementComponent* mMovement;
+	UPROPERTY(EditAnywhere)
+		UCableComponent* mCable;
 
 	//********************************************************************************************************
 	//********************************************************************************************************
@@ -80,6 +78,12 @@ private:
 	UPROPERTY(EditAnywhere)
 		float mStrafeSpeed = 200000.0f;
 
+	UPROPERTY(EditAnywhere)
+		float mGrappleForce = 1;
+
+	UPROPERTY(EditAnywhere)
+		float mGrappleLength = 10000;	
+
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//Current Ship Speed
@@ -102,6 +106,10 @@ private:
 	float mThrusterTimer = 0.0f;
 
 	bool mCooldown = false;
+
+	bool mGrappling = false;
+
+	FVector3d mGrapplePoint;
 	
 	//********************************************************************************************************
 	//********************************************************************************************************
@@ -113,4 +121,7 @@ private:
 	void Roll(float AxisAmount);
 	void StrafeHorizontal(float AxisAmount);
 	void StrafeVertical(float AxisAmount);
+
+	void Fire();
+	void Grapple();
 };
