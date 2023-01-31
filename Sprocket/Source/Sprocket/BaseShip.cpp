@@ -63,7 +63,7 @@ void ABaseShip::Tick(float DeltaTime)
 
 	if (mGrappling)
 	{
-		mCable->EndLocation = mGrapplePoint;
+		mGrapplePoint = mCable->EndLocation;
 		mCable->SetWorldLocation(GetActorLocation());
 		mCable->CableLength = FVector3d::Dist(GetActorLocation(), mGrapplePoint);
 
@@ -185,9 +185,9 @@ void ABaseShip::Grapple()
 			mGrappling = true;
 			mGrapplePoint = Hit.ImpactPoint;
 			mCable->SetVisibility(true);
-			mCable->SetWorldLocation(GetActorLocation());
+			//mCable->SetWorldLocation(GetActorLocation());
 			mCable->EndLocation = mGrapplePoint;
-			mCable->SetAttachEndTo(Hit.GetActor(),TEXT("Static Mesh"));
+			mCable->SetAttachEndTo(Hit.GetActor(), Hit.GetActor()->GetRootComponent()->GetDefaultSceneRootVariableName());
 		}
 
 		if (Cast<ABaseShip>(Hit.GetActor()))
