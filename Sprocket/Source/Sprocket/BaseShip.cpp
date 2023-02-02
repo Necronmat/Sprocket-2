@@ -6,6 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "CableComponent.h"
+#include "ShipProjectile.h"
 #include "GameFramework/PawnMovementComponent.h"
 
 // Sets default values
@@ -147,6 +148,22 @@ void ABaseShip::StrafeVertical(float AxisAmount)
 
 void ABaseShip::Fire()
 {
+	mProjectileSpawn = GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(100.0f, 0.0f, 0.0f));
+
+	FRotator projectileRotation = GetActorRotation();
+	projectileRotation.Pitch += 10.0f;
+
+	FActorSpawnParameters spawnParams;
+	spawnParams.Owner = this;
+	spawnParams.Instigator = GetInstigator();
+
+	AShipProjectile* Projectile = GetWorld()->SpawnActor<AShipProjectile>(mProjectile, mProjectileSpawn, projectileRotation, spawnParams);
+	if (Projectile)
+	{
+		// Set the projectile's initial trajectory.
+		FVector LaunchDirection = projectileRotation.Vector();
+		Projectile->FireInDirection(LaunchDirection);
+	}
 }
 
 void ABaseShip::Grapple()
