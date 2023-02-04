@@ -17,22 +17,13 @@ void EmptyLinkFunctionForGeneratedCodeSprocket_init() {}
 				nullptr,
 				0,
 				PKG_CompiledIn | 0x00000000,
-<<<<<<< HEAD
-				0xA2B3CE4F,
-				0xD54A7F6F,
-=======
-				0x09FCF1D1,
-				0x9871D111,
->>>>>>> Cait'sDevBranch
+				0x4AC8ECB0,
+				0x389F1A9A,
 				METADATA_PARAMS(nullptr, 0)
 			};
 			UECodeGen_Private::ConstructUPackage(Z_Registration_Info_UPackage__Script_Sprocket.OuterSingleton, PackageParams);
 		}
 		return Z_Registration_Info_UPackage__Script_Sprocket.OuterSingleton;
 	}
-<<<<<<< HEAD
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_Sprocket(Z_Construct_UPackage__Script_Sprocket, TEXT("/Script/Sprocket"), Z_Registration_Info_UPackage__Script_Sprocket, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0xA2B3CE4F, 0xD54A7F6F));
-=======
-	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_Sprocket(Z_Construct_UPackage__Script_Sprocket, TEXT("/Script/Sprocket"), Z_Registration_Info_UPackage__Script_Sprocket, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x09FCF1D1, 0x9871D111));
->>>>>>> Cait'sDevBranch
+	static FRegisterCompiledInInfo Z_CompiledInDeferPackage_UPackage__Script_Sprocket(Z_Construct_UPackage__Script_Sprocket, TEXT("/Script/Sprocket"), Z_Registration_Info_UPackage__Script_Sprocket, CONSTRUCT_RELOAD_VERSION_INFO(FPackageReloadVersionInfo, 0x4AC8ECB0, 0x389F1A9A));
 PRAGMA_ENABLE_DEPRECATION_WARNINGS

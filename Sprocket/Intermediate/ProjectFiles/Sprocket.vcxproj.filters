@@ -86,5 +86,11 @@
     <ClInclude Include="..\..\Source\Sprocket\SprocketGameModeBase.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\Station.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\Station.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -31,9 +31,14 @@ private:
 	UPROPERTY(EditAnywhere)
 		FVector3f EarthRotationDirection = FVector3f(1.0, 0.2, 0.0);
 	UPROPERTY(EditAnywhere)
+		bool IsEarthSpinning = true;
+
+	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* CloudMesh;
 	UPROPERTY(EditAnywhere)
 		float CloudRotationSpeed = 2.0f;
 	UPROPERTY(EditAnywhere)
 		FVector3f CloudRotationDirection = FVector3f(-1.5, 0.2, 0.4);
+	UPROPERTY(EditAnywhere)
+		bool IsCloudSpinning = true;
 };
