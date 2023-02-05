@@ -6,7 +6,7 @@
 #include "GameFramework/SpringArmComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "CableComponent.h"
-#include "ShipProjectile.h"
+#include "ShipGun.h"
 #include "GameFramework/PawnMovementComponent.h"
 
 // Sets default values
@@ -41,6 +41,20 @@ ABaseShip::ABaseShip()
 void ABaseShip::BeginPlay()
 {
 	Super::BeginPlay();
+
+	FActorSpawnParameters spawnParams;
+	spawnParams.Owner = this;
+	spawnParams.Instigator = GetInstigator();
+
+	AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(mBaseGun, GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), GetActorRotation(), spawnParams);
+	tempGun->AttachToShip(mShipMesh, FVector(0.0f, 15.0f, 10.0f), GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
+	//testGun->SetGunStats(0.5f, 10.f, 100.0f,3000.0f);
+	mGuns.Add(tempGun);
+
+	/*tempGun = GetWorld()->SpawnActor<AShipGun>(mBaseGun, GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), GetActorRotation(), spawnParams);
+	tempGun->AttachToShip(mShipMesh, FVector(0.0f, -15.0f, 10.0f), GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
+	tempGun->SetGunStats(0.1f, 1.0f, 1.0f, 6000.0f);
+	mGuns.Add(tempGun);*/
 	
 }
 
@@ -85,9 +99,18 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("StrafeVertical"), this, &ABaseShip::StrafeVertical);
 
 	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), IE_Pressed, this, &ABaseShip::Fire);
+	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), IE_Repeat, this, &ABaseShip::Fire);
 	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Pressed, this, &ABaseShip::Grapple);
 	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Released, this, &ABaseShip::Grapple);
 
+}
+
+void ABaseShip::AddGun(AShipGun Gun)
+{
+}
+
+void ABaseShip::AddGun(float range, float damage, float force, float speed)
+{
 }
 
 void ABaseShip::Throttle(float AxisAmount)
@@ -148,21 +171,9 @@ void ABaseShip::StrafeVertical(float AxisAmount)
 
 void ABaseShip::Fire()
 {
-	mProjectileSpawn = GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(100.0f, 0.0f, 0.0f));
-
-	FRotator projectileRotation = GetActorRotation();
-	projectileRotation.Pitch += 10.0f;
-
-	FActorSpawnParameters spawnParams;
-	spawnParams.Owner = this;
-	spawnParams.Instigator = GetInstigator();
-
-	AShipProjectile* Projectile = GetWorld()->SpawnActor<AShipProjectile>(mProjectile, mProjectileSpawn, projectileRotation, spawnParams);
-	if (Projectile)
+	for (AShipGun* gun : mGuns)
 	{
-		// Set the projectile's initial trajectory.
-		FVector LaunchDirection = projectileRotation.Vector();
-		Projectile->FireInDirection(LaunchDirection);
+		gun->FireGun();
 	}
 }
 

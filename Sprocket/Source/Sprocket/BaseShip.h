@@ -10,6 +10,7 @@ class UStaticMeshComponent;
 class USpringArmComponent;
 class UCameraComponent;
 class UCableComponent;
+class AShipGun;
 
 UCLASS()
 class SPROCKET_API ABaseShip : public APawn
@@ -30,6 +31,10 @@ public:
 
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+
+	void AddGun(AShipGun Gun);
+
+	void AddGun(float range, float damage, float force, float speed);
 
 private:
 
@@ -88,7 +93,6 @@ private:
 	//********************************************************************************************************
 	//Current Ship Speed
 	
-	//The current speed of the thrusters
 	float mThrusterSpeed = 0.0f;
 
 	float mHull = 10.0f;
@@ -102,8 +106,6 @@ private:
 	//Timers
 
 	float mStrafeCooldown = 0.0f;
-
-	float mThrusterTimer = 0.0f;
 
 	bool mCooldown = false;
 
@@ -119,11 +121,11 @@ private:
 	//********************************************************************************************************
 	//Shooting
 
-	UPROPERTY(EditAnywhere)
-		FVector mProjectileSpawn;
-
 	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<class AShipProjectile> mProjectile;
+		TSubclassOf<class AShipGun> mBaseGun;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AShipGun*> mGuns;
 	
 	//********************************************************************************************************
 	//********************************************************************************************************

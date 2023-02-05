@@ -29,7 +29,7 @@ public:
 	UFUNCTION()
 		void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
 
-	void FireInDirection(const FVector& ShootDirection);
+	void FireInDirection(const FVector& ShootDirection, float speed, float force, float damage, float range);
 
 private:
 
@@ -43,6 +43,16 @@ private:
 		UStaticMeshComponent* mProjectileMesh;
 
 	UPROPERTY(VisibleDefaultsOnly)
-		UMaterialInstanceDynamic* mProjectileMaterial; 
+		UMaterialInstance* mProjectileMaterial;
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Projectile stats
+
+	float mSpeed = 3000.0f;
+
+	float mForce = 100.0f;
+
+	float mDamage = 1.0f;
 
 };

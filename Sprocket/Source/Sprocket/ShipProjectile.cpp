@@ -27,15 +27,14 @@ AShipProjectile::AShipProjectile()
 	// Use this component to drive this projectile's movement.
 	mMovementComp = CreateDefaultSubobject<UProjectileMovementComponent>(TEXT("Movement Component"));
 	mMovementComp->SetUpdatedComponent(mCollision);
-	mMovementComp->InitialSpeed = 3000.0f;
-	mMovementComp->MaxSpeed = 3000.0f;
+	mMovementComp->InitialSpeed = mSpeed;
+	mMovementComp->MaxSpeed = mSpeed;
 	mMovementComp->bRotationFollowsVelocity = true;
 	mMovementComp->bShouldBounce = false;
-	mMovementComp->Bounciness = 0.3f;
 	mMovementComp->ProjectileGravityScale = 0.0f;
 
-	static ConstructorHelpers::FObjectFinder<UMaterial>Material(TEXT("Material'/Game/PlayerShipAssets/M_Projectile.M_Projectile'"));
-	mProjectileMaterial = UMaterialInstanceDynamic::Create(Material.Object, mProjectileMesh);
+	static ConstructorHelpers::FObjectFinder<UMaterialInstance>Material(TEXT("MaterialInstanceConstant'/Game/PlayerShipAssets/M_Projectile_Inst.M_Projectile_Inst'"));
+	mProjectileMaterial = Material.Object;
 	mProjectileMesh->SetMaterial(0, mProjectileMaterial);
 	mProjectileMesh->SetRelativeScale3D(FVector(0.09f, 0.09f, 0.09f));
 	mProjectileMesh->SetupAttachment(RootComponent);
@@ -61,14 +60,23 @@ void AShipProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 {
 	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
 	{
-		OtherComponent->AddImpulseAtLocation(mMovementComp->Velocity * 100.0f, Hit.ImpactPoint);
+		OtherComponent->AddImpulseAtLocation(mMovementComp->Velocity * mForce, Hit.ImpactPoint);
 	}
 
 	Destroy();
 }
 
-void AShipProjectile::FireInDirection(const FVector& ShootDirection)
+void AShipProjectile::FireInDirection(const FVector& ShootDirection, float speed, float force, float damage, float range)
 {
+	mSpeed = speed;
+	mForce = force;
+	mDamage = damage;
+
+	mMovementComp->InitialSpeed = mSpeed;
+	mMovementComp->MaxSpeed = mSpeed;
+
+	SetLifeSpan(range);
+
 	mMovementComp->Velocity = ShootDirection * mMovementComp->InitialSpeed;
 }
 
