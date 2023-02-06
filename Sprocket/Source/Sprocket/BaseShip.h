@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Scenario1GameModeBase.h"
 #include "BaseShip.generated.h"
 
 class UStaticMeshComponent;
@@ -147,4 +148,8 @@ private:
 	void Fire();
 	void Grapple();
 	void ReleaseGrapple();
+	void PauseGame();
+
+	UPROPERTY()
+		AScenario1GameModeBase* GameModeRef;
 };

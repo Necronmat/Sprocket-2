@@ -12,6 +12,7 @@ AEarth::AEarth()
 	EarthMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Earth Mesh"));
 	SetRootComponent(EarthMesh);
 	CloudMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Cloud Mesh"));
+	CloudMesh->SetupAttachment(RootComponent);
 }
 
 // Called when the game starts or when spawned
@@ -25,8 +26,7 @@ void AEarth::BeginPlay()
 void AEarth::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
-	AddActorLocalRotation(FRotator(EarthRotationDirection.X * EarthRotationSpeed, EarthRotationDirection.Y * EarthRotationSpeed, EarthRotationDirection.Z * EarthRotationSpeed));
-	CloudMesh->AddLocalRotation(FRotator(CloudRotationDirection.X * CloudRotationSpeed, CloudRotationDirection.Y * CloudRotationSpeed, CloudRotationDirection.Z * CloudRotationSpeed));
+	if(IsEarthSpinning) AddActorLocalRotation(FRotator(EarthRotationDirection.X * EarthRotationSpeed, EarthRotationDirection.Y * EarthRotationSpeed, EarthRotationDirection.Z * EarthRotationSpeed));
+	if(IsCloudSpinning) CloudMesh->AddLocalRotation(FRotator(CloudRotationDirection.X * CloudRotationSpeed, CloudRotationDirection.Y * CloudRotationSpeed, CloudRotationDirection.Z * CloudRotationSpeed));
 }
 

@@ -97,7 +97,8 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), IE_Pressed, this, &ABaseShip::Fire);
 	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Pressed, this, &ABaseShip::Grapple);
 	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Released, this, &ABaseShip::ReleaseGrapple);
-
+	PlayerInputComponent->BindAction(TEXT("Pause"),IE_Pressed, this, &ABaseShip::PauseGame);
+	GameModeRef = Cast<AScenario1GameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 }
 
 void ABaseShip::AddGun(AShipGun Gun)
@@ -106,6 +107,7 @@ void ABaseShip::AddGun(AShipGun Gun)
 
 void ABaseShip::AddGun(float range, float damage, float force, float speed)
 {
+	
 }
 
 void ABaseShip::Throttle(float AxisAmount)
@@ -238,5 +240,8 @@ void ABaseShip::RemoveRandomGun()
 		mGuns[index]->Destroy();
 		mGuns.RemoveAt(index);
 	}	
+void ABaseShip::PauseGame()
+{
+	GameModeRef->TogglePaused();
 }
 
