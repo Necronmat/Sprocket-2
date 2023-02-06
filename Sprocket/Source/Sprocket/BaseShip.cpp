@@ -72,6 +72,7 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("StrafeHorizontal"), this, &ABaseShip::StrafeHorizontal);
 	PlayerInputComponent->BindAxis(TEXT("StrafeVertical"), this, &ABaseShip::StrafeVertical);
 	PlayerInputComponent->BindAction(TEXT("Pause"),IE_Pressed, this, &ABaseShip::PauseGame);
+	GameModeRef = Cast<AScenario1GameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 }
 
 void ABaseShip::Throttle(float AxisAmount)
@@ -170,6 +171,6 @@ void ABaseShip::StrafeVertical(float AxisAmount)
 
 void ABaseShip::PauseGame()
 {
-
+	GameModeRef->TogglePaused();
 }
 

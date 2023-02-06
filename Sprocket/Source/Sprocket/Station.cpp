@@ -57,30 +57,36 @@ void AStation::Tick(float DeltaTime)
 void AStation::OnFarOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Far Overlap Begun"));
+	GameModeRef->StationSphereOverlap(true, StationId, 0);
 }
 
 void AStation::OnApproachOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Approach Overlap Begun"));
+	GameModeRef->StationSphereOverlap(true, StationId, 1);
 }
 
 void AStation::OnLandingOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Landing Overlap Begun"));
+	GameModeRef->StationSphereOverlap(true, StationId, 2);
 }
 
 void AStation::OnFarOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Far Overlap End"));
+	GameModeRef->StationSphereOverlap(false, StationId, 0);
 }
 
 void AStation::OnApproachOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Approach Overlap End"));
+	GameModeRef->StationSphereOverlap(false, StationId, 1);
 }
 
 void AStation::OnLandingOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Overlap Overlap End"));
+	UE_LOG(LogTemp, Warning, TEXT("Landing Overlap End"));
+	GameModeRef->StationSphereOverlap(false, StationId, 2);
 }
 

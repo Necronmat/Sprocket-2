@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Pawn.h"
+#include "Scenario1GameModeBase.h"
 #include "BaseShip.generated.h"
 
 class UStaticMeshComponent;
@@ -114,4 +115,7 @@ private:
 	void StrafeHorizontal(float AxisAmount);
 	void StrafeVertical(float AxisAmount);
 	void PauseGame();
+
+	UPROPERTY()
+		AScenario1GameModeBase* GameModeRef;
 };

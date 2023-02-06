@@ -21,6 +21,10 @@ bool AScenario1GameModeBase::IsGamePaused()
 	return bPaused;
 }
 
+void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, int sphereNo)
+{
+}
+
 void AScenario1GameModeBase::BeginPlay()
 {
 	Super::BeginPlay();

@@ -18,6 +18,8 @@ public:
 		void TogglePaused();
 	UFUNCTION(BlueprintCallable)
 		bool IsGamePaused();
+	UFUNCTION()
+		void StationSphereOverlap(bool bStart, int stationNo, int sphereNo);
 protected:
 	virtual void BeginPlay() override;
 

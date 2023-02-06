@@ -68,6 +68,9 @@ private:
 	UPROPERTY(EditAnywhere)
 		int LandingSensorPartAttachment = 0;
 
+	UPROPERTY(EditAnywhere)
+		int StationId = -1;
+
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;
 };
