@@ -42,7 +42,7 @@ void ABaseShip::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	mShipMesh->AddImpulse(GetActorForwardVector() * mThrusterSpeed * DeltaTime);
-	UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
+	//UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
 
 	FRotator DeltaRotation = GetActorRotation();
 	SetActorRotation(FRotator((DeltaRotation.Pitch > 180) ? DeltaRotation.Pitch - 360 : DeltaRotation.Pitch,
@@ -71,7 +71,7 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("Roll"), this, &ABaseShip::Roll);
 	PlayerInputComponent->BindAxis(TEXT("StrafeHorizontal"), this, &ABaseShip::StrafeHorizontal);
 	PlayerInputComponent->BindAxis(TEXT("StrafeVertical"), this, &ABaseShip::StrafeVertical);
-
+	PlayerInputComponent->BindAction(TEXT("Pause"),IE_Pressed, this, &ABaseShip::PauseGame);
 }
 
 void ABaseShip::Throttle(float AxisAmount)
@@ -165,6 +165,11 @@ void ABaseShip::StrafeVertical(float AxisAmount)
 		mStrafeCooldown = 2.0f;
 		mCooldown = true;
 	}
+
+}
+
+void ABaseShip::PauseGame()
+{
 
 }
 

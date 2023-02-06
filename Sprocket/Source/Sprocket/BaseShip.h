@@ -113,4 +113,5 @@ private:
 	void Roll(float AxisAmount);
 	void StrafeHorizontal(float AxisAmount);
 	void StrafeVertical(float AxisAmount);
+	void PauseGame();
 };

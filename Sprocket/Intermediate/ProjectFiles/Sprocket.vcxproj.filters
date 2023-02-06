@@ -71,6 +71,12 @@
     <ClInclude Include="..\..\Source\Sprocket\MainMenuGameMode.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\Scenario1GameModeBase.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\Scenario1GameModeBase.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
     <None Include="..\..\Source\Sprocket\Sprocket.Build.cs">
       <Filter>Source\Sprocket</Filter>
     </None>
@@ -78,6 +84,12 @@
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Sprocket\Sprocket.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\SprocketGameInstance.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\SprocketGameInstance.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Sprocket\SprocketGameModeBase.cpp">

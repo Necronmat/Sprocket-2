@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Components/SphereComponent.h"
+#include "Scenario1GameModeBase.h"
 #include "Station.generated.h"
 
 UCLASS()
@@ -24,6 +26,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+	UFUNCTION() void OnFarOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
+	UFUNCTION() void OnApproachOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
+	UFUNCTION() void OnLandingOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
+	UFUNCTION() void OnFarOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION() void OnApproachOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+	UFUNCTION() void OnLandingOverlapEnd(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* MainStationMesh;
 	UPROPERTY(EditAnywhere)
@@ -50,4 +58,16 @@ private:
 		FVector3f ThirdStationPartRotationDirection = FVector3f(0.0, 0.0, 0.0);
 	UPROPERTY(EditAnywhere)
 		bool IsThirdStationPartSpinning = true;
+
+	UPROPERTY(EditAnywhere)
+		USphereComponent* FarSensorCollisionSphere;
+	UPROPERTY(EditAnywhere)
+		USphereComponent* ApproachSensorCollisionSphere;
+	UPROPERTY(EditAnywhere)
+		USphereComponent* LandingSensorCollisionSphere;
+	UPROPERTY(EditAnywhere)
+		int LandingSensorPartAttachment = 0;
+
+	UPROPERTY()
+		AScenario1GameModeBase* GameModeRef;
 };
