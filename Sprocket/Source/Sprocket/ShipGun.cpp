@@ -15,10 +15,14 @@ AShipGun::AShipGun()
 
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>Material(TEXT("MaterialInstanceConstant'/Game/PlayerShipAssets/M_Gun_Inst.M_Gun_Inst'"));
 	mGunMaterial = Material.Object;
-	mGunMesh->SetMaterial(0, mGunMaterial);
+	mDynamicGunMat = UMaterialInstanceDynamic::Create(mGunMaterial, nullptr);
+	mDynamicGunMat->SetFlags(RF_Transient);
+	mGunMesh->SetMaterial(0, mDynamicGunMat);
 	mGunMesh->SetupAttachment(RootComponent);
 
 	mProjectile = LoadClass<AShipProjectile>(NULL, TEXT("Class'/Script/Sprocket.ShipProjectile'"), NULL, LOAD_None, NULL);
+
+	mGunMesh->SetCustomPrimitiveDataFloat(0, mGunTimer);
 }
 
 // Called when the game starts or when spawned
@@ -43,6 +47,8 @@ void AShipGun::Tick(float DeltaTime)
 	if (!mCanFire)
 	{
 		mGunTimer -= 1 * DeltaTime;
+
+		mGunMesh->SetCustomPrimitiveDataFloat(0, mGunTimer);
 
 		if (mGunTimer <= 0.0f)
 		{
@@ -88,7 +94,7 @@ void AShipGun::AttachToShip(USceneComponent* parent, FVector offset, FQuat rotat
 	mGunMesh->AttachToComponent(parent, rules);
 
 	mGunMesh->SetRelativeLocation(offset);
-	mGunMesh->SetRelativeRotation(rotation);
+	//mGunMesh->SetRelativeRotation(rotation);
 	mGunMesh->SetRelativeScale3D(scale);
 
 }

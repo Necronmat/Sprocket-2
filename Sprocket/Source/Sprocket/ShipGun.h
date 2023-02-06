@@ -38,6 +38,8 @@ private:
 	UPROPERTY(VisibleDefaultsOnly)
 		UMaterialInstance* mGunMaterial;
 
+	UMaterialInstanceDynamic* mDynamicGunMat;
+
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//Gun stats

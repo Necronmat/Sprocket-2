@@ -138,6 +138,9 @@ private:
 	void StrafeHorizontal(float AxisAmount);
 	void StrafeVertical(float AxisAmount);
 
+	void AddRandomGun();
+	void RemoveRandomGun();
+
 	void Fire();
 	void Grapple();
 };

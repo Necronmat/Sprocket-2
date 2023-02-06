@@ -40,22 +40,7 @@ ABaseShip::ABaseShip()
 // Called when the game starts or when spawned
 void ABaseShip::BeginPlay()
 {
-	Super::BeginPlay();
-
-	FActorSpawnParameters spawnParams;
-	spawnParams.Owner = this;
-	spawnParams.Instigator = GetInstigator();
-
-	AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(mBaseGun, GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), GetActorRotation(), spawnParams);
-	tempGun->AttachToShip(mShipMesh, FVector(0.0f, 15.0f, 10.0f), GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
-	//testGun->SetGunStats(0.5f, 10.f, 100.0f,3000.0f);
-	mGuns.Add(tempGun);
-
-	/*tempGun = GetWorld()->SpawnActor<AShipGun>(mBaseGun, GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), GetActorRotation(), spawnParams);
-	tempGun->AttachToShip(mShipMesh, FVector(0.0f, -15.0f, 10.0f), GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
-	tempGun->SetGunStats(0.1f, 1.0f, 1.0f, 6000.0f);
-	mGuns.Add(tempGun);*/
-	
+	Super::BeginPlay();	
 }
 
 // Called every frame
@@ -98,8 +83,10 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAxis(TEXT("StrafeHorizontal"), this, &ABaseShip::StrafeHorizontal);
 	PlayerInputComponent->BindAxis(TEXT("StrafeVertical"), this, &ABaseShip::StrafeVertical);
 
+	PlayerInputComponent->BindAction(TEXT("RandomGun"), IE_Pressed, this, &ABaseShip::AddRandomGun);
+	PlayerInputComponent->BindAction(TEXT("DeleteGun"), IE_Pressed, this, &ABaseShip::RemoveRandomGun);
+
 	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), IE_Pressed, this, &ABaseShip::Fire);
-	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), IE_Repeat, this, &ABaseShip::Fire);
 	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Pressed, this, &ABaseShip::Grapple);
 	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Released, this, &ABaseShip::Grapple);
 
@@ -222,6 +209,28 @@ void ABaseShip::Grapple()
 		{
 			UE_LOG(LogTemp, Warning, TEXT("Hit ship"), mThrusterSpeed);
 		}
+	}	
+}
+
+void ABaseShip::AddRandomGun()
+{
+	FActorSpawnParameters spawnParams;
+	spawnParams.Owner = this;
+	spawnParams.Instigator = GetInstigator();
+
+	AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(mBaseGun, GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), GetActorRotation(), spawnParams);
+	tempGun->AttachToShip(mShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
+	tempGun->SetGunStats(FMath::RandRange( 0.0f, 100.0f), 1.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(0.0f, 6000.0f));
+	mGuns.Add(tempGun);
+}
+
+void ABaseShip::RemoveRandomGun()
+{
+	if (mGuns.Num() > 0)
+	{
+		int index = FMath::RandRange(0, mGuns.Num() - 1);
+		mGuns[index]->Destroy();
+		mGuns.RemoveAt(index);
 	}	
 }
 
