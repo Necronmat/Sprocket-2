@@ -25,6 +25,9 @@ protected:
 
 private:
 	UPROPERTY() bool bPaused = false;
+
+	UPROPERTY() int ScenarioProgressTracker = 0;
+
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidget>PauseMenuClass;
 	UPROPERTY()
