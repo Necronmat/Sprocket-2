@@ -51,6 +51,10 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_mCable;
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_mHook_MetaData[];
+#endif
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_mHook;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mAcceleration_MetaData[];
 #endif
 		static const UECodeGen_Private::FFloatPropertyParams NewProp_mAcceleration;
@@ -149,6 +153,14 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable = { "mCable", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mCable), Z_Construct_UClass_UCableComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable_MetaData)) };
 #if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData[] = {
+		{ "Category", "BaseShip" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "BaseShip.h" },
+	};
+#endif
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook = { "mHook", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mHook), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData)) };
+#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration_MetaData[] = {
 		{ "Category", "BaseShip" },
 		{ "Comment", "//********************************************************************************************************\n//********************************************************************************************************\n//Ship Stats\n" },
@@ -244,6 +256,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxSpeed,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mMaxShields,
@@ -294,9 +307,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 2269076870U) },
+		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 3262145754U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_3250169727(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_3866658942(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

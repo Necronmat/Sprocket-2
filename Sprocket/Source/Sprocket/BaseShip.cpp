@@ -29,9 +29,17 @@ ABaseShip::ABaseShip()
 
 	//Setting up Grappling hook
 	mCable = CreateDefaultSubobject<UCableComponent>(TEXT("Grappling Hook"));
+	FAttachmentTransformRules rules = FAttachmentTransformRules::SnapToTargetIncludingScale;
+	rules.LocationRule = EAttachmentRule::KeepWorld;
+	rules.RotationRule = EAttachmentRule::KeepWorld;
+	rules.ScaleRule = EAttachmentRule::KeepWorld;
+	rules.bWeldSimulatedBodies = true;
 	//SetRootComponent(mCable);
-	mCable->SetupAttachment(mShipMesh);
+	mCable->AttachToComponent(mShipMesh, rules);
 	mCable->CableLength = mGrappleLength;
+
+	mHook = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hook"));
+	mHook->AttachToComponent(mCable, rules);
 
 	//Have the player automatically possess this character
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
@@ -63,11 +71,11 @@ void ABaseShip::Tick(float DeltaTime)
 
 	if (mGrappling)
 	{
-		mGrapplePoint = mCable->EndLocation;
-		mCable->SetWorldLocation(GetActorLocation());
-		mCable->CableLength = FVector3d::Dist(GetActorLocation(), mGrapplePoint);
+		mCable->EndLocation = mGrapplePoint->GetActorLocation();
+		mCable->CableLength = FVector3d::Dist(GetActorLocation(), mGrapplePoint->GetActorLocation());
+		mHook->SetWorldLocation(mGrapplePoint->GetActorLocation());
 
-		mShipMesh->AddForce((mGrapplePoint - GetActorLocation()) * mGrappleForce / mShipWeight * FVector3d::Dist(GetActorLocation() * DeltaTime, mGrapplePoint));
+		mShipMesh->AddForce((mGrapplePoint->GetActorLocation() - GetActorLocation()) * mGrappleForce / mShipWeight * FVector3d::Dist(GetActorLocation() * DeltaTime, mGrapplePoint->GetActorLocation()));
 	}
 }
 
@@ -88,7 +96,7 @@ void ABaseShip::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 
 	PlayerInputComponent->BindAction(TEXT("PrimaryFire"), IE_Pressed, this, &ABaseShip::Fire);
 	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Pressed, this, &ABaseShip::Grapple);
-	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Released, this, &ABaseShip::Grapple);
+	PlayerInputComponent->BindAction(TEXT("Grapple"), IE_Released, this, &ABaseShip::ReleaseGrapple);
 
 }
 
@@ -166,50 +174,48 @@ void ABaseShip::Fire()
 
 void ABaseShip::Grapple()
 {
-	if (mGrappling)
+	AController* ControllerRef = GetController();
+	FVector CameraLocation;
+	FRotator CameraRotation;
+
+	ControllerRef->GetPlayerViewPoint(CameraLocation, CameraRotation);
+
+	//Gets the end of the raycast
+	FVector End = CameraLocation + CameraRotation.Vector() * mGrappleLength;
+
+	/*FVector ShipLocation = GetActorLocation();
+	FRotator ShipRotation = GetActorRotation();
+
+	FVector End = ShipLocation + ShipRotation.Vector() * mGrappleLength;*/
+
+	FCollisionQueryParams CollisionParams;
+	CollisionParams.AddIgnoredActor(this);
+	CollisionParams.AddIgnoredComponent(mCable);
+
+	//The hit result of the raycast, uses the custom enemy channel
+	FHitResult Hit;
+	bool bDidHit = GetWorld()->LineTraceSingleByChannel(Hit, CameraLocation, End, ECC_Visibility, CollisionParams);
+	DrawDebugLine(GetWorld(), CameraLocation, End, FColor::Red, false, 1, 0, 5);
+
+	if (Cast<AActor>(Hit.GetActor()))
 	{
-		mGrappling = false;
-		mCable->SetVisibility(false);
+		mGrappling = true;
+		mGrapplePoint = Hit.GetActor();
+		mCable->SetVisibility(true);
+		mCable->EndLocation = mGrapplePoint->GetActorLocation();
+		mHook->SetWorldLocation(mGrapplePoint->GetActorLocation());
 	}
-	else
+
+	if (Cast<ABaseShip>(Hit.GetActor()))
 	{
-		AController* ControllerRef = GetController();
-		FVector CameraLocation;
-		FRotator CameraRotation;
+		UE_LOG(LogTemp, Warning, TEXT("Hit ship"), mThrusterSpeed);
+	}
+}
 
-		ControllerRef->GetPlayerViewPoint(CameraLocation, CameraRotation);
-
-		//Gets the end of the raycast
-		FVector End = CameraLocation + CameraRotation.Vector() * mGrappleLength;
-
-		/*FVector ShipLocation = GetActorLocation();
-		FRotator ShipRotation = GetActorRotation();
-
-		FVector End = ShipLocation + ShipRotation.Vector() * mGrappleLength;*/
-
-		FCollisionQueryParams CollisionParams;
-		CollisionParams.AddIgnoredActor(this);
-
-		//The hit result of the raycast, uses the custom enemy channel
-		FHitResult Hit;
-		bool bDidHit = GetWorld()->LineTraceSingleByChannel(Hit, CameraLocation, End, ECC_Visibility, CollisionParams);
-		DrawDebugLine(GetWorld(), CameraLocation, End, FColor::Red, false, 1, 0, 5);
-
-		if (Cast<AActor>(Hit.GetActor()))
-		{
-			mGrappling = true;
-			mGrapplePoint = Hit.ImpactPoint;
-			mCable->SetVisibility(true);
-			//mCable->SetWorldLocation(GetActorLocation());
-			mCable->EndLocation = mGrapplePoint;
-			mCable->SetAttachEndTo(Hit.GetActor(), Hit.GetActor()->GetRootComponent()->GetDefaultSceneRootVariableName());
-		}
-
-		if (Cast<ABaseShip>(Hit.GetActor()))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Hit ship"), mThrusterSpeed);
-		}
-	}	
+void ABaseShip::ReleaseGrapple()
+{
+	mGrappling = false;
+	mCable->SetVisibility(false);
 }
 
 void ABaseShip::AddRandomGun()
