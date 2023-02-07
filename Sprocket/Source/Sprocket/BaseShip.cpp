@@ -110,6 +110,22 @@ void ABaseShip::AddGun(float range, float damage, float force, float speed)
 	
 }
 
+float ABaseShip::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	mShields -= DamageAmount;
+	if (mShields < 0.0f) {
+		float remainingDamage = 0.0 - mShields;
+		mHull -= remainingDamage;
+		if (mHull < 0.0f) {
+			FString message = TEXT("Player has Died, Please Restart");
+
+			GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
+			Destroy();
+		}
+	}
+	return DamageAmount;
+}
+
 void ABaseShip::Throttle(float AxisAmount)
 {
 	if (mThrusterSpeed <= 0 && AxisAmount > 0)
@@ -239,9 +255,41 @@ void ABaseShip::RemoveRandomGun()
 		int index = FMath::RandRange(0, mGuns.Num() - 1);
 		mGuns[index]->Destroy();
 		mGuns.RemoveAt(index);
-	}	
+	}
+}	
+
 void ABaseShip::PauseGame()
 {
 	GameModeRef->TogglePaused();
+}
+
+float ABaseShip::GetCurrentSpeed()
+{
+	return mThrusterSpeed;
+}
+
+float ABaseShip::GetMaxSpeed()
+{
+	return mMaxSpeed;
+}
+
+float ABaseShip::GetCurrentHull()
+{
+	return mHull;
+}
+
+float ABaseShip::GetMaxHull()
+{
+	return mMaxHull;
+}
+
+float ABaseShip::GetCurrentShield()
+{
+	return mShields;
+}
+
+float ABaseShip::GetMaxShield()
+{
+	return mMaxShields;
 }
 

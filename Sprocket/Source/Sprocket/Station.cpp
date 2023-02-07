@@ -2,6 +2,7 @@
 
 
 #include "Station.h"
+#include "Scenario1GameModeBase.h"
 #include "Kismet/GamePlayStatics.h"
 
 // Sets default values
@@ -52,6 +53,11 @@ void AStation::Tick(float DeltaTime)
 	if (IsMainStationSpinning) AddActorLocalRotation(FRotator(MainStationRotationDirection.X * MainStationRotationSpeed, MainStationRotationDirection.Y * MainStationRotationSpeed, MainStationRotationDirection.Z * MainStationRotationSpeed));
 	if (IsSecondaryStationPartSpinning) SecondaryStationPartMesh->AddLocalRotation(FRotator(SecondaryStationPartRotationDirection.X * SecondaryStationPartRotationSpeed, SecondaryStationPartRotationDirection.Y * SecondaryStationPartRotationSpeed, SecondaryStationPartRotationDirection.Z * SecondaryStationPartRotationSpeed));
 	if (IsThirdStationPartSpinning) ThirdStationPartMesh->AddLocalRotation(FRotator(ThirdStationPartRotationDirection.X * ThirdStationPartRotationSpeed, ThirdStationPartRotationDirection.Y * ThirdStationPartRotationSpeed, ThirdStationPartRotationDirection.Z * ThirdStationPartRotationSpeed));
+}
+
+int AStation::GetStationId()
+{
+	return StationId;
 }
 
 void AStation::OnFarOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)

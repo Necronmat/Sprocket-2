@@ -39,6 +39,8 @@ public:
 
 private:
 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//BLueprint componenets
@@ -149,6 +151,19 @@ private:
 	void Grapple();
 	void ReleaseGrapple();
 	void PauseGame();
+
+	UFUNCTION(BlueprintPure)
+		float GetCurrentSpeed();
+	UFUNCTION(BlueprintPure)
+		float GetMaxSpeed();
+	UFUNCTION(BlueprintPure)
+		float GetCurrentHull();
+	UFUNCTION(BlueprintPure)
+		float GetMaxHull();
+	UFUNCTION(BlueprintPure)
+		float GetCurrentShield();
+	UFUNCTION(BlueprintPure)
+		float GetMaxShield();
 
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;

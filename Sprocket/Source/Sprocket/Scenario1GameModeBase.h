@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
+#include "Station.h"
 #include "Scenario1GameModeBase.generated.h"
 
 /**
@@ -24,12 +25,24 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UFUNCTION()
+		void TriggerFarStationEvent(int stationId);
+	UFUNCTION()
+		void TriggerApproachStationEvent(int stationId);
+	UFUNCTION()
+		void TriggerLandingStationEvent(int stationId);
+
 	UPROPERTY() bool bPaused = false;
 
-	UPROPERTY() int ScenarioProgressTracker = 0;
+	UPROPERTY() int ScenarioProgressTracker = 1;
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidget>PauseMenuClass;
 	UPROPERTY()
 		UUserWidget* PauseMenuCount;
+
+	UPROPERTY() AStation* station1;
+	UPROPERTY() AStation* station2;
+	UPROPERTY() AStation* station3;
+	UPROPERTY(EditAnywhere) TSubclassOf<AStation> StationClass;
 };

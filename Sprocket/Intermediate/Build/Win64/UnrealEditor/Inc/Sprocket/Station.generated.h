@@ -16,8 +16,8 @@ struct FHitResult;
 #endif
 #define SPROCKET_Station_generated_h
 
-#define FID_Sprocket_Source_Sprocket_Station_h_14_SPARSE_DATA
-#define FID_Sprocket_Source_Sprocket_Station_h_14_RPC_WRAPPERS \
+#define FID_Sprocket_Source_Sprocket_Station_h_15_SPARSE_DATA
+#define FID_Sprocket_Source_Sprocket_Station_h_15_RPC_WRAPPERS \
  \
 	DECLARE_FUNCTION(execOnLandingOverlapEnd); \
 	DECLARE_FUNCTION(execOnApproachOverlapEnd); \
@@ -27,7 +27,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execOnFarOverlapBegin);
 
 
-#define FID_Sprocket_Source_Sprocket_Station_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
+#define FID_Sprocket_Source_Sprocket_Station_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
  \
 	DECLARE_FUNCTION(execOnLandingOverlapEnd); \
 	DECLARE_FUNCTION(execOnApproachOverlapEnd); \
@@ -37,7 +37,7 @@ struct FHitResult;
 	DECLARE_FUNCTION(execOnFarOverlapBegin);
 
 
-#define FID_Sprocket_Source_Sprocket_Station_h_14_INCLASS_NO_PURE_DECLS \
+#define FID_Sprocket_Source_Sprocket_Station_h_15_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesAStation(); \
 	friend struct Z_Construct_UClass_AStation_Statics; \
@@ -46,7 +46,7 @@ public: \
 	DECLARE_SERIALIZER(AStation)
 
 
-#define FID_Sprocket_Source_Sprocket_Station_h_14_INCLASS \
+#define FID_Sprocket_Source_Sprocket_Station_h_15_INCLASS \
 private: \
 	static void StaticRegisterNativesAStation(); \
 	friend struct Z_Construct_UClass_AStation_Statics; \
@@ -55,7 +55,7 @@ public: \
 	DECLARE_SERIALIZER(AStation)
 
 
-#define FID_Sprocket_Source_Sprocket_Station_h_14_STANDARD_CONSTRUCTORS \
+#define FID_Sprocket_Source_Sprocket_Station_h_15_STANDARD_CONSTRUCTORS \
 	/** Standard constructor, called after all reflected properties have been initialized */ \
 	NO_API AStation(const FObjectInitializer& ObjectInitializer); \
 	DEFINE_DEFAULT_OBJECT_INITIALIZER_CONSTRUCTOR_CALL(AStation) \
@@ -68,7 +68,7 @@ private: \
 public:
 
 
-#define FID_Sprocket_Source_Sprocket_Station_h_14_ENHANCED_CONSTRUCTORS \
+#define FID_Sprocket_Source_Sprocket_Station_h_15_ENHANCED_CONSTRUCTORS \
 private: \
 	/** Private move- and copy-constructors, should never be used */ \
 	NO_API AStation(AStation&&); \
@@ -79,25 +79,25 @@ public: \
 	DEFINE_DEFAULT_CONSTRUCTOR_CALL(AStation)
 
 
-#define FID_Sprocket_Source_Sprocket_Station_h_11_PROLOG
-#define FID_Sprocket_Source_Sprocket_Station_h_14_GENERATED_BODY_LEGACY \
+#define FID_Sprocket_Source_Sprocket_Station_h_12_PROLOG
+#define FID_Sprocket_Source_Sprocket_Station_h_15_GENERATED_BODY_LEGACY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Sprocket_Source_Sprocket_Station_h_14_SPARSE_DATA \
-	FID_Sprocket_Source_Sprocket_Station_h_14_RPC_WRAPPERS \
-	FID_Sprocket_Source_Sprocket_Station_h_14_INCLASS \
-	FID_Sprocket_Source_Sprocket_Station_h_14_STANDARD_CONSTRUCTORS \
+	FID_Sprocket_Source_Sprocket_Station_h_15_SPARSE_DATA \
+	FID_Sprocket_Source_Sprocket_Station_h_15_RPC_WRAPPERS \
+	FID_Sprocket_Source_Sprocket_Station_h_15_INCLASS \
+	FID_Sprocket_Source_Sprocket_Station_h_15_STANDARD_CONSTRUCTORS \
 public: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 
 
-#define FID_Sprocket_Source_Sprocket_Station_h_14_GENERATED_BODY \
+#define FID_Sprocket_Source_Sprocket_Station_h_15_GENERATED_BODY \
 PRAGMA_DISABLE_DEPRECATION_WARNINGS \
 public: \
-	FID_Sprocket_Source_Sprocket_Station_h_14_SPARSE_DATA \
-	FID_Sprocket_Source_Sprocket_Station_h_14_RPC_WRAPPERS_NO_PURE_DECLS \
-	FID_Sprocket_Source_Sprocket_Station_h_14_INCLASS_NO_PURE_DECLS \
-	FID_Sprocket_Source_Sprocket_Station_h_14_ENHANCED_CONSTRUCTORS \
+	FID_Sprocket_Source_Sprocket_Station_h_15_SPARSE_DATA \
+	FID_Sprocket_Source_Sprocket_Station_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
+	FID_Sprocket_Source_Sprocket_Station_h_15_INCLASS_NO_PURE_DECLS \
+	FID_Sprocket_Source_Sprocket_Station_h_15_ENHANCED_CONSTRUCTORS \
 private: \
 PRAGMA_ENABLE_DEPRECATION_WARNINGS
 

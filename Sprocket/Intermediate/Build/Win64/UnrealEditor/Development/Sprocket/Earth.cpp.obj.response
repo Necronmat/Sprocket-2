@@ -253,6 +253,9 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Earth.
 /I Developer\AnimationDataController\Public
 /I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket
 /I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source
+/I ..\Plugins\Runtime\CableComponent\Intermediate\Build\Win64\UnrealEditor\Inc\CableComponent
+/I ..\Plugins\Runtime\CableComponent\Source
+/I ..\Plugins\Runtime\CableComponent\Source\CableComponent\Classes
 /I ThirdParty\mimalloc\include
 /I ThirdParty\LibTiff\Source\Win64
 /I ThirdParty\LibTiff\Source
