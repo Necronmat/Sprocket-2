@@ -14,7 +14,7 @@ AShipProjectile::AShipProjectile()
 	// Set the sphere's collision radius.
 	mCollision->InitSphereRadius(15.0f);
 	// Set the sphere's collision profile name to "Projectile".
-	mCollision->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
+	mCollision->BodyInstance.SetCollisionProfileName(TEXT("Projectiles"));
 	// Event called when component hits something.
 	mCollision->OnComponentHit.AddDynamic(this, &AShipProjectile::OnHit);
 	// Set the root component to be the collision component.
@@ -22,6 +22,7 @@ AShipProjectile::AShipProjectile()
 
 	mProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
+	mProjectileMesh->SetCollisionProfileName(TEXT("Projectiles"));
 	mProjectileMesh->SetStaticMesh(Mesh.Object);
 
 	// Use this component to drive this projectile's movement.

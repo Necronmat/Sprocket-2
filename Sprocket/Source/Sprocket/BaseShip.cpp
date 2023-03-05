@@ -75,7 +75,7 @@ void ABaseShip::Tick(float DeltaTime)
 		mCable->CableLength = FVector3d::Dist(GetActorLocation(), mGrapplePoint->GetActorLocation());
 		mHook->SetWorldLocation(mGrapplePoint->GetActorLocation());
 
-		mShipMesh->AddForce((mGrapplePoint->GetActorLocation() - GetActorLocation()) * mGrappleForce / mShipWeight * FVector3d::Dist(GetActorLocation() * DeltaTime, mGrapplePoint->GetActorLocation()));
+		mShipMesh->AddForce((mGrapplePoint->GetActorLocation() - GetActorLocation()) * mGrappleForce / mShipWeight * DeltaTime);
 	}
 }
 

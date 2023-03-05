@@ -90,7 +90,7 @@ private:
 		float mStrafeSpeed = 200000.0f;
 
 	UPROPERTY(EditAnywhere)
-		float mGrappleForce = 1;
+		float mGrappleForce = 10000;
 
 	UPROPERTY(EditAnywhere)
 		float mGrappleLength = 100000;	

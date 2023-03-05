@@ -11,6 +11,7 @@ AShipGun::AShipGun()
 	mGunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	mGunMesh->SetStaticMesh(Mesh.Object);
+	mGunMesh->SetCollisionProfileName(TEXT("Player"));
 	mGunMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>Material(TEXT("MaterialInstanceConstant'/Game/PlayerShipAssets/M_Gun_Inst.M_Gun_Inst'"));
