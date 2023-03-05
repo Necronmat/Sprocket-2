@@ -37,10 +37,6 @@ public:
 
 	void AddGun(float range, float damage, float force, float speed);
 
-private:
-
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//BLueprint componenets
@@ -59,6 +55,10 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* mHook;
+private:
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 
 	//********************************************************************************************************
 	//********************************************************************************************************
@@ -126,7 +126,7 @@ private:
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//Shooting
-
+public:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class AShipGun> mBaseGun;
 
@@ -136,7 +136,7 @@ private:
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//Player control funtions
-
+private:	
 	void Throttle(float AxisAmount);
 	void Pitch(float AxisAmount);
 	void Yaw(float AxisAmount);
@@ -152,18 +152,18 @@ private:
 	void ReleaseGrapple();
 	void PauseGame();
 
-	UFUNCTION(BlueprintPure)
-		float GetCurrentSpeed();
-	UFUNCTION(BlueprintPure)
-		float GetMaxSpeed();
-	UFUNCTION(BlueprintPure)
-		float GetCurrentHull();
-	UFUNCTION(BlueprintPure)
-		float GetMaxHull();
-	UFUNCTION(BlueprintPure)
-		float GetCurrentShield();
-	UFUNCTION(BlueprintPure)
-		float GetMaxShield();
+	//UFUNCTION(BlueprintPure)
+	//	float GetCurrentSpeed();
+	//UFUNCTION(BlueprintPure)
+	//	float GetMaxSpeed();
+	//UFUNCTION(BlueprintPure)
+	//	float GetCurrentHull();
+	//UFUNCTION(BlueprintPure)
+	//	float GetMaxHull();
+	//UFUNCTION(BlueprintPure)
+	//	float GetCurrentShield();
+	//UFUNCTION(BlueprintPure)
+	//	float GetMaxShield();
 
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;

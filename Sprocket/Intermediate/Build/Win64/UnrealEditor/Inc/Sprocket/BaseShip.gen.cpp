@@ -21,252 +21,8 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 	SPROCKET_API UClass* Z_Construct_UClass_AShipGun_NoRegister();
 	SPROCKET_API UClass* Z_Construct_UClass_AScenario1GameModeBase_NoRegister();
 // End Cross Module References
-	DEFINE_FUNCTION(ABaseShip::execGetMaxShield)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetMaxShield();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(ABaseShip::execGetCurrentShield)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetCurrentShield();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(ABaseShip::execGetMaxHull)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetMaxHull();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(ABaseShip::execGetCurrentHull)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetCurrentHull();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(ABaseShip::execGetMaxSpeed)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetMaxSpeed();
-		P_NATIVE_END;
-	}
-	DEFINE_FUNCTION(ABaseShip::execGetCurrentSpeed)
-	{
-		P_FINISH;
-		P_NATIVE_BEGIN;
-		*(float*)Z_Param__Result=P_THIS->GetCurrentSpeed();
-		P_NATIVE_END;
-	}
 	void ABaseShip::StaticRegisterNativesABaseShip()
 	{
-		UClass* Class = ABaseShip::StaticClass();
-		static const FNameNativePtrPair Funcs[] = {
-			{ "GetCurrentHull", &ABaseShip::execGetCurrentHull },
-			{ "GetCurrentShield", &ABaseShip::execGetCurrentShield },
-			{ "GetCurrentSpeed", &ABaseShip::execGetCurrentSpeed },
-			{ "GetMaxHull", &ABaseShip::execGetMaxHull },
-			{ "GetMaxShield", &ABaseShip::execGetMaxShield },
-			{ "GetMaxSpeed", &ABaseShip::execGetMaxSpeed },
-		};
-		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
-	}
-	struct Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics
-	{
-		struct BaseShip_eventGetCurrentHull_Parms
-		{
-			float ReturnValue;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShip_eventGetCurrentHull_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "BaseShip.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShip, nullptr, "GetCurrentHull", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::BaseShip_eventGetCurrentHull_Parms), Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_ABaseShip_GetCurrentHull()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShip_GetCurrentHull_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics
-	{
-		struct BaseShip_eventGetCurrentShield_Parms
-		{
-			float ReturnValue;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShip_eventGetCurrentShield_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "BaseShip.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShip, nullptr, "GetCurrentShield", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::BaseShip_eventGetCurrentShield_Parms), Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_ABaseShip_GetCurrentShield()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShip_GetCurrentShield_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics
-	{
-		struct BaseShip_eventGetCurrentSpeed_Parms
-		{
-			float ReturnValue;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShip_eventGetCurrentSpeed_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "BaseShip.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShip, nullptr, "GetCurrentSpeed", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::BaseShip_eventGetCurrentSpeed_Parms), Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_ABaseShip_GetCurrentSpeed()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShip_GetCurrentSpeed_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics
-	{
-		struct BaseShip_eventGetMaxHull_Parms
-		{
-			float ReturnValue;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShip_eventGetMaxHull_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "BaseShip.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShip, nullptr, "GetMaxHull", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::BaseShip_eventGetMaxHull_Parms), Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_ABaseShip_GetMaxHull()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShip_GetMaxHull_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics
-	{
-		struct BaseShip_eventGetMaxShield_Parms
-		{
-			float ReturnValue;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShip_eventGetMaxShield_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "BaseShip.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShip, nullptr, "GetMaxShield", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::BaseShip_eventGetMaxShield_Parms), Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_ABaseShip_GetMaxShield()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShip_GetMaxShield_Statics::FuncParams);
-		}
-		return ReturnFunction;
-	}
-	struct Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics
-	{
-		struct BaseShip_eventGetMaxSpeed_Parms
-		{
-			float ReturnValue;
-		};
-		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
-		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
-#if WITH_METADATA
-		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
-#endif
-		static const UECodeGen_Private::FFunctionParams FuncParams;
-	};
-	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShip_eventGetMaxSpeed_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
-	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::PropPointers[] = {
-		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::NewProp_ReturnValue,
-	};
-#if WITH_METADATA
-	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::Function_MetaDataParams[] = {
-		{ "ModuleRelativePath", "BaseShip.h" },
-	};
-#endif
-	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShip, nullptr, "GetMaxSpeed", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::BaseShip_eventGetMaxSpeed_Parms), Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::Function_MetaDataParams)) };
-	UFunction* Z_Construct_UFunction_ABaseShip_GetMaxSpeed()
-	{
-		static UFunction* ReturnFunction = nullptr;
-		if (!ReturnFunction)
-		{
-			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShip_GetMaxSpeed_Statics::FuncParams);
-		}
-		return ReturnFunction;
 	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(ABaseShip);
 	UClass* Z_Construct_UClass_ABaseShip_NoRegister()
@@ -276,7 +32,6 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 	struct Z_Construct_UClass_ABaseShip_Statics
 	{
 		static UObject* (*const DependentSingletons[])();
-		static const FClassFunctionLinkInfo FuncInfo[];
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam Class_MetaDataParams[];
 #endif
@@ -361,14 +116,6 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		(UObject* (*)())Z_Construct_UClass_APawn,
 		(UObject* (*)())Z_Construct_UPackage__Script_Sprocket,
 	};
-	const FClassFunctionLinkInfo Z_Construct_UClass_ABaseShip_Statics::FuncInfo[] = {
-		{ &Z_Construct_UFunction_ABaseShip_GetCurrentHull, "GetCurrentHull" }, // 838991475
-		{ &Z_Construct_UFunction_ABaseShip_GetCurrentShield, "GetCurrentShield" }, // 3230832560
-		{ &Z_Construct_UFunction_ABaseShip_GetCurrentSpeed, "GetCurrentSpeed" }, // 4121453655
-		{ &Z_Construct_UFunction_ABaseShip_GetMaxHull, "GetMaxHull" }, // 714698214
-		{ &Z_Construct_UFunction_ABaseShip_GetMaxShield, "GetMaxShield" }, // 2681221314
-		{ &Z_Construct_UFunction_ABaseShip_GetMaxSpeed, "GetMaxSpeed" }, // 861243578
-	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::Class_MetaDataParams[] = {
 		{ "HideCategories", "Navigation" },
@@ -385,7 +132,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		{ "ToolTip", "BLueprint componenets" },
 	};
 #endif
-	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mShipMesh = { "mShipMesh", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mShipMesh), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mShipMesh_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mShipMesh_MetaData)) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mShipMesh = { "mShipMesh", nullptr, (EPropertyFlags)0x0010000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mShipMesh), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mShipMesh_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mShipMesh_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData[] = {
 		{ "Category", "BaseShip" },
@@ -393,7 +140,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		{ "ModuleRelativePath", "BaseShip.h" },
 	};
 #endif
-	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm = { "mSpringArm", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mSpringArm), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData)) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm = { "mSpringArm", nullptr, (EPropertyFlags)0x0010000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mSpringArm), Z_Construct_UClass_USpringArmComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mSpringArm_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera_MetaData[] = {
 		{ "Category", "BaseShip" },
@@ -401,7 +148,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		{ "ModuleRelativePath", "BaseShip.h" },
 	};
 #endif
-	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera = { "mCamera", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mCamera), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera_MetaData)) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera = { "mCamera", nullptr, (EPropertyFlags)0x0010000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mCamera), Z_Construct_UClass_UCameraComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCamera_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable_MetaData[] = {
 		{ "Category", "BaseShip" },
@@ -409,7 +156,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		{ "ModuleRelativePath", "BaseShip.h" },
 	};
 #endif
-	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable = { "mCable", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mCable), Z_Construct_UClass_UCableComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable_MetaData)) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable = { "mCable", nullptr, (EPropertyFlags)0x0010000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mCable), Z_Construct_UClass_UCableComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mCable_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData[] = {
 		{ "Category", "BaseShip" },
@@ -417,7 +164,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		{ "ModuleRelativePath", "BaseShip.h" },
 	};
 #endif
-	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook = { "mHook", nullptr, (EPropertyFlags)0x0040000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mHook), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData)) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook = { "mHook", nullptr, (EPropertyFlags)0x0010000000080009, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mHook), Z_Construct_UClass_UStaticMeshComponent_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mHook_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mAcceleration_MetaData[] = {
 		{ "Category", "BaseShip" },
@@ -495,12 +242,10 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun_MetaData[] = {
 		{ "Category", "BaseShip" },
-		{ "Comment", "//********************************************************************************************************\n//********************************************************************************************************\n//Shooting\n" },
 		{ "ModuleRelativePath", "BaseShip.h" },
-		{ "ToolTip", "Shooting" },
 	};
 #endif
-	const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun = { "mBaseGun", nullptr, (EPropertyFlags)0x0044000000010001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mBaseGun), Z_Construct_UClass_AShipGun_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun_MetaData)) };
+	const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun = { "mBaseGun", nullptr, (EPropertyFlags)0x0014000000010001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mBaseGun), Z_Construct_UClass_AShipGun_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun_MetaData)) };
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_Inner = { "mGuns", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AShipGun_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData[] = {
@@ -508,10 +253,12 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		{ "ModuleRelativePath", "BaseShip.h" },
 	};
 #endif
-	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns = { "mGuns", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mGuns), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData)) };
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns = { "mGuns", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mGuns), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef_MetaData[] = {
+		{ "Comment", "//UFUNCTION(BlueprintPure)\n//\x09""float GetCurrentSpeed();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetMaxSpeed();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetCurrentHull();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetMaxHull();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetCurrentShield();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetMaxShield();\n" },
 		{ "ModuleRelativePath", "BaseShip.h" },
+		{ "ToolTip", "UFUNCTION(BlueprintPure)\n       float GetCurrentSpeed();\nUFUNCTION(BlueprintPure)\n       float GetMaxSpeed();\nUFUNCTION(BlueprintPure)\n       float GetCurrentHull();\nUFUNCTION(BlueprintPure)\n       float GetMaxHull();\nUFUNCTION(BlueprintPure)\n       float GetCurrentShield();\nUFUNCTION(BlueprintPure)\n       float GetMaxShield();" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef = { "GameModeRef", nullptr, (EPropertyFlags)0x0040000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, GameModeRef), Z_Construct_UClass_AScenario1GameModeBase_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef_MetaData)) };
@@ -544,11 +291,11 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		"Game",
 		&StaticCppClassTypeInfo,
 		DependentSingletons,
-		FuncInfo,
+		nullptr,
 		Z_Construct_UClass_ABaseShip_Statics::PropPointers,
 		nullptr,
 		UE_ARRAY_COUNT(DependentSingletons),
-		UE_ARRAY_COUNT(FuncInfo),
+		0,
 		UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::PropPointers),
 		0,
 		0x009000A4u,
@@ -572,9 +319,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 3570361264U) },
+		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 3443910234U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_331046784(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_2195926246(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
