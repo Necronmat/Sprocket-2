@@ -1,8 +1,8 @@
 {
 	"SourceFiles": [
-		"D:\\Users\\jliddiard\\Documents\\GitHub\\Sprocket-2\\Sprocket\\Source\\Sprocket\\Sprocket.Build.cs",
-		"D:\\Users\\jliddiard\\Documents\\GitHub\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
-		"D:\\Users\\jliddiard\\Documents\\GitHub\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs"
+		"D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\Sprocket\\Sprocket.Build.cs",
+		"D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
+		"D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs"
 	],
 	"EngineVersion": "5.0.3"
 }

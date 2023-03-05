@@ -14,7 +14,7 @@ AShipProjectile::AShipProjectile()
 	// Set the sphere's collision radius.
 	mCollision->InitSphereRadius(15.0f);
 	// Set the sphere's collision profile name to "Projectile".
-	mCollision->BodyInstance.SetCollisionProfileName(TEXT("Projectile"));
+	mCollision->BodyInstance.SetCollisionProfileName(TEXT("Projectiles"));
 	// Event called when component hits something.
 	mCollision->OnComponentHit.AddDynamic(this, &AShipProjectile::OnHit);
 	// Set the root component to be the collision component.

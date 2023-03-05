@@ -14,26 +14,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define SPROCKET_BaseShip_generated_h
 
 #define FID_Sprocket_Source_Sprocket_BaseShip_h_19_SPARSE_DATA
-#define FID_Sprocket_Source_Sprocket_BaseShip_h_19_RPC_WRAPPERS \
- \
-	DECLARE_FUNCTION(execGetMaxShield); \
-	DECLARE_FUNCTION(execGetCurrentShield); \
-	DECLARE_FUNCTION(execGetMaxHull); \
-	DECLARE_FUNCTION(execGetCurrentHull); \
-	DECLARE_FUNCTION(execGetMaxSpeed); \
-	DECLARE_FUNCTION(execGetCurrentSpeed);
-
-
-#define FID_Sprocket_Source_Sprocket_BaseShip_h_19_RPC_WRAPPERS_NO_PURE_DECLS \
- \
-	DECLARE_FUNCTION(execGetMaxShield); \
-	DECLARE_FUNCTION(execGetCurrentShield); \
-	DECLARE_FUNCTION(execGetMaxHull); \
-	DECLARE_FUNCTION(execGetCurrentHull); \
-	DECLARE_FUNCTION(execGetMaxSpeed); \
-	DECLARE_FUNCTION(execGetCurrentSpeed);
-
-
+#define FID_Sprocket_Source_Sprocket_BaseShip_h_19_RPC_WRAPPERS
+#define FID_Sprocket_Source_Sprocket_BaseShip_h_19_RPC_WRAPPERS_NO_PURE_DECLS
 #define FID_Sprocket_Source_Sprocket_BaseShip_h_19_INCLASS_NO_PURE_DECLS \
 private: \
 	static void StaticRegisterNativesABaseShip(); \
