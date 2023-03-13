@@ -2,12 +2,12 @@
 	"Targets": [
 		{
 			"Name": "Sprocket",
-			"Path": "D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
+			"Path": "D:\\Users\\jliddiard\\Documents\\GitHub\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
 			"Type": "Game"
 		},
 		{
 			"Name": "SprocketEditor",
-			"Path": "D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs",
+			"Path": "D:\\Users\\jliddiard\\Documents\\GitHub\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs",
 			"Type": "Editor"
 		}
 	]

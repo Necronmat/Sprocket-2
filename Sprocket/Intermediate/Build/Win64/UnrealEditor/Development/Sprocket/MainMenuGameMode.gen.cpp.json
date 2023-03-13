@@ -1,17 +1,17 @@
 {
-    "Version": "1.1",
+    "Version": "1.2",
     "Data": {
-        "Source": "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\mainmenugamemode.gen.cpp",
+        "Source": "d:\\users\\jliddiard\\documents\\github\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\mainmenugamemode.gen.cpp",
         "ProvidedModule": "",
-        "PCH": "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\sprocketeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "PCH": "d:\\users\\jliddiard\\documents\\github\\sprocket-2\\sprocket\\intermediate\\build\\win64\\sprocketeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
         "Includes": [
-            "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\development\\sprocket\\definitions.sprocket.h",
-            "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\source\\sprocket\\mainmenugamemode.h",
-            "d:\\program files\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
-            "d:\\program files\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
-            "d:\\program files\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\serverstatreplicator.generated.h",
-            "d:\\program files\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gamemodebase.generated.h",
-            "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\mainmenugamemode.generated.h"
+            "d:\\users\\jliddiard\\documents\\github\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\development\\sprocket\\definitions.sprocket.h",
+            "d:\\users\\jliddiard\\documents\\github\\sprocket-2\\sprocket\\source\\sprocket\\mainmenugamemode.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\serverstatreplicator.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gamemodebase.generated.h",
+            "d:\\users\\jliddiard\\documents\\github\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\mainmenugamemode.generated.h"
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

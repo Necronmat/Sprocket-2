@@ -1,4 +1,4 @@
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket\BaseShipController.gen.cpp
+D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket\BaseShipController.gen.cpp
 /I .
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine
 /I Runtime
@@ -251,8 +251,8 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController
 /I Developer\AnimationDataController\Public
-/I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket
-/I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source
+/I D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket
+/I D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Source
 /I ..\Plugins\Runtime\CableComponent\Intermediate\Build\Win64\UnrealEditor\Inc\CableComponent
 /I ..\Plugins\Runtime\CableComponent\Source
 /I ..\Plugins\Runtime\CableComponent\Source\CableComponent\Classes
@@ -270,18 +270,18 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win
 /I ThirdParty\PhysX3\PhysX_3.4\Include\common
 /I ThirdParty\PhysX3\PhysX_3.4\Include\extensions
 /I ThirdParty\PhysX3\PhysX_3.4\Include\geometry
-/I "D:\Program Files\Microsoft\VisualStudio22\VC\Tools\MSVC\14.29.30133\INCLUDE"
+/I "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\VC\Tools\MSVC\14.34.31933\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\winrt"
-/FI"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/FI"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
-/Yu"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-/Fo"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipController.gen.cpp.obj"
-/sourceDependencies D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipController.gen.cpp.json
+/FI"D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/FI"D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
+/Yu"D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+/Fo"D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipController.gen.cpp.obj"
+/sourceDependencies D:\Users\jliddiard\Documents\GitHub\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipController.gen.cpp.json
 /Zc:inline
 /nologo
 /Oi

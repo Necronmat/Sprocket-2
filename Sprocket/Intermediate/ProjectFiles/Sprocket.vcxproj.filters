@@ -65,6 +65,12 @@
     <ClInclude Include="..\..\Source\Sprocket\BaseShipMovementComponent.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\BTTask_FlyToPoint.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\BTTask_FlyToPoint.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Sprocket\BTTask_GetRandomPoint.cpp">
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
