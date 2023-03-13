@@ -1,8 +1,12 @@
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Sprocket.init.gen.cpp.obj.response.lc
 <<<<<<< HEAD
 "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket\Sprocket.init.gen.cpp"
 =======
 D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket\Sprocket.init.gen.cpp
 >>>>>>> Cait'sDevBranch
+=======
+"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket\Earth.gen.cpp"
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Earth.gen.cpp.obj.response
 /I .
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine
 /I Runtime
@@ -255,13 +259,18 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController
 /I Developer\AnimationDataController\Public
-<<<<<<< HEAD
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket"
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source"
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Sprocket.init.gen.cpp.obj.response.lc
 =======
 /I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket
 /I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source
 >>>>>>> Cait'sDevBranch
+=======
+/I ..\Plugins\Runtime\CableComponent\Intermediate\Build\Win64\UnrealEditor\Inc\CableComponent
+/I ..\Plugins\Runtime\CableComponent\Source
+/I ..\Plugins\Runtime\CableComponent\Source\CableComponent\Classes
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Earth.gen.cpp.obj.response
 /I ThirdParty\mimalloc\include
 /I ThirdParty\LibTiff\Source\Win64
 /I ThirdParty\LibTiff\Source
@@ -276,7 +285,11 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win
 /I ThirdParty\PhysX3\PhysX_3.4\Include\common
 /I ThirdParty\PhysX3\PhysX_3.4\Include\extensions
 /I ThirdParty\PhysX3\PhysX_3.4\Include\geometry
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Sprocket.init.gen.cpp.obj.response.lc
 /I "D:\Program Files\Microsoft\VisualStudio22\VC\Tools\MSVC\14.29.30133\INCLUDE"
+=======
+/I "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\INCLUDE"
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Earth.gen.cpp.obj.response
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
 <<<<<<< HEAD
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt"
@@ -287,6 +300,7 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win
 /FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
 /Yu"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
 /Fp"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Sprocket.init.gen.cpp.obj.response.lc
 /Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.init.gen.cpp.lc.obj"
 /sourceDependencies"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.init.gen.cpp.lc.json"
 =======
@@ -301,6 +315,10 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win
 /Fo"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.init.gen.cpp.lc.obj"
 /sourceDependencies"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.init.gen.cpp.lc.json"
 >>>>>>> Cait'sDevBranch
+=======
+/Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Earth.gen.cpp.obj"
+/sourceDependencies "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Earth.gen.cpp.json"
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Earth.gen.cpp.obj.response
 /Zc:inline
 /nologo
 /Oi

@@ -129,6 +129,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		TArray<AShipGun*> mGuns;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class UCrewComponent> mBaseCrew;
 	
 	//********************************************************************************************************
 	//********************************************************************************************************

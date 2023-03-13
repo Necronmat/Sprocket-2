@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShipMovementComponent.gen.cpp.obj.response.lc
 "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket\BaseShipMovementComponent.gen.cpp"
+=======
+"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\BaseShipController.cpp"
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShipController.cpp.obj.response
 /I .
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine
 /I Runtime
@@ -251,8 +255,16 @@
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController
 /I Developer\AnimationDataController\Public
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShipMovementComponent.gen.cpp.obj.response.lc
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket"
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Source"
+=======
+/I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket"
+/I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source"
+/I ..\Plugins\Runtime\CableComponent\Intermediate\Build\Win64\UnrealEditor\Inc\CableComponent
+/I ..\Plugins\Runtime\CableComponent\Source
+/I ..\Plugins\Runtime\CableComponent\Source\CableComponent\Classes
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShipController.cpp.obj.response
 /I ThirdParty\mimalloc\include
 /I ThirdParty\LibTiff\Source\Win64
 /I ThirdParty\LibTiff\Source
@@ -273,12 +285,21 @@
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt"
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShipMovementComponent.gen.cpp.obj.response.lc
 /FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
 /FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
 /Yu"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
 /Fp"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
 /Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipMovementComponent.gen.cpp.lc.obj"
 /sourceDependencies"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipMovementComponent.gen.cpp.lc.json"
+=======
+/FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
+/Yu"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
+/Fp"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+/Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipController.cpp.obj"
+/sourceDependencies "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShipController.cpp.json"
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShipController.cpp.obj.response
 /Zc:inline
 /nologo
 /Oi

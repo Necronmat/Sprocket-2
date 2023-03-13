@@ -2,6 +2,10 @@
 	"BuildId": "19505902",
 	"Modules": 
 	{
+<<<<<<< Updated upstream
 		"Sprocket": "UnrealEditor-Sprocket-8140.dll"
+=======
+		"Sprocket": "UnrealEditor-Sprocket.dll"
+>>>>>>> Stashed changes
 	}
 }

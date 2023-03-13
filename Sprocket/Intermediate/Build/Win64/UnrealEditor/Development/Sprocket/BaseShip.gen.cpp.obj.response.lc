@@ -1,4 +1,8 @@
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShip.gen.cpp.obj.response.lc
 "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket\BaseShip.gen.cpp"
+=======
+"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\Station.cpp"
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Station.cpp.obj.response
 /I .
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine
 /I Runtime
@@ -253,6 +257,12 @@
 /I Developer\AnimationDataController\Public
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket"
 /I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source"
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShip.gen.cpp.obj.response.lc
+=======
+/I ..\Plugins\Runtime\CableComponent\Intermediate\Build\Win64\UnrealEditor\Inc\CableComponent
+/I ..\Plugins\Runtime\CableComponent\Source
+/I ..\Plugins\Runtime\CableComponent\Source\CableComponent\Classes
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Station.cpp.obj.response
 /I ThirdParty\mimalloc\include
 /I ThirdParty\LibTiff\Source\Win64
 /I ThirdParty\LibTiff\Source
@@ -277,8 +287,13 @@
 /FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
 /Yu"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
 /Fp"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
+<<<<<<< Updated upstream:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/BaseShip.gen.cpp.obj.response.lc
 /Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShip.gen.cpp.lc.obj"
 /sourceDependencies"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\BaseShip.gen.cpp.lc.json"
+=======
+/Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Station.cpp.obj"
+/sourceDependencies "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Station.cpp.json"
+>>>>>>> Stashed changes:Sprocket/Intermediate/Build/Win64/UnrealEditor/Development/Sprocket/Station.cpp.obj.response
 /Zc:inline
 /nologo
 /Oi
