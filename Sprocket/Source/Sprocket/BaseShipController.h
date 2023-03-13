@@ -43,6 +43,8 @@ private:
 	void ReleaseGrapple();
 	void PauseGame();
 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	UFUNCTION(BlueprintPure)
 		float GetCurrentSpeed();
 	UFUNCTION(BlueprintPure)
@@ -68,12 +70,12 @@ private:
 	float mThrusterSpeed = 0.0f;
 
 	UPROPERTY(EditAnywhere)
-		float mMaxHull = 10.0f;
-	float mHull = 10.0f;
+		float mMaxHull = 100.0f;
+	float mHull = 100.0f;
 
 	UPROPERTY(EditAnywhere)
-		float mMaxShields = 10.0f;
-	float mShields = 10.0f;
+		float mMaxShields = 100.0f;
+	float mShields = 100.0f;
 
 	UPROPERTY(EditAnywhere)
 		float mMaxPower = 10.0f;

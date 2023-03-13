@@ -256,9 +256,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns = { "mGuns", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mGuns), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef_MetaData[] = {
-		{ "Comment", "//UFUNCTION(BlueprintPure)\n//\x09""float GetCurrentSpeed();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetMaxSpeed();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetCurrentHull();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetMaxHull();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetCurrentShield();\n//UFUNCTION(BlueprintPure)\n//\x09""float GetMaxShield();\n" },
 		{ "ModuleRelativePath", "BaseShip.h" },
-		{ "ToolTip", "UFUNCTION(BlueprintPure)\n       float GetCurrentSpeed();\nUFUNCTION(BlueprintPure)\n       float GetMaxSpeed();\nUFUNCTION(BlueprintPure)\n       float GetCurrentHull();\nUFUNCTION(BlueprintPure)\n       float GetMaxHull();\nUFUNCTION(BlueprintPure)\n       float GetCurrentShield();\nUFUNCTION(BlueprintPure)\n       float GetMaxShield();" },
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef = { "GameModeRef", nullptr, (EPropertyFlags)0x0040000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, GameModeRef), Z_Construct_UClass_AScenario1GameModeBase_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef_MetaData)) };
@@ -319,9 +317,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 3443910234U) },
+		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 8142863U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_2195926246(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_4277991614(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

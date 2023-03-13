@@ -60,6 +60,16 @@ int AStation::GetStationId()
 	return StationId;
 }
 
+void AStation::SetIsTarget(bool isTarget)
+{
+	bTarget = isTarget;
+}
+
+bool AStation::GetIsTarget()
+{
+	return bTarget;
+}
+
 void AStation::OnFarOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Far Overlap Begun"));

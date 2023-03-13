@@ -35,6 +35,18 @@
     <Filter Include="Source\Sprocket">
       <UniqueIdentifier>{0B116390-6A3A-3B80-BE6B-2289411527DC}</UniqueIdentifier>
     </Filter>
+    <ClCompile Include="..\..\Source\Sprocket\AIShipController.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\AIShipController.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\AiShipPawn.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\AiShipPawn.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Sprocket\BaseShip.cpp">
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
@@ -51,6 +63,12 @@
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Sprocket\BaseShipMovementComponent.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\BTTask_GetRandomPoint.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\BTTask_GetRandomPoint.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
     <ClCompile Include="..\..\Source\Sprocket\Earth.cpp">

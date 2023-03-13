@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\Sprocket.cpp"
-=======
 D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Sprocket.cpp
->>>>>>> Cait'sDevBranch
 /I .
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\Engine
 /I Runtime
@@ -255,13 +251,8 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Sprock
 /I Runtime\ClothingSystemRuntimeInterface\Public
 /I ..\Intermediate\Build\Win64\UnrealEditor\Inc\AnimationDataController
 /I Developer\AnimationDataController\Public
-<<<<<<< HEAD
-/I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket"
-/I "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source"
-=======
 /I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Inc\Sprocket
 /I D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source
->>>>>>> Cait'sDevBranch
 /I ..\Plugins\Runtime\CableComponent\Intermediate\Build\Win64\UnrealEditor\Inc\CableComponent
 /I ..\Plugins\Runtime\CableComponent\Source
 /I ..\Plugins\Runtime\CableComponent\Source\CableComponent\Classes
@@ -279,20 +270,6 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Sprock
 /I ThirdParty\PhysX3\PhysX_3.4\Include\common
 /I ThirdParty\PhysX3\PhysX_3.4\Include\extensions
 /I ThirdParty\PhysX3\PhysX_3.4\Include\geometry
-<<<<<<< HEAD
-/I "C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.33.31629\INCLUDE"
-/I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\ucrt"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\shared"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\um"
-/I "C:\Program Files (x86)\Windows Kits\10\include\10.0.19041.0\winrt"
-/FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/FI"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Definitions.Sprocket.h"
-/Yu"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h"
-/Fp"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
-/Fo"C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.cpp.obj"
-/sourceDependencies "C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.cpp.json"
-=======
 /I "D:\Program Files\Microsoft\VisualStudio22\VC\Tools\MSVC\14.29.30133\INCLUDE"
 /I "C:\Program Files (x86)\Windows Kits\NETFXSDK\4.8\include\um"
 /I "C:\Program Files (x86)\Windows Kits\10\include\10.0.18362.0\ucrt"
@@ -305,7 +282,6 @@ D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Sprock
 /Fp"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\SprocketEditor\Development\Engine\SharedPCH.Engine.ShadowErrors.h.pch"
 /Fo"D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.cpp.obj"
 /sourceDependencies D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Intermediate\Build\Win64\UnrealEditor\Development\Sprocket\Sprocket.cpp.json
->>>>>>> Cait'sDevBranch
 /Zc:inline
 /nologo
 /Oi

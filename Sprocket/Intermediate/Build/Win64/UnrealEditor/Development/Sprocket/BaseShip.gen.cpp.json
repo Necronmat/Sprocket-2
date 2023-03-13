@@ -1,27 +1,6 @@
 {
     "Version": "1.1",
     "Data": {
-<<<<<<< HEAD
-        "Source": "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\baseship.gen.cpp",
-        "ProvidedModule": "",
-        "PCH": "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\intermediate\\build\\win64\\sprocketeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
-        "Includes": [
-            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\development\\sprocket\\definitions.sprocket.h",
-            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\source\\sprocket\\baseship.h",
-            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\source\\sprocket\\scenario1gamemodebase.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\serverstatreplicator.generated.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gamemodebase.generated.h",
-            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\source\\sprocket\\station.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\components\\spherecomponent.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\components\\shapecomponent.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\shapecomponent.generated.h",
-            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\spherecomponent.generated.h",
-            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\station.generated.h",
-            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\scenario1gamemodebase.generated.h",
-            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\baseship.generated.h"
-=======
         "Source": "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\baseship.gen.cpp",
         "ProvidedModule": "",
         "PCH": "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\sprocketeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
@@ -41,7 +20,6 @@
             "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\station.generated.h",
             "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\scenario1gamemodebase.generated.h",
             "d:\\caitlynn\\documents\\uniwork\\masters\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\baseship.generated.h"
->>>>>>> Cait'sDevBranch
         ],
         "ImportedModules": [],
         "ImportedHeaderUnits": []

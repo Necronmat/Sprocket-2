@@ -93,10 +93,18 @@ void EmptyLinkFunctionForGeneratedCodeStation() {}
 		P_THIS->OnFarOverlapBegin(Z_Param_OverlappedComp,Z_Param_OtherActor,Z_Param_OtherComp,Z_Param_OtherBodyIndex,Z_Param_bFromSweep,Z_Param_Out_sweepResult);
 		P_NATIVE_END;
 	}
+	DEFINE_FUNCTION(AStation::execGetIsTarget)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(bool*)Z_Param__Result=P_THIS->GetIsTarget();
+		P_NATIVE_END;
+	}
 	void AStation::StaticRegisterNativesAStation()
 	{
 		UClass* Class = AStation::StaticClass();
 		static const FNameNativePtrPair Funcs[] = {
+			{ "GetIsTarget", &AStation::execGetIsTarget },
 			{ "OnApproachOverlapBegin", &AStation::execOnApproachOverlapBegin },
 			{ "OnApproachOverlapEnd", &AStation::execOnApproachOverlapEnd },
 			{ "OnFarOverlapBegin", &AStation::execOnFarOverlapBegin },
@@ -105,6 +113,43 @@ void EmptyLinkFunctionForGeneratedCodeStation() {}
 			{ "OnLandingOverlapEnd", &AStation::execOnLandingOverlapEnd },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
+	}
+	struct Z_Construct_UFunction_AStation_GetIsTarget_Statics
+	{
+		struct Station_eventGetIsTarget_Parms
+		{
+			bool ReturnValue;
+		};
+		static void NewProp_ReturnValue_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	void Z_Construct_UFunction_AStation_GetIsTarget_Statics::NewProp_ReturnValue_SetBit(void* Obj)
+	{
+		((Station_eventGetIsTarget_Parms*)Obj)->ReturnValue = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UFunction_AStation_GetIsTarget_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(Station_eventGetIsTarget_Parms), &Z_Construct_UFunction_AStation_GetIsTarget_Statics::NewProp_ReturnValue_SetBit, METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_AStation_GetIsTarget_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_AStation_GetIsTarget_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_AStation_GetIsTarget_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "Station.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_AStation_GetIsTarget_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_AStation, nullptr, "GetIsTarget", nullptr, nullptr, sizeof(Z_Construct_UFunction_AStation_GetIsTarget_Statics::Station_eventGetIsTarget_Parms), Z_Construct_UFunction_AStation_GetIsTarget_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_AStation_GetIsTarget_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14020401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_AStation_GetIsTarget_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_AStation_GetIsTarget_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_AStation_GetIsTarget()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_AStation_GetIsTarget_Statics::FuncParams);
+		}
+		return ReturnFunction;
 	}
 	struct Z_Construct_UFunction_AStation_OnApproachOverlapBegin_Statics
 	{
@@ -613,6 +658,11 @@ void EmptyLinkFunctionForGeneratedCodeStation() {}
 #endif
 		static const UECodeGen_Private::FUnsizedIntPropertyParams NewProp_StationId;
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_bTarget_MetaData[];
+#endif
+		static void NewProp_bTarget_SetBit(void* Obj);
+		static const UECodeGen_Private::FBoolPropertyParams NewProp_bTarget;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_GameModeRef_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_GameModeRef;
@@ -625,6 +675,7 @@ void EmptyLinkFunctionForGeneratedCodeStation() {}
 		(UObject* (*)())Z_Construct_UPackage__Script_Sprocket,
 	};
 	const FClassFunctionLinkInfo Z_Construct_UClass_AStation_Statics::FuncInfo[] = {
+		{ &Z_Construct_UFunction_AStation_GetIsTarget, "GetIsTarget" }, // 3290569795
 		{ &Z_Construct_UFunction_AStation_OnApproachOverlapBegin, "OnApproachOverlapBegin" }, // 3688803277
 		{ &Z_Construct_UFunction_AStation_OnApproachOverlapEnd, "OnApproachOverlapEnd" }, // 685818160
 		{ &Z_Construct_UFunction_AStation_OnFarOverlapBegin, "OnFarOverlapBegin" }, // 670828644
@@ -776,6 +827,17 @@ void EmptyLinkFunctionForGeneratedCodeStation() {}
 #endif
 	const UECodeGen_Private::FUnsizedIntPropertyParams Z_Construct_UClass_AStation_Statics::NewProp_StationId = { "StationId", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Int, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AStation, StationId), METADATA_PARAMS(Z_Construct_UClass_AStation_Statics::NewProp_StationId_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AStation_Statics::NewProp_StationId_MetaData)) };
 #if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AStation_Statics::NewProp_bTarget_MetaData[] = {
+		{ "Category", "Station" },
+		{ "ModuleRelativePath", "Station.h" },
+	};
+#endif
+	void Z_Construct_UClass_AStation_Statics::NewProp_bTarget_SetBit(void* Obj)
+	{
+		((AStation*)Obj)->bTarget = 1;
+	}
+	const UECodeGen_Private::FBoolPropertyParams Z_Construct_UClass_AStation_Statics::NewProp_bTarget = { "bTarget", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Bool | UECodeGen_Private::EPropertyGenFlags::NativeBool, RF_Public|RF_Transient|RF_MarkAsNative, 1, sizeof(bool), sizeof(AStation), &Z_Construct_UClass_AStation_Statics::NewProp_bTarget_SetBit, METADATA_PARAMS(Z_Construct_UClass_AStation_Statics::NewProp_bTarget_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AStation_Statics::NewProp_bTarget_MetaData)) };
+#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AStation_Statics::NewProp_GameModeRef_MetaData[] = {
 		{ "ModuleRelativePath", "Station.h" },
 	};
@@ -799,6 +861,7 @@ void EmptyLinkFunctionForGeneratedCodeStation() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AStation_Statics::NewProp_LandingSensorCollisionSphere,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AStation_Statics::NewProp_LandingSensorPartAttachment,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AStation_Statics::NewProp_StationId,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AStation_Statics::NewProp_bTarget,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AStation_Statics::NewProp_GameModeRef,
 	};
 	const FCppClassTypeInfoStatic Z_Construct_UClass_AStation_Statics::StaticCppClassTypeInfo = {
@@ -837,9 +900,9 @@ void EmptyLinkFunctionForGeneratedCodeStation() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Station_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_AStation, AStation::StaticClass, TEXT("AStation"), &Z_Registration_Info_UClass_AStation, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AStation), 356509190U) },
+		{ Z_Construct_UClass_AStation, AStation::StaticClass, TEXT("AStation"), &Z_Registration_Info_UClass_AStation, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AStation), 726187139U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Station_h_2044580211(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Station_h_358728805(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Station_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Station_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

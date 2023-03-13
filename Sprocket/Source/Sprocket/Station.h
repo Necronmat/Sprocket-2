@@ -27,6 +27,12 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	int GetStationId();
+
+	void SetIsTarget(bool isTarget);
+
+	UFUNCTION(BlueprintPure)
+	bool GetIsTarget();
+
 private:
 	UFUNCTION() void OnFarOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 	UFUNCTION() void OnApproachOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
@@ -72,6 +78,9 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		int StationId = -1;
+
+	UPROPERTY(EditAnywhere)
+		bool bTarget = false;
 
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;

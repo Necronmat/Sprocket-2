@@ -40,6 +40,10 @@ private:
 		TSubclassOf<UUserWidget>PauseMenuClass;
 	UPROPERTY()
 		UUserWidget* PauseMenuCount;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<UUserWidget>UIMenuClass;
+	UPROPERTY()
+		UUserWidget* UIMenuCount;
 
 	UPROPERTY() AStation* station1;
 	UPROPERTY() AStation* station2;

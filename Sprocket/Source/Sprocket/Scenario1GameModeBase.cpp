@@ -9,11 +9,14 @@ void AScenario1GameModeBase::TogglePaused()
 {
 	bPaused = !bPaused;
 	if (bPaused) {
+		if (UIMenuCount) UIMenuCount->RemoveFromViewport();
 		PauseMenuCount = CreateWidget(GetWorld(), PauseMenuClass);
 		if (PauseMenuCount) PauseMenuCount->AddToViewport();
 	}
 	else {
 		if (PauseMenuCount) PauseMenuCount->RemoveFromViewport();
+		UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
+		if (UIMenuCount) UIMenuCount->AddToViewport();
 	}
 }
 
@@ -51,7 +54,10 @@ void AScenario1GameModeBase::BeginPlay()
 			else if (Station->GetStationId() == 2) station2 = Station;
 			else if (Station->GetStationId() == 3) station3 = Station;
 		}
+		station2->SetIsTarget(true);
 	}
+	UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
+	if (UIMenuCount) UIMenuCount->AddToViewport();
 }
 
 void AScenario1GameModeBase::TriggerFarStationEvent(int stationId)
@@ -76,12 +82,17 @@ void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 		if (stationId == 2) {
 			message = TEXT("Drop off these goods at Station 3.");
 			ScenarioProgressTracker++;
+			station2->SetIsTarget(false);
+			station3->SetIsTarget(true);
+
 		}
 		break;
 	case 2:
 		if (stationId == 3) {
 			message = TEXT("Scenario Over.");
 			ScenarioProgressTracker++;
+			station3->SetIsTarget(false);
+			station1->SetIsTarget(true);
 		}
 		break;
 	default:

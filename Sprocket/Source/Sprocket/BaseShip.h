@@ -30,13 +30,6 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
-
-	void AddGun(AShipGun Gun);
-
-	void AddGun(float range, float damage, float force, float speed);
-
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//BLueprint componenets
@@ -137,34 +130,7 @@ public:
 	//********************************************************************************************************
 	//Player control funtions
 private:	
-	void Throttle(float AxisAmount);
-	void Pitch(float AxisAmount);
-	void Yaw(float AxisAmount);
-	void Roll(float AxisAmount);
-	void StrafeHorizontal(float AxisAmount);
-	void StrafeVertical(float AxisAmount);
-
-	void AddRandomGun();
-	void RemoveRandomGun();
-
-	void Fire();
-	void Grapple();
-	void ReleaseGrapple();
-	void PauseGame();
-
-	//UFUNCTION(BlueprintPure)
-	//	float GetCurrentSpeed();
-	//UFUNCTION(BlueprintPure)
-	//	float GetMaxSpeed();
-	//UFUNCTION(BlueprintPure)
-	//	float GetCurrentHull();
-	//UFUNCTION(BlueprintPure)
-	//	float GetMaxHull();
-	//UFUNCTION(BlueprintPure)
-	//	float GetCurrentShield();
-	//UFUNCTION(BlueprintPure)
-	//	float GetMaxShield();
-
+	
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;
 };

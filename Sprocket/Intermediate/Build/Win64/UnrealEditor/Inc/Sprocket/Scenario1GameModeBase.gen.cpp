@@ -308,6 +308,14 @@ void EmptyLinkFunctionForGeneratedCodeScenario1GameModeBase() {}
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_PauseMenuCount;
 #if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_UIMenuClass_MetaData[];
+#endif
+		static const UECodeGen_Private::FClassPropertyParams NewProp_UIMenuClass;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_UIMenuCount_MetaData[];
+#endif
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_UIMenuCount;
+#if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_station1_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_station1;
@@ -379,6 +387,20 @@ void EmptyLinkFunctionForGeneratedCodeScenario1GameModeBase() {}
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_PauseMenuCount = { "PauseMenuCount", nullptr, (EPropertyFlags)0x0040000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AScenario1GameModeBase, PauseMenuCount), Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_PauseMenuCount_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_PauseMenuCount_MetaData)) };
 #if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuClass_MetaData[] = {
+		{ "Category", "Scenario1GameModeBase" },
+		{ "ModuleRelativePath", "Scenario1GameModeBase.h" },
+	};
+#endif
+	const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuClass = { "UIMenuClass", nullptr, (EPropertyFlags)0x0044000000000001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AScenario1GameModeBase, UIMenuClass), Z_Construct_UClass_UUserWidget_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuClass_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuClass_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuCount_MetaData[] = {
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "Scenario1GameModeBase.h" },
+	};
+#endif
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuCount = { "UIMenuCount", nullptr, (EPropertyFlags)0x0040000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(AScenario1GameModeBase, UIMenuCount), Z_Construct_UClass_UUserWidget_NoRegister, METADATA_PARAMS(Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuCount_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuCount_MetaData)) };
+#if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_station1_MetaData[] = {
 		{ "ModuleRelativePath", "Scenario1GameModeBase.h" },
 	};
@@ -408,6 +430,8 @@ void EmptyLinkFunctionForGeneratedCodeScenario1GameModeBase() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_ScenarioProgressTracker,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_PauseMenuClass,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_PauseMenuCount,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuClass,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_UIMenuCount,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_station1,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_station2,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_AScenario1GameModeBase_Statics::NewProp_station3,
@@ -449,9 +473,9 @@ void EmptyLinkFunctionForGeneratedCodeScenario1GameModeBase() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Scenario1GameModeBase_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_AScenario1GameModeBase, AScenario1GameModeBase::StaticClass, TEXT("AScenario1GameModeBase"), &Z_Registration_Info_UClass_AScenario1GameModeBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AScenario1GameModeBase), 1620346808U) },
+		{ Z_Construct_UClass_AScenario1GameModeBase, AScenario1GameModeBase::StaticClass, TEXT("AScenario1GameModeBase"), &Z_Registration_Info_UClass_AScenario1GameModeBase, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(AScenario1GameModeBase), 4017606530U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Scenario1GameModeBase_h_324428726(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Scenario1GameModeBase_h_1236299571(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Scenario1GameModeBase_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_Scenario1GameModeBase_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

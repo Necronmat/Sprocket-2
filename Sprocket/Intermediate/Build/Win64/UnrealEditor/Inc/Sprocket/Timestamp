@@ -1,29 +1,16 @@
-<<<<<<< HEAD
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\BaseShipController.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\ShipGun.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\MainMenuGameMode.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\MainMenuControllerController.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameModeBase.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\ShipProjectile.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\BaseShipMovementComponent.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\Mine.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\Station.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\Scenario1GameModeBase.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\Earth.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\BaseShip.h
-C:\Users\User\Desktop\Uni work\UClan-Masters\Team Project\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameInstance.h
-=======
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\AIShipController.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\BTTask_GetRandomPoint.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Earth.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\MainMenuControllerController.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\MainMenuGameMode.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\BaseShipMovementComponent.h
 D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\BaseShip.h
 D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\BaseShipController.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\BaseShipMovementComponent.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\MainMenuControllerController.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Earth.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\ShipProjectile.h
 D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\ShipGun.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameModeBase.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameInstance.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Station.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Mine.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\ShipProjectile.h
 D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Scenario1GameModeBase.h
-D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\MainMenuGameMode.h
->>>>>>> Cait'sDevBranch
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Station.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameInstance.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\SprocketGameModeBase.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\Mine.h
+D:\Caitlynn\Documents\UniWork\Masters\Sprocket-2\Sprocket\Source\Sprocket\AiShipPawn.h
