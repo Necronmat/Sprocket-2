@@ -16,4 +16,7 @@ class SPROCKET_API UBTTask_GetRandomPoint : public UBTTask_BlackboardBase
 	
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
+	UPROPERTY(EditAnywhere)
+		float randomRadius = 10000.0f;
 };

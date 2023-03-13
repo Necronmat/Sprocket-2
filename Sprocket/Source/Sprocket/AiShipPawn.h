@@ -26,11 +26,12 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnywhere)
+	UStaticMeshComponent* ShipMesh;
 private:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	
 	UPROPERTY(EditAnywhere)
-	UStaticMeshComponent* ShipMesh;
 	float BaseHull = 100.0f;
 	float Hull = BaseHull;
 	float BaseShields = 50.0f;

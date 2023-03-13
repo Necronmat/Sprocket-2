@@ -22,7 +22,7 @@ void ABaseShipController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (playerBaseShip) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mThrusterSpeed * DeltaTime);
-		UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
+		//UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
 
 		if (mGrappling)
 		{

@@ -65,6 +65,18 @@
     <ClInclude Include="..\..\Source\Sprocket\BaseShipMovementComponent.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\BTService_LineOfSightToPlayer.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\BTService_LineOfSightToPlayer.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\BTService_UpdatePlayerPosition.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\BTService_UpdatePlayerPosition.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Sprocket\BTTask_FlyToPoint.cpp">
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
