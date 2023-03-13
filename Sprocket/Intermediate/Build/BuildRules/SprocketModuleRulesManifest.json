@@ -1,14 +1,8 @@
 {
 	"SourceFiles": [
-<<<<<<< HEAD
-		"C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket-2\\Sprocket\\Source\\Sprocket\\Sprocket.Build.cs",
-		"C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
-		"C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs"
-=======
-		"D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\Sprocket\\Sprocket.Build.cs",
-		"D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
-		"D:\\Caitlynn\\Documents\\UniWork\\Masters\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs"
->>>>>>> Cait'sDevBranch
+		"C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket-2\\Sprocket-2\\Sprocket\\Source\\Sprocket\\Sprocket.Build.cs",
+		"C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket-2\\Sprocket-2\\Sprocket\\Source\\Sprocket.Target.cs",
+		"C:\\Users\\User\\Desktop\\Uni work\\UClan-Masters\\Team Project\\Sprocket-2\\Sprocket-2\\Sprocket\\Source\\SprocketEditor.Target.cs"
 	],
 	"EngineVersion": "5.0.3"
 }

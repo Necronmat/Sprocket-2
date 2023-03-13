@@ -6,6 +6,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "CableComponent.h"
 #include "ShipGun.h"
+#include "CrewComponent.h"
 
 void ABaseShipController::BeginPlay()
 {
@@ -46,6 +47,9 @@ void ABaseShipController::SetupInputComponent()
 	
 	InputComponent->BindAction(TEXT("RandomGun"), IE_Pressed, this, &ABaseShipController::AddRandomGun);
 	InputComponent->BindAction(TEXT("DeleteGun"), IE_Pressed, this, &ABaseShipController::RemoveRandomGun);
+
+	InputComponent->BindAction(TEXT("RandomCrew"), IE_Pressed, this, &ABaseShipController::AddRandomCrew);
+	InputComponent->BindAction(TEXT("DeleteCrew"), IE_Pressed, this, &ABaseShipController::RemoveRandomCrew);
 	
 	InputComponent->BindAction(TEXT("PrimaryFire"), IE_Pressed, this, &ABaseShipController::Fire);
 	InputComponent->BindAction(TEXT("Grapple"), IE_Pressed, this, &ABaseShipController::Grapple);
@@ -137,6 +141,165 @@ void ABaseShipController::RemoveRandomGun()
 	}
 }
 
+void ABaseShipController::AddRandomCrew()
+{
+	if (playerBaseShip)
+	{
+		UCrewComponent* temp = NewObject<UCrewComponent>(UCrewComponent::StaticClass());
+		AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
+		AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
+
+		//Do nothing if the crew made is too expensive to add
+		if (temp->GetCost() + mPowerUsage > mMaxPower)
+		{
+			return;
+		}
+
+		if (temp->GetCrew() == WeaponsSpecialist)
+		{
+			int num = std::round(temp->GetPositive());
+
+			for (int i = 0; i < num; ++i)
+			{
+				AddRandomGun();
+			}
+
+			mMaxShields /= temp->GetNegative();
+
+			if (mShields > mMaxShields)
+			{
+				mShields = mMaxShields;
+			}
+		}
+		else if (temp->GetCrew() == Fisherman)
+		{
+			//Check if a fisherman is already on board
+			for (int i = 0; i < mCrew.Num(); ++i)
+			{
+				if (mCrew[i]->GetCrew() == Fisherman)
+				{
+					return;
+				}
+			}
+
+			mGrapplingEnabled = true;
+
+			//Negative is increased event chance
+		}
+		else if (temp->GetCrew() == RocketEngineer)
+		{
+			mMaxSpeed *= temp->GetPositive();
+			mMaxHull /= temp->GetNegative();
+
+			if (mHull > mMaxHull)
+			{
+				mHull = mMaxHull;
+			}
+
+			//Decrease gun damage
+		}
+		else if (temp->GetCrew() == Mechanic)
+		{
+			mMaxHull *= temp->GetPositive();
+			mMaxSpeed /= temp->GetNegative();
+
+			if (mThrusterSpeed > mMaxSpeed)
+			{
+				mThrusterSpeed = mMaxSpeed;
+			}
+		}
+		else if (temp->GetCrew() == Electrician)
+		{
+			mMaxShields *= temp->GetPositive();
+			mMaxSpeed /= temp->GetNegative();
+
+			if (mThrusterSpeed > mMaxSpeed)
+			{
+				mThrusterSpeed = mMaxSpeed;
+			}
+		}
+		else if (temp->GetCrew() == FirstMate)
+		{
+			//Decrease power
+			//Comments about their luxurius life
+		}
+
+		mPowerUsage += temp->GetCost();
+
+		UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(temp->GetCrew()));
+
+		mCrew.Add(temp);
+		playerBaseShip->AddInstanceComponent(temp);
+	}
+}
+
+void ABaseShipController::RemoveRandomCrew()
+{
+	if (mCrew.Num() == 0)
+	{
+		return;
+	}
+	int num = FMath::FRandRange(0, mCrew.Num() - 1);
+
+	if (mCrew[num]->GetCrew() == WeaponsSpecialist)
+	{
+		int gunNum = std::round(mCrew[num]->GetPositive());
+
+		for (int i = 0; i < num; ++i)
+		{
+			RemoveRandomGun();
+		}
+
+		mMaxShields *= mCrew[num]->GetNegative();
+	}
+	else if (mCrew[num]->GetCrew() == Fisherman)
+	{
+		mGrapplingEnabled = false;
+	}
+	else if (mCrew[num]->GetCrew() == RocketEngineer)
+	{
+		mMaxSpeed /= mCrew[num]->GetPositive();
+		mMaxHull *= mCrew[num]->GetNegative();
+
+		if (mThrusterSpeed > mMaxSpeed)
+		{
+			mThrusterSpeed = mMaxSpeed;
+		}
+	}
+	else if (mCrew[num]->GetCrew() == Mechanic)
+	{
+		mMaxHull /= mCrew[num]->GetPositive();
+		mMaxSpeed *= mCrew[num]->GetNegative();
+
+		if (mHull > mMaxHull)
+		{
+			mHull = mMaxHull;
+		}
+	}
+	else if (mCrew[num]->GetCrew() == Electrician)
+	{
+		mMaxShields /= mCrew[num]->GetPositive();
+		mMaxSpeed *= mCrew[num]->GetNegative();
+
+
+		if (mShields > mMaxShields)
+		{
+			mShields = mMaxShields;
+		}
+	}
+	else if (mCrew[num]->GetCrew() == FirstMate)
+	{
+
+	}
+
+	mPowerUsage -= mCrew[num]->GetCost();
+
+	UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(mCrew[num]->GetCrew()));
+
+	playerBaseShip->RemoveInstanceComponent(mCrew[num]);
+	mCrew.RemoveAt(num);
+}
+
 void ABaseShipController::Fire()
 {
 	if (playerBaseShip) {
@@ -150,41 +313,44 @@ void ABaseShipController::Fire()
 void ABaseShipController::Grapple()
 {
 	if (playerBaseShip) {
-		//AController* ControllerRef = GetController();
-		FVector CameraLocation;
-		FRotator CameraRotation;
-
-		GetPlayerViewPoint(CameraLocation, CameraRotation);
-
-		//Gets the end of the raycast
-		FVector End = CameraLocation + CameraRotation.Vector() * mGrappleLength;
-
-		/*FVector ShipLocation = GetActorLocation();
-		FRotator ShipRotation = GetActorRotation();
-
-		FVector End = ShipLocation + ShipRotation.Vector() * mGrappleLength;*/
-
-		FCollisionQueryParams CollisionParams;
-		CollisionParams.AddIgnoredActor(this);
-		CollisionParams.AddIgnoredComponent(playerBaseShip->mCable);
-
-		//The hit result of the raycast, uses the custom enemy channel
-		FHitResult Hit;
-		bool bDidHit = GetWorld()->LineTraceSingleByChannel(Hit, CameraLocation, End, ECC_Visibility, CollisionParams);
-		DrawDebugLine(GetWorld(), CameraLocation, End, FColor::Red, false, 1, 0, 5);
-
-		if (Cast<AActor>(Hit.GetActor()))
+		if (mGrapplingEnabled)
 		{
-			mGrappling = true;
-			mGrapplePoint = Hit.GetActor();
-			playerBaseShip->mCable->SetVisibility(true);
-			playerBaseShip->mCable->EndLocation = mGrapplePoint->GetActorLocation();
-			playerBaseShip->mHook->SetWorldLocation(mGrapplePoint->GetActorLocation());
-		}
+			//AController* ControllerRef = GetController();
+			FVector CameraLocation;
+			FRotator CameraRotation;
 
-		if (Cast<ABaseShip>(Hit.GetActor()))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Hit ship"), mThrusterSpeed);
+			GetPlayerViewPoint(CameraLocation, CameraRotation);
+
+			//Gets the end of the raycast
+			FVector End = CameraLocation + CameraRotation.Vector() * mGrappleLength;
+
+			/*FVector ShipLocation = GetActorLocation();
+			FRotator ShipRotation = GetActorRotation();
+
+			FVector End = ShipLocation + ShipRotation.Vector() * mGrappleLength;*/
+
+			FCollisionQueryParams CollisionParams;
+			CollisionParams.AddIgnoredActor(this);
+			CollisionParams.AddIgnoredComponent(playerBaseShip->mCable);
+
+			//The hit result of the raycast, uses the custom enemy channel
+			FHitResult Hit;
+			bool bDidHit = GetWorld()->LineTraceSingleByChannel(Hit, CameraLocation, End, ECC_Visibility, CollisionParams);
+			DrawDebugLine(GetWorld(), CameraLocation, End, FColor::Red, false, 1, 0, 5);
+
+			if (Cast<AActor>(Hit.GetActor()))
+			{
+				mGrappling = true;
+				mGrapplePoint = Hit.GetActor();
+				playerBaseShip->mCable->SetVisibility(true);
+				playerBaseShip->mCable->EndLocation = mGrapplePoint->GetActorLocation();
+				playerBaseShip->mHook->SetWorldLocation(mGrapplePoint->GetActorLocation());
+			}
+
+			if (Cast<ABaseShip>(Hit.GetActor()))
+			{
+				UE_LOG(LogTemp, Warning, TEXT("Hit ship"), mThrusterSpeed);
+			}
 		}
 	}
 }

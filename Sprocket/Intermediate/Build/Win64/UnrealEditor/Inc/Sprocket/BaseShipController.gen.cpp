@@ -14,6 +14,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 	ENGINE_API UClass* Z_Construct_UClass_APlayerController();
 	UPackage* Z_Construct_UPackage__Script_Sprocket();
 	SPROCKET_API UClass* Z_Construct_UClass_ABaseShip_NoRegister();
+	SPROCKET_API UClass* Z_Construct_UClass_UCrewComponent_NoRegister();
 	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FTimerHandle();
 	SPROCKET_API UClass* Z_Construct_UClass_AScenario1GameModeBase_NoRegister();
 // End Cross Module References
@@ -280,6 +281,11 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_playerBaseShip_MetaData[];
 #endif
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_playerBaseShip;
+		static const UECodeGen_Private::FObjectPropertyParams NewProp_mCrew_Inner;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_mCrew_MetaData[];
+#endif
+		static const UECodeGen_Private::FArrayPropertyParams NewProp_mCrew;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mAcceleration_MetaData[];
 #endif
@@ -359,12 +365,21 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 	};
 #endif
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShipController_Statics::NewProp_playerBaseShip = { "playerBaseShip", nullptr, (EPropertyFlags)0x0010000000000001, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShipController, playerBaseShip), Z_Construct_UClass_ABaseShip_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShipController_Statics::NewProp_playerBaseShip_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShipController_Statics::NewProp_playerBaseShip_MetaData)) };
+	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShipController_Statics::NewProp_mCrew_Inner = { "mCrew", nullptr, (EPropertyFlags)0x0000000000080008, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_UCrewComponent_NoRegister, METADATA_PARAMS(nullptr, 0) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShipController_Statics::NewProp_mCrew_MetaData[] = {
+		{ "Category", "BaseShipController" },
+		{ "Comment", "//********************************************************************************************************\n//********************************************************************************************************\n//Ship Stats\n" },
+		{ "EditInline", "true" },
+		{ "ModuleRelativePath", "BaseShipController.h" },
+		{ "ToolTip", "Ship Stats" },
+	};
+#endif
+	const UECodeGen_Private::FArrayPropertyParams Z_Construct_UClass_ABaseShipController_Statics::NewProp_mCrew = { "mCrew", nullptr, (EPropertyFlags)0x0040008000000009, UECodeGen_Private::EPropertyGenFlags::Array, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShipController, mCrew), EArrayPropertyFlags::None, METADATA_PARAMS(Z_Construct_UClass_ABaseShipController_Statics::NewProp_mCrew_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShipController_Statics::NewProp_mCrew_MetaData)) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShipController_Statics::NewProp_mAcceleration_MetaData[] = {
 		{ "Category", "BaseShipController" },
-		{ "Comment", "//********************************************************************************************************\n//********************************************************************************************************\n//Ship Stats\n" },
 		{ "ModuleRelativePath", "BaseShipController.h" },
-		{ "ToolTip", "Ship Stats" },
 	};
 #endif
 	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UClass_ABaseShipController_Statics::NewProp_mAcceleration = { "mAcceleration", nullptr, (EPropertyFlags)0x0040000000000001, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShipController, mAcceleration), METADATA_PARAMS(Z_Construct_UClass_ABaseShipController_Statics::NewProp_mAcceleration_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShipController_Statics::NewProp_mAcceleration_MetaData)) };
@@ -449,6 +464,8 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShipController_Statics::NewProp_GameModeRef = { "GameModeRef", nullptr, (EPropertyFlags)0x0040000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShipController, GameModeRef), Z_Construct_UClass_AScenario1GameModeBase_NoRegister, METADATA_PARAMS(Z_Construct_UClass_ABaseShipController_Statics::NewProp_GameModeRef_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShipController_Statics::NewProp_GameModeRef_MetaData)) };
 	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UClass_ABaseShipController_Statics::PropPointers[] = {
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShipController_Statics::NewProp_playerBaseShip,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShipController_Statics::NewProp_mCrew_Inner,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShipController_Statics::NewProp_mCrew,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShipController_Statics::NewProp_mAcceleration,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShipController_Statics::NewProp_mMaxSpeed,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShipController_Statics::NewProp_mMaxHull,
@@ -498,9 +515,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABaseShipController, ABaseShipController::StaticClass, TEXT("ABaseShipController"), &Z_Registration_Info_UClass_ABaseShipController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShipController), 3918315050U) },
+		{ Z_Construct_UClass_ABaseShipController, ABaseShipController::StaticClass, TEXT("ABaseShipController"), &Z_Registration_Info_UClass_ABaseShipController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShipController), 460689204U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_1227346676(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_1946691132(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

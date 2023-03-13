@@ -130,6 +130,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class AShipGun> mBaseGun;
 
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class UCrewComponent> mBaseCrew;
+
 	UPROPERTY(EditAnywhere)
 		TArray<AShipGun*> mGuns;
 	

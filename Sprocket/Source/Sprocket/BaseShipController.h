@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "BaseShipController.generated.h"
 
+class UCrewComponent;
 /**
  * 
  */
@@ -38,6 +39,9 @@ private:
 	void AddRandomGun();
 	void RemoveRandomGun();
 
+	void AddRandomCrew();
+	void RemoveRandomCrew();
+
 	void Fire();
 	void Grapple();
 	void ReleaseGrapple();
@@ -59,6 +63,9 @@ private:
 //********************************************************************************************************
 //********************************************************************************************************
 //Ship Stats
+
+	UPROPERTY(EditAnywhere)
+		TArray<UCrewComponent*> mCrew;
 
 	UPROPERTY(EditAnywhere)
 		float mAcceleration = 200.0f;
@@ -108,6 +115,7 @@ private:
 	//Grappling Hook
 
 	bool mGrappling = false;
+	bool mGrapplingEnabled = false;
 	AActor* mGrapplePoint;
 
 	UPROPERTY()

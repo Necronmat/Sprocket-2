@@ -19,6 +19,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 	CABLECOMPONENT_API UClass* Z_Construct_UClass_UCableComponent_NoRegister();
 	COREUOBJECT_API UClass* Z_Construct_UClass_UClass();
 	SPROCKET_API UClass* Z_Construct_UClass_AShipGun_NoRegister();
+	SPROCKET_API UClass* Z_Construct_UClass_UCrewComponent_NoRegister();
 	SPROCKET_API UClass* Z_Construct_UClass_AScenario1GameModeBase_NoRegister();
 // End Cross Module References
 	void ABaseShip::StaticRegisterNativesABaseShip()
@@ -99,6 +100,10 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mBaseGun_MetaData[];
 #endif
 		static const UECodeGen_Private::FClassPropertyParams NewProp_mBaseGun;
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam NewProp_mBaseCrew_MetaData[];
+#endif
+		static const UECodeGen_Private::FClassPropertyParams NewProp_mBaseCrew;
 		static const UECodeGen_Private::FObjectPropertyParams NewProp_mGuns_Inner;
 #if WITH_METADATA
 		static const UECodeGen_Private::FMetaDataPairParam NewProp_mGuns_MetaData[];
@@ -246,6 +251,13 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 	};
 #endif
 	const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun = { "mBaseGun", nullptr, (EPropertyFlags)0x0014000000010001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mBaseGun), Z_Construct_UClass_AShipGun_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun_MetaData)) };
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseCrew_MetaData[] = {
+		{ "Category", "BaseShip" },
+		{ "ModuleRelativePath", "BaseShip.h" },
+	};
+#endif
+	const UECodeGen_Private::FClassPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseCrew = { "mBaseCrew", nullptr, (EPropertyFlags)0x0014000000010001, UECodeGen_Private::EPropertyGenFlags::Class, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(ABaseShip, mBaseCrew), Z_Construct_UClass_UCrewComponent_NoRegister, Z_Construct_UClass_UClass, METADATA_PARAMS(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseCrew_MetaData, UE_ARRAY_COUNT(Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseCrew_MetaData)) };
 	const UECodeGen_Private::FObjectPropertyParams Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_Inner = { "mGuns", nullptr, (EPropertyFlags)0x0000000000000000, UECodeGen_Private::EPropertyGenFlags::Object, RF_Public|RF_Transient|RF_MarkAsNative, 1, 0, Z_Construct_UClass_AShipGun_NoRegister, METADATA_PARAMS(nullptr, 0) };
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_MetaData[] = {
@@ -279,6 +291,7 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mGrappleForce,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mGrappleLength,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseGun,
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mBaseCrew,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns_Inner,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_mGuns,
 		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UClass_ABaseShip_Statics::NewProp_GameModeRef,
@@ -319,9 +332,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShip() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 3443910234U) },
+		{ Z_Construct_UClass_ABaseShip, ABaseShip::StaticClass, TEXT("ABaseShip"), &Z_Registration_Info_UClass_ABaseShip, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShip), 3684476726U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_2195926246(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_43675567(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShip_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);
