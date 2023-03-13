@@ -174,6 +174,8 @@ void ABaseShipController::AddRandomCrew()
 			}
 
 			mPowerUsage += temp->GetCost() * temp->GetNegative();
+
+			//Decrease shields
 		}
 		else if (temp->GetCrew() == Fisherman)
 		{
@@ -187,11 +189,15 @@ void ABaseShipController::AddRandomCrew()
 			}
 
 			mGrapplingEnabled = true;
+
+			//Negative is increased event chance
 		}
 		else if (temp->GetCrew() == RocketEngineer)
 		{
 			mMaxSpeed *= temp->GetPositive();
 			mMaxHull /= temp->GetNegative();
+
+			//Decrease gun damage
 		}
 		else if (temp->GetCrew() == Mechanic)
 		{
@@ -207,10 +213,13 @@ void ABaseShipController::AddRandomCrew()
 
 			mMaxShields *= temp->GetPositive();
 			mPowerUsage += temp->GetCost() * temp->GetNegative();
+
+			//Decrease speed
 		}
 		else if (temp->GetCrew() == FirstMate)
 		{
-
+			//Decrease power
+			//Comments about their luxurius life
 		}
 
 		mPowerUsage += temp->GetCost();
