@@ -13,6 +13,8 @@ void ABaseShipController::BeginPlay()
 	Super::BeginPlay();
 	PrimaryActorTick.bCanEverTick = true;
 	playerBaseShip = Cast<ABaseShip>(GetPawn());
+	mHull = mMaxHull;
+	mShields = mMaxShields;
 }
 
 
@@ -368,6 +370,24 @@ void ABaseShipController::PauseGame()
 	if(GameModeRef) GameModeRef->TogglePaused();
 }
 
+float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
+
+	mShields -= DamageAmount;
+	if (mShields < 0.0f) {
+		float remainingDamage = 0.0 - mShields;
+		mHull -= remainingDamage;
+		if (mHull < 0.0f) {
+			FString message = TEXT("Player has Died, Please Restart");
+
+			GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
+			playerBaseShip->Destroy();
+		}
+	}
+	return DamageAmount;
+}
+
 float ABaseShipController::GetCurrentSpeed()
 {
 	return mThrusterSpeed;
@@ -375,7 +395,7 @@ float ABaseShipController::GetCurrentSpeed()
 
 float ABaseShipController::GetMaxSpeed()
 {
-	return mMaxShields;
+	return mMaxSpeed;
 }
 
 float ABaseShipController::GetCurrentHull()

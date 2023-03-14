@@ -24,7 +24,8 @@ struct FHitResult;
 	DECLARE_FUNCTION(execOnFarOverlapEnd); \
 	DECLARE_FUNCTION(execOnLandingOverlapBegin); \
 	DECLARE_FUNCTION(execOnApproachOverlapBegin); \
-	DECLARE_FUNCTION(execOnFarOverlapBegin);
+	DECLARE_FUNCTION(execOnFarOverlapBegin); \
+	DECLARE_FUNCTION(execGetIsTarget);
 
 
 #define FID_Sprocket_Source_Sprocket_Station_h_15_RPC_WRAPPERS_NO_PURE_DECLS \
@@ -34,7 +35,8 @@ struct FHitResult;
 	DECLARE_FUNCTION(execOnFarOverlapEnd); \
 	DECLARE_FUNCTION(execOnLandingOverlapBegin); \
 	DECLARE_FUNCTION(execOnApproachOverlapBegin); \
-	DECLARE_FUNCTION(execOnFarOverlapBegin);
+	DECLARE_FUNCTION(execOnFarOverlapBegin); \
+	DECLARE_FUNCTION(execGetIsTarget);
 
 
 #define FID_Sprocket_Source_Sprocket_Station_h_15_INCLASS_NO_PURE_DECLS \

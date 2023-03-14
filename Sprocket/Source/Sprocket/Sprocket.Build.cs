@@ -8,7 +8,7 @@ public class Sprocket : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "CableComponent", });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "UMG", "GameplayTasks", "NavigationSystem", "CableComponent" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
