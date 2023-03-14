@@ -89,6 +89,12 @@
     <ClInclude Include="..\..\Source\Sprocket\BTTask_GetRandomPoint.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
+    <ClCompile Include="..\..\Source\Sprocket\CrewComponent.cpp">
+      <Filter>Source\Sprocket</Filter>
+    </ClCompile>
+    <ClInclude Include="..\..\Source\Sprocket\CrewComponent.h">
+      <Filter>Source\Sprocket</Filter>
+    </ClInclude>
     <ClCompile Include="..\..\Source\Sprocket\Earth.cpp">
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
@@ -156,16 +162,6 @@
       <Filter>Source\Sprocket</Filter>
     </ClCompile>
     <ClInclude Include="..\..\Source\Sprocket\Station.h">
-      <Filter>Source\Sprocket</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\Source\Sprocket\CrewComponent.cpp">
-      <Filter>Source\Sprocket</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\Source\Sprocket\CrewComponent.h">
       <Filter>Source\Sprocket</Filter>
     </ClInclude>
   </ItemGroup>

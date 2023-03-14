@@ -16,6 +16,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 #define FID_Sprocket_Source_Sprocket_BaseShipController_h_17_SPARSE_DATA
 #define FID_Sprocket_Source_Sprocket_BaseShipController_h_17_RPC_WRAPPERS \
  \
+	DECLARE_FUNCTION(execGetPowerUsage); \
+	DECLARE_FUNCTION(execGetMaxPower); \
 	DECLARE_FUNCTION(execGetMaxShield); \
 	DECLARE_FUNCTION(execGetCurrentShield); \
 	DECLARE_FUNCTION(execGetMaxHull); \
@@ -26,6 +28,8 @@ PRAGMA_DISABLE_DEPRECATION_WARNINGS
 
 #define FID_Sprocket_Source_Sprocket_BaseShipController_h_17_RPC_WRAPPERS_NO_PURE_DECLS \
  \
+	DECLARE_FUNCTION(execGetPowerUsage); \
+	DECLARE_FUNCTION(execGetMaxPower); \
 	DECLARE_FUNCTION(execGetMaxShield); \
 	DECLARE_FUNCTION(execGetCurrentShield); \
 	DECLARE_FUNCTION(execGetMaxHull); \

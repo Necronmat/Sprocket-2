@@ -34,7 +34,7 @@ EBlackboardNotificationResult UBTTask_FlyToPoint::OnBlackboardValueChange(const 
 	const EBTTaskStatus::Type TaskStatus = BehaviorComp->GetTaskStatus(this);
 	if (TaskStatus != EBTTaskStatus::Active)
 	{
-		MyMemory->BBObserverDelegateHandle.Reset(); //-V595
+		MyMemory->BBObserverDelegateHandle.Reset(); 
 
 		return EBlackboardNotificationResult::RemoveObserver;
 	}

@@ -61,7 +61,10 @@ private:
 		float GetCurrentShield();
 	UFUNCTION(BlueprintPure)
 		float GetMaxShield();
-
+	UFUNCTION(BlueprintPure)
+		float GetMaxPower();
+	UFUNCTION(BlueprintPure)
+		float GetPowerUsage();
 //********************************************************************************************************
 //********************************************************************************************************
 //Ship Stats
