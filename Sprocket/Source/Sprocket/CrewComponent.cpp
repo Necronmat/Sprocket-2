@@ -14,8 +14,8 @@ UCrewComponent::UCrewComponent()
 
 	mCrew = ECrewType(FMath::FRandRange(0, 5));
 
-	mPositive = FMath::FRandRange(1.0f, 2.0f);
-	mNegative = FMath::FRandRange(1.0f, 2.0f);
+	mPositive = FMath::FRandRange(1.0f, 1.12f);
+	mNegative = FMath::FRandRange(1.0f, 1.05f);
 
 	//Increase cost if the positive is much bigger than the negative
 	if (mPositive - mNegative > mPositive * 0.7f)

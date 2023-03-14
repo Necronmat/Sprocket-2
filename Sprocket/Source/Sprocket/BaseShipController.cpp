@@ -47,6 +47,7 @@ void ABaseShipController::SetupInputComponent()
 	InputComponent->BindAxis(TEXT("StrafeHorizontal"), this, &ABaseShipController::StrafeHorizontal);
 	InputComponent->BindAxis(TEXT("StrafeVertical"), this, &ABaseShipController::StrafeVertical);
 	
+	InputComponent->BindAction(TEXT("Nitro"), IE_DoubleClick, this, &ABaseShipController::Nitro);
 	InputComponent->BindAction(TEXT("RandomGun"), IE_Pressed, this, &ABaseShipController::AddRandomGun);
 	InputComponent->BindAction(TEXT("DeleteGun"), IE_Pressed, this, &ABaseShipController::RemoveRandomGun);
 
@@ -63,10 +64,10 @@ void ABaseShipController::SetupInputComponent()
 void ABaseShipController::Throttle(float AxisAmount)
 {
 	if (playerBaseShip) {
-		if (mThrusterSpeed <= 0 && AxisAmount > 0) {
-			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
-			mThrusterSpeed = mMaxSpeed / 3;
-		}
+		//if (mThrusterSpeed <= 0 && AxisAmount > 0) {
+		//	playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
+		//	mThrusterSpeed = mMaxSpeed / 3;
+		//}
 
 		mThrusterSpeed += AxisAmount * mAcceleration;
 
@@ -117,6 +118,14 @@ void ABaseShipController::StrafeVertical(float AxisAmount)
 	}
 }
 
+void ABaseShipController::Nitro()
+{
+	if (mThrusterSpeed <= mMaxSpeed / 3) {
+		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
+		mThrusterSpeed = mMaxSpeed / 3;
+	}
+}
+
 void ABaseShipController::AddRandomGun()
 {
 	if (playerBaseShip) {
@@ -126,7 +135,7 @@ void ABaseShipController::AddRandomGun()
 
 		AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(playerBaseShip->mBaseGun, playerBaseShip->GetActorLocation() + FTransform(playerBaseShip->GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), playerBaseShip->GetActorRotation(), spawnParams);
 		tempGun->AttachToShip(playerBaseShip->mShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), playerBaseShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
-		tempGun->SetGunStats(FMath::RandRange(0.0f, 100.0f), 1.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(0.0f, 6000.0f));
+		tempGun->SetGunStats(FMath::RandRange(0.0f, 100.0f), 100.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(0.0f, 6000.0f));
 		playerBaseShip->mGuns.Add(tempGun);
 	}
 }
@@ -145,99 +154,99 @@ void ABaseShipController::RemoveRandomGun()
 
 void ABaseShipController::AddRandomCrew()
 {
-	//if (playerBaseShip)
-	//{
-	//	UCrewComponent* temp = NewObject<UCrewComponent>(UCrewComponent::StaticClass());
-	//	AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
-	//	AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
+	if (playerBaseShip)
+	{
+		UCrewComponent* temp = NewObject<UCrewComponent>(UCrewComponent::StaticClass());
+		AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
+		AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
 
-	//	//Do nothing if the crew made is too expensive to add
-	//	if (temp->GetCost() + mPowerUsage > mMaxPower)
-	//	{
-	//		return;
-	//	}
+		//Do nothing if the crew made is too expensive to add
+		if (temp->GetCost() + mPowerUsage > mMaxPower)
+		{
+			return;
+		}
 
-	//	if (temp->GetCrew() == WeaponsSpecialist)
-	//	{
-	//		int num = std::round(temp->GetPositive());
+		if (temp->GetCrew() == WeaponsSpecialist)
+		{
+			int num = std::round(temp->GetPositive());
 
-	//		for (int i = 0; i < num; ++i)
-	//		{
-	//			AddRandomGun();
-	//		}
+			for (int i = 0; i < num; ++i)
+			{
+				AddRandomGun();
+			}
 
-	//		mMaxShields /= temp->GetNegative();
+			mMaxShields /= temp->GetNegative();
 
-	//		if (mShields > mMaxShields)
-	//		{
-	//			mShields = mMaxShields;
-	//		}
-	//	}
-	//	else if (temp->GetCrew() == Fisherman)
-	//	{
-	//		//Check if a fisherman is already on board
-	//		for (int i = 0; i < mCrew.Num(); ++i)
-	//		{
-	//			if (mCrew[i]->GetCrew() == Fisherman)
-	//			{
-	//				return;
-	//			}
-	//		}
+			if (mShields > mMaxShields)
+			{
+				mShields = mMaxShields;
+			}
+		}
+		else if (temp->GetCrew() == Fisherman)
+		{
+			//Check if a fisherman is already on board
+			for (int i = 0; i < mCrew.Num(); ++i)
+			{
+				if (mCrew[i]->GetCrew() == Fisherman)
+				{
+					return;
+				}
+			}
 
-	//		mGrapplingEnabled = true;
+			mGrapplingEnabled = true;
 
-	//		//Negative is increased event chance
-	//	}
-	//	else if (temp->GetCrew() == RocketEngineer)
-	//	{
-	//		mMaxSpeed *= temp->GetPositive();
-	//		mMaxHull /= temp->GetNegative();
+			//Negative is increased event chance
+		}
+		else if (temp->GetCrew() == RocketEngineer)
+		{
+			mMaxSpeed *= temp->GetPositive();
+			mMaxHull /= temp->GetNegative();
 
-	//		if (mHull > mMaxHull)
-	//		{
-	//			mHull = mMaxHull;
-	//		}
+			if (mHull > mMaxHull)
+			{
+				mHull = mMaxHull;
+			}
 
-	//		//Decrease gun damage
-	//	}
-	//	else if (temp->GetCrew() == Mechanic)
-	//	{
-	//		mMaxHull *= temp->GetPositive();
-	//		mMaxSpeed /= temp->GetNegative();
+			//Decrease gun damage
+		}
+		else if (temp->GetCrew() == Mechanic)
+		{
+			mMaxHull *= temp->GetPositive();
+			mMaxSpeed /= temp->GetNegative();
 
-	//		if (mThrusterSpeed > mMaxSpeed)
-	//		{
-	//			mThrusterSpeed = mMaxSpeed;
-	//		}
-	//	}
-	//	else if (temp->GetCrew() == Electrician)
-	//	{
-	//		mMaxShields *= temp->GetPositive();
-	//		mMaxSpeed /= temp->GetNegative();
+			if (mThrusterSpeed > mMaxSpeed)
+			{
+				mThrusterSpeed = mMaxSpeed;
+			}
+		}
+		else if (temp->GetCrew() == Electrician)
+		{
+			mMaxShields *= temp->GetPositive();
+			mMaxSpeed /= temp->GetNegative();
 
-	//		if (mThrusterSpeed > mMaxSpeed)
-	//		{
-	//			mThrusterSpeed = mMaxSpeed;
-	//		}
-	//	}
-	//	else if (temp->GetCrew() == FirstMate)
-	//	{
-	//		//Decrease power
-	//		//Comments about their luxurius life
-	//	}
+			if (mThrusterSpeed > mMaxSpeed)
+			{
+				mThrusterSpeed = mMaxSpeed;
+			}
+		}
+		else if (temp->GetCrew() == FirstMate)
+		{
+			//Decrease power
+			//Comments about their luxurius life
+		}
 
-	//	mPowerUsage += temp->GetCost();
+		mPowerUsage += temp->GetCost();
 
-	//	UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(temp->GetCrew()));
+		UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(temp->GetCrew()));
 
-	//	mCrew.Add(temp);
-	//	playerBaseShip->AddInstanceComponent(temp);
-	//}
+		mCrew.Add(temp);
+		playerBaseShip->AddInstanceComponent(temp);
+	}
 }
 
 void ABaseShipController::RemoveRandomCrew()
 {
-	/*if (mCrew.Num() == 0)
+	if (mCrew.Num() == 0)
 	{
 		return;
 	}
@@ -299,7 +308,7 @@ void ABaseShipController::RemoveRandomCrew()
 	UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(mCrew[num]->GetCrew()));
 
 	playerBaseShip->RemoveInstanceComponent(mCrew[num]);
-	mCrew.RemoveAt(num);*/
+	mCrew.RemoveAt(num);
 }
 
 void ABaseShipController::Fire()

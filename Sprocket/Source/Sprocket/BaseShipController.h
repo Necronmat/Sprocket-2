@@ -36,6 +36,7 @@ private:
 	void StrafeHorizontal(float AxisAmount);
 	void StrafeVertical(float AxisAmount);
 
+	void Nitro();
 	void AddRandomGun();
 	void RemoveRandomGun();
 

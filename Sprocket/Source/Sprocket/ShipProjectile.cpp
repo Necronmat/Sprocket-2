@@ -2,6 +2,7 @@
 
 
 #include "ShipProjectile.h"
+#include "Kismet/GameplayStatics.h"
 
 // Sets default values
 AShipProjectile::AShipProjectile()
@@ -62,6 +63,7 @@ void AShipProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActo
 	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
 	{
 		OtherComponent->AddImpulseAtLocation(mMovementComp->Velocity * mForce, Hit.ImpactPoint);
+		UGameplayStatics::ApplyDamage(OtherActor, mDamage, UGameplayStatics::GetPlayerController(GetWorld(), 0), UGameplayStatics::GetPlayerPawn(GetWorld(), 0), UDamageType::StaticClass());
 	}
 
 	Destroy();
