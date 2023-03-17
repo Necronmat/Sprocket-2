@@ -45,17 +45,15 @@ void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, in
 void AScenario1GameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	if (StationClass) {
-		UPROPERTY() TArray<AActor*> Stations;
-		UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStation::StaticClass(), Stations);
-		for (AActor* station : Stations) {
-			AStation* Station = Cast<AStation>(station);
-			if (Station->GetStationId() == 1) station1 = Station;
-			else if (Station->GetStationId() == 2) station2 = Station;
-			else if (Station->GetStationId() == 3) station3 = Station;
-		}
-		station2->SetIsTarget(true);
+	UPROPERTY() TArray<AActor*> Stations;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStation::StaticClass(), Stations);
+	for (AActor* station : Stations) {
+		AStation* Station = Cast<AStation>(station);
+		if (Station->GetStationId() == 1) station1 = Station;
+		else if (Station->GetStationId() == 2) station2 = Station;
+		else if (Station->GetStationId() == 3) station3 = Station;
 	}
+	station2->SetIsTarget(true);
 	UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 	if (UIMenuCount) UIMenuCount->AddToViewport();
 }
