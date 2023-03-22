@@ -437,6 +437,17 @@ float ABaseShipController::GetPowerUsage()
 	return mPowerUsage;
 }
 
+float ABaseShipController::GetStrafeMaxCooldown()
+{
+	return mStrafeCooldownDuration;
+}
+
+float ABaseShipController::GetStrafeCooldown()
+{
+	if (!GetWorld()->GetTimerManager().TimerExists(StrafeCooldownTimer)) return 0.0f;
+	else return GetWorld()->GetTimerManager().GetTimerRemaining(StrafeCooldownTimer);
+}
+
 void ABaseShipController::StrafeCooldownElapsed()
 {
 	mCooldown = false;

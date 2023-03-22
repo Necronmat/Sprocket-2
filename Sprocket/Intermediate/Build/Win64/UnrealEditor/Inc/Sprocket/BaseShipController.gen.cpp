@@ -18,6 +18,20 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 	ENGINE_API UScriptStruct* Z_Construct_UScriptStruct_FTimerHandle();
 	SPROCKET_API UClass* Z_Construct_UClass_AScenario1GameModeBase_NoRegister();
 // End Cross Module References
+	DEFINE_FUNCTION(ABaseShipController::execGetStrafeCooldown)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(float*)Z_Param__Result=P_THIS->GetStrafeCooldown();
+		P_NATIVE_END;
+	}
+	DEFINE_FUNCTION(ABaseShipController::execGetStrafeMaxCooldown)
+	{
+		P_FINISH;
+		P_NATIVE_BEGIN;
+		*(float*)Z_Param__Result=P_THIS->GetStrafeMaxCooldown();
+		P_NATIVE_END;
+	}
 	DEFINE_FUNCTION(ABaseShipController::execGetPowerUsage)
 	{
 		P_FINISH;
@@ -86,6 +100,8 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 			{ "GetMaxShield", &ABaseShipController::execGetMaxShield },
 			{ "GetMaxSpeed", &ABaseShipController::execGetMaxSpeed },
 			{ "GetPowerUsage", &ABaseShipController::execGetPowerUsage },
+			{ "GetStrafeCooldown", &ABaseShipController::execGetStrafeCooldown },
+			{ "GetStrafeMaxCooldown", &ABaseShipController::execGetStrafeMaxCooldown },
 		};
 		FNativeFunctionRegistrar::RegisterFunctions(Class, Funcs, UE_ARRAY_COUNT(Funcs));
 	}
@@ -345,6 +361,70 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 		}
 		return ReturnFunction;
 	}
+	struct Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics
+	{
+		struct BaseShipController_eventGetStrafeCooldown_Parms
+		{
+			float ReturnValue;
+		};
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShipController_eventGetStrafeCooldown_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "BaseShipController.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShipController, nullptr, "GetStrafeCooldown", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::BaseShipController_eventGetStrafeCooldown_Parms), Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
+	struct Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics
+	{
+		struct BaseShipController_eventGetStrafeMaxCooldown_Parms
+		{
+			float ReturnValue;
+		};
+		static const UECodeGen_Private::FFloatPropertyParams NewProp_ReturnValue;
+		static const UECodeGen_Private::FPropertyParamsBase* const PropPointers[];
+#if WITH_METADATA
+		static const UECodeGen_Private::FMetaDataPairParam Function_MetaDataParams[];
+#endif
+		static const UECodeGen_Private::FFunctionParams FuncParams;
+	};
+	const UECodeGen_Private::FFloatPropertyParams Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::NewProp_ReturnValue = { "ReturnValue", nullptr, (EPropertyFlags)0x0010000000000580, UECodeGen_Private::EPropertyGenFlags::Float, RF_Public|RF_Transient|RF_MarkAsNative, 1, STRUCT_OFFSET(BaseShipController_eventGetStrafeMaxCooldown_Parms, ReturnValue), METADATA_PARAMS(nullptr, 0) };
+	const UECodeGen_Private::FPropertyParamsBase* const Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::PropPointers[] = {
+		(const UECodeGen_Private::FPropertyParamsBase*)&Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::NewProp_ReturnValue,
+	};
+#if WITH_METADATA
+	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::Function_MetaDataParams[] = {
+		{ "ModuleRelativePath", "BaseShipController.h" },
+	};
+#endif
+	const UECodeGen_Private::FFunctionParams Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::FuncParams = { (UObject*(*)())Z_Construct_UClass_ABaseShipController, nullptr, "GetStrafeMaxCooldown", nullptr, nullptr, sizeof(Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::BaseShipController_eventGetStrafeMaxCooldown_Parms), Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::PropPointers, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::PropPointers), RF_Public|RF_Transient|RF_MarkAsNative, (EFunctionFlags)0x14040401, 0, 0, METADATA_PARAMS(Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::Function_MetaDataParams, UE_ARRAY_COUNT(Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::Function_MetaDataParams)) };
+	UFunction* Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown()
+	{
+		static UFunction* ReturnFunction = nullptr;
+		if (!ReturnFunction)
+		{
+			UECodeGen_Private::ConstructUFunction(&ReturnFunction, Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown_Statics::FuncParams);
+		}
+		return ReturnFunction;
+	}
 	IMPLEMENT_CLASS_NO_AUTO_REGISTRATION(ABaseShipController);
 	UClass* Z_Construct_UClass_ABaseShipController_NoRegister()
 	{
@@ -431,6 +511,8 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 		{ &Z_Construct_UFunction_ABaseShipController_GetMaxShield, "GetMaxShield" }, // 2304180366
 		{ &Z_Construct_UFunction_ABaseShipController_GetMaxSpeed, "GetMaxSpeed" }, // 2623791820
 		{ &Z_Construct_UFunction_ABaseShipController_GetPowerUsage, "GetPowerUsage" }, // 2152148625
+		{ &Z_Construct_UFunction_ABaseShipController_GetStrafeCooldown, "GetStrafeCooldown" }, // 2554711359
+		{ &Z_Construct_UFunction_ABaseShipController_GetStrafeMaxCooldown, "GetStrafeMaxCooldown" }, // 706230685
 	};
 #if WITH_METADATA
 	const UECodeGen_Private::FMetaDataPairParam Z_Construct_UClass_ABaseShipController_Statics::Class_MetaDataParams[] = {
@@ -597,9 +679,9 @@ void EmptyLinkFunctionForGeneratedCodeBaseShipController() {}
 		static const FClassRegisterCompiledInInfo ClassInfo[];
 	};
 	const FClassRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_Statics::ClassInfo[] = {
-		{ Z_Construct_UClass_ABaseShipController, ABaseShipController::StaticClass, TEXT("ABaseShipController"), &Z_Registration_Info_UClass_ABaseShipController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShipController), 4177980697U) },
+		{ Z_Construct_UClass_ABaseShipController, ABaseShipController::StaticClass, TEXT("ABaseShipController"), &Z_Registration_Info_UClass_ABaseShipController, CONSTRUCT_RELOAD_VERSION_INFO(FClassReloadVersionInfo, sizeof(ABaseShipController), 616964060U) },
 	};
-	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_3867975131(TEXT("/Script/Sprocket"),
+	static FRegisterCompiledInInfo Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_3964153776(TEXT("/Script/Sprocket"),
 		Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_Statics::ClassInfo, UE_ARRAY_COUNT(Z_CompiledInDeferFile_FID_Sprocket_Source_Sprocket_BaseShipController_h_Statics::ClassInfo),
 		nullptr, 0,
 		nullptr, 0);

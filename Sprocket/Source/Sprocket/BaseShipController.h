@@ -66,6 +66,10 @@ private:
 		float GetMaxPower();
 	UFUNCTION(BlueprintPure)
 		float GetPowerUsage();
+	UFUNCTION(BlueprintPure)
+		float GetStrafeMaxCooldown();
+	UFUNCTION(BlueprintPure)
+		float GetStrafeCooldown();
 //********************************************************************************************************
 //********************************************************************************************************
 //Ship Stats

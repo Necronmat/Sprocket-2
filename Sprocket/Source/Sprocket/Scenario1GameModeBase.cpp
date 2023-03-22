@@ -53,7 +53,7 @@ void AScenario1GameModeBase::BeginPlay()
 		else if (Station->GetStationId() == 2) station2 = Station;
 		else if (Station->GetStationId() == 3) station3 = Station;
 	}
-	station2->SetIsTarget(true);
+	if(station2) station2->SetIsTarget(true);
 	UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 	if (UIMenuCount) UIMenuCount->AddToViewport();
 }
