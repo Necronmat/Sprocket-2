@@ -3,6 +3,7 @@
 
 #include "AIShipController.h"
 #include "BrainComponent.h"
+#include "ShipGun.h"
 
 void AAIShipController::OnPossess(APawn* InPawn)
 {
@@ -10,6 +11,7 @@ void AAIShipController::OnPossess(APawn* InPawn)
 	if (BT_HostileShipAI) RunBehaviorTree(BT_HostileShipAI);
 	PrimaryActorTick.bCanEverTick = true;
 	aiShip = Cast<AAiShipPawn>(GetPawn());
+	AddRandomGun();
 }
 
 void AAIShipController::Tick(float DeltaTime)
@@ -59,6 +61,28 @@ void AAIShipController::SetMovementTarget(FVector point, float range)
 bool AAIShipController::GetMoving()
 {
 	return bMoving;
+}
+
+void AAIShipController::AddRandomGun()
+{
+		FActorSpawnParameters spawnParams;
+		spawnParams.Owner = this;
+		spawnParams.Instigator = GetInstigator();
+
+		AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(aiShip->mBaseGun, aiShip->GetActorLocation() + FTransform(aiShip->GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), aiShip->GetActorRotation(), spawnParams);
+		tempGun->AttachToShip(aiShip->ShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), aiShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
+		tempGun->SetGunStats(FMath::RandRange(0.0f, 100.0f), 100.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(0.0f, 6000.0f));
+		aiShip->mGuns.Add(tempGun);
+}
+
+void AAIShipController::RemoveRandomGun()
+{
+		if (aiShip->mGuns.Num() > 0)
+		{
+			int index = FMath::RandRange(0, aiShip->mGuns.Num() - 1);
+			aiShip->mGuns[index]->Destroy();
+			aiShip->mGuns.RemoveAt(index);
+		}
 }
 
 void AAIShipController::StoreMoveRequestId()

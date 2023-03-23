@@ -28,6 +28,13 @@ public:
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* ShipMesh;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class AShipGun> mBaseGun;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AShipGun*> mGuns;
+
 private:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	

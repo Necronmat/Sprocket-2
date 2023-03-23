@@ -22,6 +22,9 @@ protected:
 public:
 	void SetMovementTarget(FVector point, float range);
 	bool GetMoving();
+
+	void AddRandomGun();
+	void RemoveRandomGun();
 	
 	const FAIRequestID GetMoveRequestId();
 
