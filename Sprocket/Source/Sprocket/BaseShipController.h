@@ -43,6 +43,9 @@ private:
 	void AddRandomCrew();
 	void RemoveRandomCrew();
 
+	void AddCrew(ECrewType type, float pos, float neg, int cost, TArray<FString> dialog);
+	void RemoveCrew(ECrewType type);
+
 	void Fire();
 	void Grapple();
 	void ReleaseGrapple();

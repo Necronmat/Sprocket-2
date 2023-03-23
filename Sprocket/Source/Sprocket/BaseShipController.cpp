@@ -311,6 +311,184 @@ void ABaseShipController::RemoveRandomCrew()
 	mCrew.RemoveAt(num);
 }
 
+void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost, TArray<FString> dialog)
+{
+	if (playerBaseShip)
+	{
+		UCrewComponent* temp = NewObject<UCrewComponent>(UCrewComponent::StaticClass());
+		AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
+		AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
+
+		//Set crew stats to the given ones
+		temp->SetCrew(type);
+		temp->SetPositive(pos);
+		temp->SetNegative(neg);
+		temp->SetCost(cost);
+		temp->SetDialog(dialog);
+
+
+		//Do nothing if the crew made is too expensive to add
+		if (cost + mPowerUsage > mMaxPower)
+		{
+			return;
+		}
+
+		if (type == WeaponsSpecialist)
+		{
+			int num = std::round(pos);
+
+			for (int i = 0; i < num; ++i)
+			{
+				AddRandomGun();
+			}
+
+			mMaxShields /= neg;
+
+			if (mShields > mMaxShields)
+			{
+				mShields = mMaxShields;
+			}
+		}
+		else if (type == Fisherman)
+		{
+			//Check if a fisherman is already on board
+			for (int i = 0; i < mCrew.Num(); ++i)
+			{
+				if (mCrew[i]->GetCrew() == Fisherman)
+				{
+					return;
+				}
+			}
+
+			mGrapplingEnabled = true;
+
+			//Negative is increased event chance
+		}
+		else if (type == RocketEngineer)
+		{
+			mMaxSpeed *= pos;
+			mMaxHull /= neg;
+
+			if (mHull > mMaxHull)
+			{
+				mHull = mMaxHull;
+			}
+
+			//Decrease gun damage
+		}
+		else if (type == Mechanic)
+		{
+			mMaxHull *= pos;
+			mMaxSpeed /= neg;
+
+			if (mThrusterSpeed > mMaxSpeed)
+			{
+				mThrusterSpeed = mMaxSpeed;
+			}
+		}
+		else if (type == Electrician)
+		{
+			mMaxShields *= pos;
+			mMaxSpeed /= neg;
+
+			if (mThrusterSpeed > mMaxSpeed)
+			{
+				mThrusterSpeed = mMaxSpeed;
+			}
+		}
+		else if (type == FirstMate)
+		{
+			//Decrease power
+			//Comments about their luxurius life
+		}
+
+		mPowerUsage += cost;
+
+		UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(temp->GetCrew()));
+
+		mCrew.Add(temp);
+		playerBaseShip->AddInstanceComponent(temp);
+	}
+}
+
+void ABaseShipController::RemoveCrew(ECrewType type)
+{
+	int num = -1;
+
+	for (int i = 0; i < mCrew.Num(); ++i)
+	{
+		if (mCrew[i]->GetCrew() == type)
+		{
+			num = i;
+			break;
+		}
+	}
+
+	if (num == -1)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("No crew of that type to remove"));
+		return;
+	}
+
+	if (mCrew[num]->GetCrew() == WeaponsSpecialist)
+	{
+		int gunNum = std::round(mCrew[num]->GetPositive());
+
+		for (int i = 0; i < num; ++i)
+		{
+			RemoveRandomGun();
+		}
+
+		mMaxShields *= mCrew[num]->GetNegative();
+	}
+	else if (mCrew[num]->GetCrew() == Fisherman)
+	{
+		mGrapplingEnabled = false;
+	}
+	else if (mCrew[num]->GetCrew() == RocketEngineer)
+	{
+		mMaxSpeed /= mCrew[num]->GetPositive();
+		mMaxHull *= mCrew[num]->GetNegative();
+
+		if (mThrusterSpeed > mMaxSpeed)
+		{
+			mThrusterSpeed = mMaxSpeed;
+		}
+	}
+	else if (mCrew[num]->GetCrew() == Mechanic)
+	{
+		mMaxHull /= mCrew[num]->GetPositive();
+		mMaxSpeed *= mCrew[num]->GetNegative();
+
+		if (mHull > mMaxHull)
+		{
+			mHull = mMaxHull;
+		}
+	}
+	else if (mCrew[num]->GetCrew() == Electrician)
+	{
+		mMaxShields /= mCrew[num]->GetPositive();
+		mMaxSpeed *= mCrew[num]->GetNegative();
+
+
+		if (mShields > mMaxShields)
+		{
+			mShields = mMaxShields;
+		}
+	}
+	else if (mCrew[num]->GetCrew() == FirstMate)
+	{
+
+	}
+
+	mPowerUsage -= mCrew[num]->GetCost();
+
+	UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(mCrew[num]->GetCrew()));
+
+	playerBaseShip->RemoveInstanceComponent(mCrew[num]);
+	mCrew.RemoveAt(num);
+}
+
 void ABaseShipController::Fire()
 {
 	if (playerBaseShip) {
