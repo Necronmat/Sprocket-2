@@ -27,6 +27,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 	int GetStationId();
+	void SetStationId(int id);
 
 	void SetIsTarget(bool isTarget);
 

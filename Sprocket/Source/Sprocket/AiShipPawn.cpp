@@ -2,6 +2,7 @@
 
 
 #include "AiShipPawn.h"
+#include "ShipGun.h"
 
 // Sets default values
 AAiShipPawn::AAiShipPawn()
@@ -36,17 +37,7 @@ void AAiShipPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 float AAiShipPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
-	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
-
-	Shields -= DamageAmount;
-	if (Shields < 0.0f) {
-		float remainingDamage = 0.0 - Shields;
-		Hull -= remainingDamage;
-		if (Hull < 0.0f) {
-			Destroy();
-
-		}
-	}
+	GetController()->TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	return DamageAmount;
 }
 

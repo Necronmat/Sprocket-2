@@ -9,20 +9,55 @@ void AScenario1GameModeBase::TogglePaused()
 {
 	bPaused = !bPaused;
 	if (bPaused) {
-		if (UIMenuCount) UIMenuCount->RemoveFromViewport();
+		if (!bCrewMateMenu) {
+			if (UIMenuCount) UIMenuCount->RemoveFromViewport();
+		}
+		else {
+			if (CrewMenuCount) CrewMenuCount->RemoveFromViewport();
+		}
+
 		PauseMenuCount = CreateWidget(GetWorld(), PauseMenuClass);
 		if (PauseMenuCount) PauseMenuCount->AddToViewport();
 	}
 	else {
 		if (PauseMenuCount) PauseMenuCount->RemoveFromViewport();
-		UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
-		if (UIMenuCount) UIMenuCount->AddToViewport();
+
+		if (!bCrewMateMenu) {
+			UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
+			if (UIMenuCount) UIMenuCount->AddToViewport();
+		}
+		else {
+			CrewMenuCount = CreateWidget(GetWorld(), CrewMenuClass);
+			if (CrewMenuCount) CrewMenuCount->AddToViewport();
+		}
+	}
+}
+
+void AScenario1GameModeBase::ToggleCrewMatesMenu()
+{
+	bCrewMateMenu = !bCrewMateMenu;
+	if (!bPaused) {
+		if (bCrewMateMenu) {
+			if (UIMenuCount) UIMenuCount->RemoveFromViewport();
+			CrewMenuCount = CreateWidget(GetWorld(), CrewMenuClass);
+			if (CrewMenuCount) CrewMenuCount->AddToViewport();
+		}
+		else {
+			if (CrewMenuCount) CrewMenuCount->RemoveFromViewport();
+			UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
+			if (UIMenuCount) UIMenuCount->AddToViewport();
+		}
 	}
 }
 
 bool AScenario1GameModeBase::IsGamePaused()
 {
 	return bPaused;
+}
+
+bool AScenario1GameModeBase::IsCrewMateMenu()
+{
+	return bCrewMateMenu;
 }
 
 void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, int sphereNo)
@@ -45,17 +80,36 @@ void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, in
 void AScenario1GameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
-	UPROPERTY() TArray<AActor*> Stations;
-	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStation::StaticClass(), Stations);
-	for (AActor* station : Stations) {
+	UPROPERTY() TArray<AActor*> temp;
+	int i = 0;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStation::StaticClass(), temp);
+	for (AActor* station : temp) {
 		AStation* Station = Cast<AStation>(station);
-		if (Station->GetStationId() == 1) station1 = Station;
-		else if (Station->GetStationId() == 2) station2 = Station;
-		else if (Station->GetStationId() == 3) station3 = Station;
+		Station->SetStationId(i);
+		i++;
+		stations.Emplace(Station);
+		//if (Station->GetStationId() == 1) station1 = Station;
+		//else if (Station->GetStationId() == 2) station2 = Station;
+		//else if (Station->GetStationId() == 3) station3 = Station;
 	}
-	if(station2) station2->SetIsTarget(true);
+
+	GenerateNewStationDestination();
+
+	//if(station2) station2->SetIsTarget(true);
 	UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 	if (UIMenuCount) UIMenuCount->AddToViewport();
+}
+
+void AScenario1GameModeBase::GenerateNewStationDestination()
+{
+	//stations[designatedStationTracker]->SetIsTarget(false);
+	int prevTracker = designatedStationTracker;
+	designatedStationTracker = FMath::RandRange(0, stations.Num() - 1);
+	if (designatedStationTracker == prevTracker) {
+		if (designatedStationTracker == stations.Num() - 1) designatedStationTracker--;
+		else designatedStationTracker++;
+	}
+	if(stations.Num() > 0)stations[designatedStationTracker]->SetIsTarget(true);
 }
 
 void AScenario1GameModeBase::TriggerFarStationEvent(int stationId)
@@ -75,7 +129,17 @@ void AScenario1GameModeBase::TriggerApproachStationEvent(int stationId)
 void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 {
 	FString message = TEXT("Error Message");
-	switch (ScenarioProgressTracker) {
+
+	if (stationId == designatedStationTracker) {
+		message = TEXT("Delivery Made");
+		stations[designatedStationTracker]->SetIsTarget(false);
+
+		//Run delivery code.
+
+		GenerateNewStationDestination();
+	}
+
+	/*switch (ScenarioProgressTracker) {
 	case 1:
 		if (stationId == 2) {
 			message = TEXT("Drop off these goods at Station 3.");
@@ -95,6 +159,6 @@ void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 		break;
 	default:
 		break;
-	}
+	}*/
 	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Green, message);
 }

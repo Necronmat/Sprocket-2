@@ -7,14 +7,15 @@
 #include "Math/UnrealMathUtility.h"
 #include "CrewComponent.generated.h"
 
-enum ECrewType
+UENUM()
+enum class ECrewType : uint8
 {
-	WeaponsSpecialist,
-	Fisherman,
-	RocketEngineer,
-	Mechanic,
-	Electrician,
-	FirstMate,
+	WeaponsSpecialist UMETA(DisplayName = "Weapons Specialist"),
+	Fisherman UMETA(DisplayName = "Fisherman"),
+	RocketEngineer UMETA(DisplayName = "Rocket Engineer"),
+	Mechanic UMETA(DisplayName = "Mechanic"),
+	Electrician UMETA(DisplayName = "Electrician"),
+	FirstMate UMETA(DisplayName = "First Mate"),
 };
 
 
@@ -52,7 +53,7 @@ public:
 
 private:
 
-	ECrewType mCrew = WeaponsSpecialist;
+	ECrewType mCrew = ECrewType::WeaponsSpecialist;
 
 	float mPositive = 0;
 

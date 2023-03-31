@@ -5,9 +5,9 @@
 #include "CoreMinimal.h"
 #include "BaseShip.h"
 #include "GameFramework/PlayerController.h"
+#include "CrewComponent.h"
 #include "BaseShipController.generated.h"
 
-class UCrewComponent;
 /**
  * 
  */
@@ -42,13 +42,16 @@ private:
 
 	void AddRandomCrew();
 	void RemoveRandomCrew();
-	void AddCrew(ECrewType type, float pos, float neg, int cost, TArray<FString> dialog);
-	void RemoveCrew(ECrewType type);
+	UFUNCTION(BlueprintCallable)
+		void AddCrew(ECrewType type, float pos, float neg, int cost);// TArray<FString> dialog);
+	UFUNCTION(BlueprintCallable)
+		void RemoveCrew(ECrewType type);
 
 	void Fire();
 	void Grapple();
 	void ReleaseGrapple();
 	void PauseGame();
+	void ToggleCrewMenu();
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
@@ -112,6 +115,26 @@ private:
 	UPROPERTY(EditAnywhere)
 		float mGrappleLength = 100000;
 
+	//CrewMate trackers
+	int ElectricianCount = 0;
+	int FirstMateCount = 0;
+	int FishermanCount = 0;
+	int MechanicCount = 0;
+	int RocketEngineerCount = 0;
+	int WeaponsSpecialistCount = 0;
+
+	UFUNCTION(BlueprintPure)
+		float GetElectricianCount();
+	UFUNCTION(BlueprintPure)
+		float GetFirstMateCount();
+	UFUNCTION(BlueprintPure)
+		float GetFishermanCount();
+	UFUNCTION(BlueprintPure)
+		float GetMechanicCount();
+	UFUNCTION(BlueprintPure)
+		float GetRocketEngineerCount();
+	UFUNCTION(BlueprintPure)
+		float GetWeaponsSpecialistCount();
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//Timers
@@ -129,6 +152,8 @@ private:
 	bool mGrappling = false;
 	bool mGrapplingEnabled = false;
 	AActor* mGrapplePoint;
+
+	bool menuDisplayed = false;
 
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;

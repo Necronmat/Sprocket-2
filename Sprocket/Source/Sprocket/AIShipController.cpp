@@ -20,6 +20,30 @@ void AAIShipController::Tick(float DeltaTime)
 	if(bMoving) UpdateMovement(DeltaTime);
 }
 
+float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
+{
+	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
+
+	shields -= DamageAmount;
+	if (shields <= 0.0f) {
+		float remainingDamage = 0.0 - shields;
+		shields = 0.0f;
+		hull -= remainingDamage;
+		if (hull < 0.0f) {
+
+			while (aiShip->mGuns.Num() > 0)
+			{
+				aiShip->mGuns[0]->Destroy();
+				aiShip->mGuns.RemoveAt(0);
+			}
+
+			aiShip->Destroy();
+
+		}
+	}
+	return DamageAmount;
+}
+
 void AAIShipController::UpdateMovement(float DeltaTime)
 {
 	float distRemaining = FVector::Dist(aiShip->GetActorLocation(), targetPoint);

@@ -6,7 +6,6 @@
 #include "Kismet/GameplayStatics.h"
 #include "CableComponent.h"
 #include "ShipGun.h"
-#include "CrewComponent.h"
 
 void ABaseShipController::BeginPlay()
 {
@@ -15,13 +14,19 @@ void ABaseShipController::BeginPlay()
 	playerBaseShip = Cast<ABaseShip>(GetPawn());
 	mHull = mMaxHull;
 	mShields = mMaxShields;
+	MechanicCount = 0;
+	WeaponsSpecialistCount = 0;
+	FishermanCount = 0;
+	RocketEngineerCount = 0;
+	ElectricianCount = 0;
+	FirstMateCount = 0;
 }
 
 
 void ABaseShipController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	if (playerBaseShip) {
+	if (playerBaseShip && !menuDisplayed) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mThrusterSpeed * DeltaTime);
 		//UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
 
@@ -58,12 +63,13 @@ void ABaseShipController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("Grapple"), IE_Pressed, this, &ABaseShipController::Grapple);
 	InputComponent->BindAction(TEXT("Grapple"), IE_Released, this, &ABaseShipController::ReleaseGrapple);
 	InputComponent->BindAction(TEXT("Pause"), IE_Pressed, this, &ABaseShipController::PauseGame);
+	InputComponent->BindAction(TEXT("ToggleCrewMenu"), IE_Pressed, this, &ABaseShipController::ToggleCrewMenu);
 	GameModeRef = Cast<AScenario1GameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 }
 
 void ABaseShipController::Throttle(float AxisAmount)
 {
-	if (playerBaseShip) {
+	if (playerBaseShip && !menuDisplayed) {
 		//if (mThrusterSpeed <= 0 && AxisAmount > 0) {
 		//	playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
 		//	mThrusterSpeed = mMaxSpeed / 3;
@@ -82,22 +88,22 @@ void ABaseShipController::Throttle(float AxisAmount)
 
 void ABaseShipController::Pitch(float AxisAmount)
 {
-	if (playerBaseShip) playerBaseShip->AddActorLocalRotation(FRotator(-AxisAmount, 0, 0));
+	if (playerBaseShip && !menuDisplayed) playerBaseShip->AddActorLocalRotation(FRotator(-AxisAmount, 0, 0));
 }
 
 void ABaseShipController::Yaw(float AxisAmount)
 {
-	if (playerBaseShip) playerBaseShip->AddActorLocalRotation(FRotator(0, AxisAmount, 0));
+	if (playerBaseShip && !menuDisplayed) playerBaseShip->AddActorLocalRotation(FRotator(0, AxisAmount, 0));
 }
 
 void ABaseShipController::Roll(float AxisAmount)
 {
-	if (playerBaseShip) playerBaseShip->AddActorLocalRotation(FRotator(0, 0, AxisAmount));
+	if (playerBaseShip && !menuDisplayed) playerBaseShip->AddActorLocalRotation(FRotator(0, 0, AxisAmount));
 }
 
 void ABaseShipController::StrafeHorizontal(float AxisAmount)
 {
-	if (playerBaseShip) {
+	if (playerBaseShip && !menuDisplayed) {
 		if (!mCooldown && abs(AxisAmount) > 0) {
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorRightVector() * AxisAmount * mStrafeSpeed);
 			mCooldown = true;
@@ -108,7 +114,7 @@ void ABaseShipController::StrafeHorizontal(float AxisAmount)
 
 void ABaseShipController::StrafeVertical(float AxisAmount)
 {
-	if (playerBaseShip) {
+	if (playerBaseShip && !menuDisplayed) {
 		if (!mCooldown && abs(AxisAmount) > 0)
 		{
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorUpVector() * AxisAmount * mStrafeSpeed);
@@ -154,7 +160,7 @@ void ABaseShipController::RemoveRandomGun()
 
 void ABaseShipController::AddRandomCrew()
 {
-	if (playerBaseShip)
+	if (playerBaseShip && !menuDisplayed)
 	{
 		UCrewComponent* temp = NewObject<UCrewComponent>(UCrewComponent::StaticClass());
 		AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
@@ -166,7 +172,7 @@ void ABaseShipController::AddRandomCrew()
 			return;
 		}
 
-		if (temp->GetCrew() == WeaponsSpecialist)
+		if (temp->GetCrew() == ECrewType::WeaponsSpecialist)
 		{
 			int num = std::round(temp->GetPositive());
 
@@ -182,12 +188,12 @@ void ABaseShipController::AddRandomCrew()
 				mShields = mMaxShields;
 			}
 		}
-		else if (temp->GetCrew() == Fisherman)
+		else if (temp->GetCrew() == ECrewType::Fisherman)
 		{
 			//Check if a fisherman is already on board
 			for (int i = 0; i < mCrew.Num(); ++i)
 			{
-				if (mCrew[i]->GetCrew() == Fisherman)
+				if (mCrew[i]->GetCrew() == ECrewType::Fisherman)
 				{
 					return;
 				}
@@ -197,7 +203,7 @@ void ABaseShipController::AddRandomCrew()
 
 			//Negative is increased event chance
 		}
-		else if (temp->GetCrew() == RocketEngineer)
+		else if (temp->GetCrew() == ECrewType::RocketEngineer)
 		{
 			mMaxSpeed *= temp->GetPositive();
 			mMaxHull /= temp->GetNegative();
@@ -209,7 +215,7 @@ void ABaseShipController::AddRandomCrew()
 
 			//Decrease gun damage
 		}
-		else if (temp->GetCrew() == Mechanic)
+		else if (temp->GetCrew() == ECrewType::Mechanic)
 		{
 			mMaxHull *= temp->GetPositive();
 			mMaxSpeed /= temp->GetNegative();
@@ -219,7 +225,7 @@ void ABaseShipController::AddRandomCrew()
 				mThrusterSpeed = mMaxSpeed;
 			}
 		}
-		else if (temp->GetCrew() == Electrician)
+		else if (temp->GetCrew() == ECrewType::Electrician)
 		{
 			mMaxShields *= temp->GetPositive();
 			mMaxSpeed /= temp->GetNegative();
@@ -229,7 +235,7 @@ void ABaseShipController::AddRandomCrew()
 				mThrusterSpeed = mMaxSpeed;
 			}
 		}
-		else if (temp->GetCrew() == FirstMate)
+		else if (temp->GetCrew() == ECrewType::FirstMate)
 		{
 			//Decrease power
 			//Comments about their luxurius life
@@ -252,7 +258,7 @@ void ABaseShipController::RemoveRandomCrew()
 	}
 	int num = FMath::FRandRange(0, mCrew.Num() - 1);
 
-	if (mCrew[num]->GetCrew() == WeaponsSpecialist)
+	if (mCrew[num]->GetCrew() == ECrewType::WeaponsSpecialist)
 	{
 		int gunNum = std::round(mCrew[num]->GetPositive());
 
@@ -263,11 +269,11 @@ void ABaseShipController::RemoveRandomCrew()
 
 		mMaxShields *= mCrew[num]->GetNegative();
 	}
-	else if (mCrew[num]->GetCrew() == Fisherman)
+	else if (mCrew[num]->GetCrew() == ECrewType::Fisherman)
 	{
 		mGrapplingEnabled = false;
 	}
-	else if (mCrew[num]->GetCrew() == RocketEngineer)
+	else if (mCrew[num]->GetCrew() == ECrewType::RocketEngineer)
 	{
 		mMaxSpeed /= mCrew[num]->GetPositive();
 		mMaxHull *= mCrew[num]->GetNegative();
@@ -277,7 +283,7 @@ void ABaseShipController::RemoveRandomCrew()
 			mThrusterSpeed = mMaxSpeed;
 		}
 	}
-	else if (mCrew[num]->GetCrew() == Mechanic)
+	else if (mCrew[num]->GetCrew() == ECrewType::Mechanic)
 	{
 		mMaxHull /= mCrew[num]->GetPositive();
 		mMaxSpeed *= mCrew[num]->GetNegative();
@@ -287,7 +293,7 @@ void ABaseShipController::RemoveRandomCrew()
 			mHull = mMaxHull;
 		}
 	}
-	else if (mCrew[num]->GetCrew() == Electrician)
+	else if (mCrew[num]->GetCrew() == ECrewType::Electrician)
 	{
 		mMaxShields /= mCrew[num]->GetPositive();
 		mMaxSpeed *= mCrew[num]->GetNegative();
@@ -298,7 +304,7 @@ void ABaseShipController::RemoveRandomCrew()
 			mShields = mMaxShields;
 		}
 	}
-	else if (mCrew[num]->GetCrew() == FirstMate)
+	else if (mCrew[num]->GetCrew() == ECrewType::FirstMate)
 	{
 
 	}
@@ -311,7 +317,7 @@ void ABaseShipController::RemoveRandomCrew()
 	mCrew.RemoveAt(num);
 }
 
-void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost, TArray<FString> dialog)
+void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost)//, TArray<FString> dialog)
 {
 	if (playerBaseShip)
 	{
@@ -324,7 +330,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		temp->SetPositive(pos);
 		temp->SetNegative(neg);
 		temp->SetCost(cost);
-		temp->SetDialog(dialog);
+		//temp->SetDialog(dialog);
 
 
 		//Do nothing if the crew made is too expensive to add
@@ -333,8 +339,9 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 			return;
 		}
 
-		if (type == WeaponsSpecialist)
+		if (type == ECrewType::WeaponsSpecialist)
 		{
+			WeaponsSpecialistCount++;
 			int num = std::round(pos);
 
 			for (int i = 0; i < num; ++i)
@@ -349,35 +356,32 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 				mShields = mMaxShields;
 			}
 		}
-		else if (type == Fisherman)
+		else if (type == ECrewType::Fisherman)
 		{
+			if (FishermanCount > 0) return;
 			//Check if a fisherman is already on board
-			for (int i = 0; i < mCrew.Num(); ++i)
-			{
-				if (mCrew[i]->GetCrew() == Fisherman)
-				{
-					return;
-				}
-			}
 
+			FishermanCount++;
 			mGrapplingEnabled = true;
 
 			//Negative is increased event chance
 		}
-		else if (type == RocketEngineer)
+		else if (type == ECrewType::RocketEngineer)
 		{
+			RocketEngineerCount++;
 			mMaxSpeed *= pos;
-			mMaxHull /= neg;
 
-			if (mHull > mMaxHull)
+			mMaxShields /= neg;
+
+			if (mShields > mMaxShields)
 			{
-				mHull = mMaxHull;
+				mShields = mMaxShields;
 			}
-
 			//Decrease gun damage
 		}
-		else if (type == Mechanic)
+		else if (type == ECrewType::Mechanic)
 		{
+			MechanicCount++;
 			mMaxHull *= pos;
 			mMaxSpeed /= neg;
 
@@ -386,8 +390,9 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 				mThrusterSpeed = mMaxSpeed;
 			}
 		}
-		else if (type == Electrician)
+		else if (type == ECrewType::Electrician)
 		{
+			ElectricianCount++;
 			mMaxShields *= pos;
 			mMaxSpeed /= neg;
 
@@ -396,8 +401,11 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 				mThrusterSpeed = mMaxSpeed;
 			}
 		}
-		else if (type == FirstMate)
+		else if (type == ECrewType::FirstMate)
 		{
+			if(FirstMateCount > 0) return;
+
+			FirstMateCount++;
 			//Decrease power
 			//Comments about their luxurius life
 		}
@@ -430,8 +438,9 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 		return;
 	}
 
-	if (mCrew[num]->GetCrew() == WeaponsSpecialist)
+	if (mCrew[num]->GetCrew() == ECrewType::WeaponsSpecialist)
 	{
+		WeaponsSpecialistCount--;
 		int gunNum = std::round(mCrew[num]->GetPositive());
 
 		for (int i = 0; i < num; ++i)
@@ -441,12 +450,14 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 
 		mMaxShields *= mCrew[num]->GetNegative();
 	}
-	else if (mCrew[num]->GetCrew() == Fisherman)
+	else if (mCrew[num]->GetCrew() == ECrewType::Fisherman)
 	{
+		FishermanCount--;
 		mGrapplingEnabled = false;
 	}
-	else if (mCrew[num]->GetCrew() == RocketEngineer)
+	else if (mCrew[num]->GetCrew() == ECrewType::RocketEngineer)
 	{
+		RocketEngineerCount--;
 		mMaxSpeed /= mCrew[num]->GetPositive();
 		mMaxHull *= mCrew[num]->GetNegative();
 
@@ -455,8 +466,9 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 			mThrusterSpeed = mMaxSpeed;
 		}
 	}
-	else if (mCrew[num]->GetCrew() == Mechanic)
+	else if (mCrew[num]->GetCrew() == ECrewType::Mechanic)
 	{
+		MechanicCount--;
 		mMaxHull /= mCrew[num]->GetPositive();
 		mMaxSpeed *= mCrew[num]->GetNegative();
 
@@ -465,8 +477,9 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 			mHull = mMaxHull;
 		}
 	}
-	else if (mCrew[num]->GetCrew() == Electrician)
+	else if (mCrew[num]->GetCrew() == ECrewType::Electrician)
 	{
+		ElectricianCount--;
 		mMaxShields /= mCrew[num]->GetPositive();
 		mMaxSpeed *= mCrew[num]->GetNegative();
 
@@ -476,9 +489,9 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 			mShields = mMaxShields;
 		}
 	}
-	else if (mCrew[num]->GetCrew() == FirstMate)
+	else if (mCrew[num]->GetCrew() == ECrewType::FirstMate)
 	{
-
+		FirstMateCount--;
 	}
 
 	mPowerUsage -= mCrew[num]->GetCost();
@@ -491,7 +504,7 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 
 void ABaseShipController::Fire()
 {
-	if (playerBaseShip) {
+	if (playerBaseShip && !menuDisplayed) {
 		for (AShipGun* gun : playerBaseShip->mGuns)
 		{
 			gun->FireGun();
@@ -501,7 +514,7 @@ void ABaseShipController::Fire()
 
 void ABaseShipController::Grapple()
 {
-	if (playerBaseShip) {
+	if (playerBaseShip && !menuDisplayed) {
 		if (mGrapplingEnabled)
 		{
 			//AController* ControllerRef = GetController();
@@ -546,7 +559,7 @@ void ABaseShipController::Grapple()
 
 void ABaseShipController::ReleaseGrapple()
 {
-	if (playerBaseShip) {
+	if (playerBaseShip && !menuDisplayed) {
 		mGrappling = false;
 		playerBaseShip->mCable->SetVisibility(false);
 	}
@@ -554,22 +567,68 @@ void ABaseShipController::ReleaseGrapple()
 
 void ABaseShipController::PauseGame()
 {
-	if(GameModeRef) GameModeRef->TogglePaused();
+	if (GameModeRef) {
+		GameModeRef->TogglePaused();
+		if (GameModeRef->IsGamePaused()) {
+			menuDisplayed = true;
+			bShowMouseCursor = true;
+			bEnableClickEvents = true;
+			bEnableMouseOverEvents = true;
+			bCinematicMode = true;
+		}
+		else if(!GameModeRef->IsCrewMateMenu()){
+			bShowMouseCursor = false;
+			bEnableClickEvents = false;
+			bEnableMouseOverEvents = false;
+			bCinematicMode = false;
+			menuDisplayed = false;
+		}
+	}
+}
+
+void ABaseShipController::ToggleCrewMenu()
+{
+	if (GameModeRef) {
+		GameModeRef->ToggleCrewMatesMenu();
+		if (GameModeRef->IsCrewMateMenu()) {
+			menuDisplayed = true;
+			bShowMouseCursor = true;
+			bEnableClickEvents = true;
+			bEnableMouseOverEvents = true;
+			bCinematicMode = true;
+		}
+		else if(!GameModeRef->IsGamePaused()) {
+			bShowMouseCursor = false;
+			bEnableClickEvents = false;
+			bEnableMouseOverEvents = false;
+			bCinematicMode = false;
+			menuDisplayed = false;
+
+		}
+	}
 }
 
 float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
+	if (!menuDisplayed) {
+		mShields -= DamageAmount;
+		if (mShields <= 0.0f) {
+			float remainingDamage = 0.0 - mShields;
+			mShields = 0.0f;
+			mHull -= remainingDamage;
+			if (mHull < 0.0f) {
+				FString message = TEXT("Player has Died, Please Restart");
 
-	mShields -= DamageAmount;
-	if (mShields < 0.0f) {
-		float remainingDamage = 0.0 - mShields;
-		mHull -= remainingDamage;
-		if (mHull < 0.0f) {
-			FString message = TEXT("Player has Died, Please Restart");
+				while (playerBaseShip->mGuns.Num() > 0)
+				{
+					playerBaseShip->mGuns[0]->Destroy();
+					playerBaseShip->mGuns.RemoveAt(0);
+				}
 
-			GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
-			playerBaseShip->Destroy();
+				GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
+				playerBaseShip->Destroy();
+			}
 		}
 	}
 	return DamageAmount;
@@ -624,6 +683,36 @@ float ABaseShipController::GetStrafeCooldown()
 {
 	if (!GetWorld()->GetTimerManager().TimerExists(StrafeCooldownTimer)) return 0.0f;
 	else return GetWorld()->GetTimerManager().GetTimerRemaining(StrafeCooldownTimer);
+}
+
+float ABaseShipController::GetElectricianCount()
+{
+	return ElectricianCount;
+}
+
+float ABaseShipController::GetFirstMateCount()
+{
+	return FirstMateCount;
+}
+
+float ABaseShipController::GetFishermanCount()
+{
+	return FishermanCount;
+}
+
+float ABaseShipController::GetMechanicCount()
+{
+	return MechanicCount;
+}
+
+float ABaseShipController::GetRocketEngineerCount()
+{
+	return RocketEngineerCount;
+}
+
+float ABaseShipController::GetWeaponsSpecialistCount()
+{
+	return WeaponsSpecialistCount;
 }
 
 void ABaseShipController::StrafeCooldownElapsed()

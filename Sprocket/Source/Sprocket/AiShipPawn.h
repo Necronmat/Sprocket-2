@@ -6,6 +6,9 @@
 #include "GameFramework/Pawn.h"
 #include "AiShipPawn.generated.h"
 
+
+class AShipGun;
+
 UCLASS()
 class SPROCKET_API AAiShipPawn : public APawn
 {

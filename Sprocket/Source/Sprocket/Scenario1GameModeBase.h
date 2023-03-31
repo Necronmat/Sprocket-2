@@ -17,14 +17,22 @@ class SPROCKET_API AScenario1GameModeBase : public AGameModeBase
 public:
 	UFUNCTION()
 		void TogglePaused();
+	UFUNCTION()
+		void ToggleCrewMatesMenu();
+
 	UFUNCTION(BlueprintCallable)
 		bool IsGamePaused();
+	UFUNCTION(BlueprintCallable)
+		bool IsCrewMateMenu();
 	UFUNCTION()
 		void StationSphereOverlap(bool bStart, int stationNo, int sphereNo);
 protected:
 	virtual void BeginPlay() override;
 
 private:
+
+	void GenerateNewStationDestination();
+
 	UFUNCTION()
 		void TriggerFarStationEvent(int stationId);
 	UFUNCTION()
@@ -33,8 +41,10 @@ private:
 		void TriggerLandingStationEvent(int stationId);
 
 	UPROPERTY() bool bPaused = false;
+	UPROPERTY() bool bCrewMateMenu = false;
 
 	UPROPERTY() int ScenarioProgressTracker = 1;
+	UPROPERTY() int designatedStationTracker = -1;
 
 	UPROPERTY(EditAnywhere)
 		TSubclassOf<UUserWidget>PauseMenuClass;
@@ -44,7 +54,13 @@ private:
 		TSubclassOf<UUserWidget>UIMenuClass;
 	UPROPERTY()
 		UUserWidget* UIMenuCount;
+	UPROPERTY(EditAnywhere)
+		TSubclassOf<UUserWidget>CrewMenuClass;
+	UPROPERTY()
+		UUserWidget* CrewMenuCount;
 
+	UPROPERTY()
+		TArray<AStation*> stations;
 	UPROPERTY() AStation* station1;
 	UPROPERTY() AStation* station2;
 	UPROPERTY() AStation* station3;

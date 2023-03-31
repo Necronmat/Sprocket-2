@@ -30,6 +30,8 @@ public:
 
 private:
 
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
 	void UpdateMovement(float DeltaTime);
 
 	bool bMoving = false;

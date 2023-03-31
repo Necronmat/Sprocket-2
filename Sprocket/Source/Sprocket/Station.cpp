@@ -60,6 +60,11 @@ int AStation::GetStationId()
 	return StationId;
 }
 
+void AStation::SetStationId(int id)
+{
+	StationId = id;
+}
+
 void AStation::SetIsTarget(bool isTarget)
 {
 	bTarget = isTarget;
