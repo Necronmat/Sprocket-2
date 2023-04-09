@@ -1,0 +1,34 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\source\\sprocket\\station.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\intermediate\\build\\win64\\sprocketeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\development\\sprocket\\definitions.sprocket.h",
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\source\\sprocket\\station.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\components\\spherecomponent.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\components\\shapecomponent.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\shapecomponent.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\spherecomponent.generated.h",
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\station.generated.h",
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\source\\sprocket\\scenario1gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\gameframework\\gamemodebase.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\engine\\serverstatreplicator.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\serverstatreplicator.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gamemodebase.generated.h",
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\scenario1gamemodebase.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\gameplaystatics.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\kismetsystemlibrary.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\coreuobject\\public\\uobject\\propertyaccessutil.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\kismetsystemlibrary.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\sound\\dialoguetypes.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\dialoguetypes.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\source\\runtime\\engine\\classes\\kismet\\gameplaystaticstypes.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gameplaystaticstypes.generated.h",
+            "c:\\program files\\epic games\\ue_5.0\\engine\\intermediate\\build\\win64\\unrealeditor\\inc\\engine\\gameplaystatics.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

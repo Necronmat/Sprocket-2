@@ -1,0 +1,15 @@
+{
+    "Version": "1.2",
+    "Data": {
+        "Source": "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\source\\sprocket\\crewcomponent.cpp",
+        "ProvidedModule": "",
+        "PCH": "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\intermediate\\build\\win64\\sprocketeditor\\development\\engine\\sharedpch.engine.shadowerrors.h.pch",
+        "Includes": [
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\development\\sprocket\\definitions.sprocket.h",
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\source\\sprocket\\crewcomponent.h",
+            "c:\\users\\user\\desktop\\uni work\\uclan-masters\\team project\\sprocket-2\\sprocket-2\\sprocket\\intermediate\\build\\win64\\unrealeditor\\inc\\sprocket\\crewcomponent.generated.h"
+        ],
+        "ImportedModules": [],
+        "ImportedHeaderUnits": []
+    }
+}

@@ -6,6 +6,7 @@
 #include "BaseShip.h"
 #include "GameFramework/PlayerController.h"
 #include "CrewComponent.h"
+#include "Sound/SoundMix.h"
 #include "BaseShipController.generated.h"
 
 /**
@@ -23,7 +24,13 @@ public:
 
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupInputComponent();
-	
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void SetVolume();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		float SetThrusterVolume();
+
 	UPROPERTY(EditAnywhere)
 		ABaseShip* playerBaseShip;
 
@@ -157,4 +164,41 @@ private:
 
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Sounds
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mGrappleSound;
+
+	UPROPERTY(EditAnywhere)
+		TArray<USoundBase*> mHullSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mLaserSound;
+
+	UPROPERTY(EditAnywhere)
+		TArray<USoundBase*> mShieldSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mThrusterUpSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mThrusterDownSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mThrusterLoopSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mThrusterBoostSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mWarningSound;
+
+	UPROPERTY(EditAnywhere)
+		float mSFXVolume = 1.0f;
+
+	UPROPERTY(EditAnywhere)
+		USoundMix* mMixer;
 };

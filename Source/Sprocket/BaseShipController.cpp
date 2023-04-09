@@ -20,6 +20,8 @@ void ABaseShipController::BeginPlay()
 	RocketEngineerCount = 0;
 	ElectricianCount = 0;
 	FirstMateCount = 0;
+
+	UGameplayStatics::PlaySound2D(this, mThrusterLoopSound, mSFXVolume);
 }
 
 
@@ -28,7 +30,9 @@ void ABaseShipController::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	if (playerBaseShip && !menuDisplayed) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mThrusterSpeed * DeltaTime);
-		//UE_LOG(LogTemp, Warning, TEXT("Speed is %f"), mThrusterSpeed);
+		//UE_LOG(LogTemp, Warning, TEXT("Volume is %f"), mThrusterSpeed / mMaxSpeed);
+
+		SetVolume();
 
 		if (mGrappling)
 		{
@@ -66,6 +70,11 @@ void ABaseShipController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("ToggleCrewMenu"), IE_Pressed, this, &ABaseShipController::ToggleCrewMenu);
 	GameModeRef = Cast<AScenario1GameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 }
+
+float ABaseShipController::SetThrusterVolume_Implementation()
+{
+	return mThrusterSpeed / mMaxSpeed;
+};
 
 void ABaseShipController::Throttle(float AxisAmount)
 {
@@ -108,6 +117,7 @@ void ABaseShipController::StrafeHorizontal(float AxisAmount)
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorRightVector() * AxisAmount * mStrafeSpeed);
 			mCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
+			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
 		}
 	}
 }
@@ -120,6 +130,7 @@ void ABaseShipController::StrafeVertical(float AxisAmount)
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorUpVector() * AxisAmount * mStrafeSpeed);
 			mCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
+			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
 		}
 	}
 }
@@ -129,6 +140,7 @@ void ABaseShipController::Nitro()
 	if (mThrusterSpeed <= mMaxSpeed / 3) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
 		mThrusterSpeed = mMaxSpeed / 3;
+		UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
 	}
 }
 
@@ -508,6 +520,7 @@ void ABaseShipController::Fire()
 		for (AShipGun* gun : playerBaseShip->mGuns)
 		{
 			gun->FireGun();
+			UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume);
 		}
 	}
 }
@@ -542,11 +555,12 @@ void ABaseShipController::Grapple()
 
 			if (Cast<AActor>(Hit.GetActor()))
 			{
+				UGameplayStatics::PlaySound2D(this, mGrappleSound, mSFXVolume);
 				mGrappling = true;
 				mGrapplePoint = Hit.GetActor();
 				playerBaseShip->mCable->SetVisibility(true);
 				playerBaseShip->mCable->EndLocation = mGrapplePoint->GetActorLocation();
-				playerBaseShip->mHook->SetWorldLocation(mGrapplePoint->GetActorLocation());
+				playerBaseShip->mHook->SetWorldLocation(mGrapplePoint->GetActorLocation());				
 			}
 
 			if (Cast<ABaseShip>(Hit.GetActor()))
@@ -613,7 +627,10 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
 	if (!menuDisplayed) {
 		mShields -= DamageAmount;
+		int index;
 		if (mShields <= 0.0f) {
+			index = FMath::RandRange(0, mHullSound.Num() - 1);
+			UGameplayStatics::PlaySound2D(this, mHullSound[index], mSFXVolume);
 			float remainingDamage = 0.0 - mShields;
 			mShields = 0.0f;
 			mHull -= remainingDamage;
@@ -629,6 +646,11 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 				GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
 				playerBaseShip->Destroy();
 			}
+		}
+		else
+		{
+			index = FMath::RandRange(0, mShieldSound.Num() - 1);
+			UGameplayStatics::PlaySound2D(this, mShieldSound[index], mSFXVolume);
 		}
 	}
 	return DamageAmount;
