@@ -268,7 +268,7 @@ void ABaseShipController::RemoveRandomCrew()
 	{
 		return;
 	}
-	int num = FMath::FRandRange(0, mCrew.Num() - 1);
+	int num = FMath::RandRange(0, mCrew.Num() - 1);
 
 	if (mCrew[num]->GetCrew() == ECrewType::WeaponsSpecialist)
 	{
@@ -333,9 +333,10 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 {
 	if (playerBaseShip)
 	{
-		UCrewComponent* temp = NewObject<UCrewComponent>(UCrewComponent::StaticClass());
-		AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
-		AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
+		UCrewComponent* temp = NewObject<UCrewComponent>(this, UCrewComponent::StaticClass(), NAME_None, RF_Transient);
+		temp->RegisterComponent();
+		//AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
+		//AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
 
 		//Set crew stats to the given ones
 		temp->SetCrew(type);

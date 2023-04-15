@@ -12,7 +12,7 @@ UCrewComponent::UCrewComponent()
 
 	// ...
 
-	mCrew = ECrewType(FMath::FRandRange(0, 5));
+	mCrew = ECrewType(FMath::RandRange(0, 5));
 
 	mPositive = FMath::FRandRange(1.0f, 1.12f);
 	mNegative = FMath::FRandRange(1.0f, 1.05f);

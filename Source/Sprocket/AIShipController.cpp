@@ -67,6 +67,26 @@ void AAIShipController::UpdateMovement(float DeltaTime)
 	
 }
 
+float AAIShipController::GetCurrentHull()
+{
+	return hull;
+}
+
+float AAIShipController::GetMaxHull()
+{
+	return maxHull;
+}
+
+float AAIShipController::GetCurrentShield()
+{
+	return shields;
+}
+
+float AAIShipController::GetMaxShield()
+{
+	return maxShields;
+}
+
 void AAIShipController::SetMovementTarget(FVector point, float range)
 {
 	if (bMoving) {

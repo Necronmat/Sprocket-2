@@ -34,6 +34,15 @@ private:
 
 	void UpdateMovement(float DeltaTime);
 
+	UFUNCTION(BlueprintPure)
+		float GetCurrentHull();
+	UFUNCTION(BlueprintPure)
+		float GetMaxHull();
+	UFUNCTION(BlueprintPure)
+		float GetCurrentShield();
+	UFUNCTION(BlueprintPure)
+		float GetMaxShield();
+
 	bool bMoving = false;
 	FVector targetPoint = { 0.0f, 0.0f, 0.0f };
 	float distanceAllowance = 0.0f;
