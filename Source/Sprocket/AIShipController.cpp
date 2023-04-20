@@ -56,8 +56,48 @@ void AAIShipController::UpdateMovement(float DeltaTime)
 	
 	FVector dir = targetPoint - aiShip->GetActorLocation();
 	dir.Normalize();
+
+	FRotator facingRotator = dir.Rotation();
+
+	FVector x = aiShip->GetActorRightVector();
+	x.Normalize();
+	FVector y = aiShip->GetActorUpVector();
+	y.Normalize();
+	FVector z = aiShip->GetActorForwardVector();
+	z.Normalize();
+
+	if (dir.Dot(x) >= 0)
+	{		
+		aiShip->AddActorLocalRotation(FRotator(0, turningRadius, 0) * DeltaTime);		
+	}
+	else
+	{
+		aiShip->AddActorLocalRotation(FRotator(0, -turningRadius, 0) * DeltaTime);
+	}
+
+	if (dir.Dot(y) >= 0)
+	{
+		aiShip->AddActorLocalRotation(FRotator(turningRadius, 0, 0) * DeltaTime);
+	}
+	else
+	{
+		aiShip->AddActorLocalRotation(FRotator(-turningRadius, 0, 0) * DeltaTime);
+	}
+
+	if (FVector(0,1,0).Dot(y) >= 0)
+	{
+		aiShip->AddActorLocalRotation(FRotator(0, 0, turningRadius) * DeltaTime);
+	}
+	else
+	{
+		aiShip->AddActorLocalRotation(FRotator(0, 0, -turningRadius) * DeltaTime);
+	}
+
+
+	//aiShip->AddActorLocalRotation(facingRotator * DeltaTime);
+
 	//aiShip->AddActorLocalRotation(FQuat(dir, turningRadius * DeltaTime));
-	aiShip->FaceRotation(dir.Rotation());
+	//aiShip->FaceRotation(dir.Rotation());
 
 	if (speed < maxSpeed/* && (distRemaining > (speed))*/) speed += acceleration;// *DeltaTime;
 	//else if (distRemaining < (speed * 5)) speed -= acceleration * DeltaTime;

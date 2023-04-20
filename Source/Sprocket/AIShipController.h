@@ -48,7 +48,7 @@ private:
 	float distanceAllowance = 0.0f;
 
 	UPROPERTY(EditAnywhere)
-		float turningRadius = 40.0f;
+		float turningRadius = 80.0f;
 
 	UPROPERTY(EditAnywhere)
 		float acceleration = 200.0f;
