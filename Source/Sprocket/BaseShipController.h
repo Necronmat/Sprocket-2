@@ -34,6 +34,11 @@ public:
 	UPROPERTY(EditAnywhere)
 		ABaseShip* playerBaseShip;
 
+	UFUNCTION()
+		void SetNotificationInfo(int value);
+	UFUNCTION()
+		void SetMissionInfo(int value);
+
 private:
 
 	void Throttle(float AxisAmount);
@@ -57,6 +62,7 @@ private:
 	void Fire();
 	void Grapple();
 	void ReleaseGrapple();
+	UFUNCTION(BlueprintCallable)
 	void PauseGame();
 	void ToggleCrewMenu();
 
@@ -82,6 +88,15 @@ private:
 		float GetStrafeMaxCooldown();
 	UFUNCTION(BlueprintPure)
 		float GetStrafeCooldown();
+
+	UFUNCTION(BlueprintPure)
+		float GetCurrentMoneyAmount();
+	UFUNCTION(BlueprintPure)
+		float GetCurrentDrainAmount();
+	UFUNCTION()
+		void IncreaseMoneyAmount(float amount);
+	UFUNCTION()
+		void DecreaseMoneyAmount(float amount);
 //********************************************************************************************************
 //********************************************************************************************************
 //Ship Stats
@@ -113,6 +128,23 @@ private:
 	UPROPERTY(EditAnywhere)
 		float mShipWeight = 10.0f;
 
+	UPROPERTY(EditAnywhere)
+		float mMoneyStartingAmount = 100.0f;
+	UPROPERTY(EditAnywhere)
+		float mMoneyBaseDrainAmount = 15.0f;
+	UPROPERTY(EditAnywhere)
+		float mMoneyCrewDrainAmount = 5.0f;
+	UPROPERTY(EditAnywhere)
+		float mMoneyCrewmateCostAmount = 5.0f;
+	UPROPERTY()
+		FTimerHandle mMoneyTimer;
+	UPROPERTY(EditAnywhere)
+		float mMoneyBaseDrainDelay = 60.0f;
+	float mMoney = 0.0f;
+	UFUNCTION()
+		void mMoneyTimerElapsed();
+
+
 	//Speed of the strafe thrusters
 	UPROPERTY(EditAnywhere)
 		float mStrafeSpeed = 200000.0f;
@@ -129,6 +161,7 @@ private:
 	int MechanicCount = 0;
 	int RocketEngineerCount = 0;
 	int WeaponsSpecialistCount = 0;
+	int TotalCrewMatesCount = 0;
 
 	UFUNCTION(BlueprintPure)
 		float GetElectricianCount();
@@ -142,6 +175,13 @@ private:
 		float GetRocketEngineerCount();
 	UFUNCTION(BlueprintPure)
 		float GetWeaponsSpecialistCount();
+	UFUNCTION(BlueprintPure)
+		int GetMissionInfo();
+	UFUNCTION(BlueprintPure)
+		int GetNotificationInfo();
+	void NotificationElapsed();
+
+	
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//Timers
@@ -201,4 +241,13 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		USoundMix* mMixer;
+
+	UPROPERTY(EditAnywhere)
+		int MissionInfo = -1;
+	UPROPERTY(EditAnywhere)
+		int NotificationInfo = -1;
+	UPROPERTY()
+		FTimerHandle NotificationTimer;
+	UPROPERTY(EditAnywhere)
+		float NotificationDuration = 3.0f;
 };

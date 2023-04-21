@@ -29,7 +29,7 @@ float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 		float remainingDamage = 0.0 - shields;
 		shields = 0.0f;
 		hull -= remainingDamage;
-		if (hull < 0.0f) {
+		if (hull <= 0.0f) {
 
 			while (aiShip->mGuns.Num() > 0)
 			{

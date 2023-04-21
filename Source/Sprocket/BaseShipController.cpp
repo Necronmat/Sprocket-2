@@ -20,8 +20,12 @@ void ABaseShipController::BeginPlay()
 	RocketEngineerCount = 0;
 	ElectricianCount = 0;
 	FirstMateCount = 0;
+	TotalCrewMatesCount = 0;
+	mMoney = mMoneyStartingAmount;
 
 	UGameplayStatics::PlaySound2D(this, mThrusterLoopSound, mSFXVolume);
+	GetWorld()->GetTimerManager().SetTimer(mMoneyTimer, this, &ABaseShipController::mMoneyTimerElapsed, mMoneyBaseDrainDelay, false);
+
 }
 
 
@@ -75,6 +79,17 @@ float ABaseShipController::SetThrusterVolume_Implementation()
 {
 	return mThrusterSpeed / mMaxSpeed;
 };
+
+void ABaseShipController::SetNotificationInfo(int value)
+{
+	NotificationInfo = value;
+	GetWorld()->GetTimerManager().SetTimer(NotificationTimer, this, &ABaseShipController::NotificationElapsed, NotificationDuration, false);
+}
+
+void ABaseShipController::SetMissionInfo(int value)
+{
+	MissionInfo = value;
+}
 
 void ABaseShipController::Throttle(float AxisAmount)
 {
@@ -153,7 +168,8 @@ void ABaseShipController::AddRandomGun()
 
 		AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(playerBaseShip->mBaseGun, playerBaseShip->GetActorLocation() + FTransform(playerBaseShip->GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), playerBaseShip->GetActorRotation(), spawnParams);
 		tempGun->AttachToShip(playerBaseShip->mShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), playerBaseShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
-		tempGun->SetGunStats(FMath::RandRange(0.0f, 100.0f), 100.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(0.0f, 6000.0f));
+		float rand = FMath::RandRange(0.001f, 20.0f);
+		tempGun->SetGunStats(5000.0f, (1/rand) * 240.f, rand * 0.5f, rand * 450.0f);
 		playerBaseShip->mGuns.Add(tempGun);
 	}
 }
@@ -355,6 +371,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		if (type == ECrewType::WeaponsSpecialist)
 		{
 			WeaponsSpecialistCount++;
+			TotalCrewMatesCount++;
 			int num = std::round(pos);
 
 			for (int i = 0; i < num; ++i)
@@ -374,6 +391,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 			if (FishermanCount > 0) return;
 			//Check if a fisherman is already on board
 
+			TotalCrewMatesCount++;
 			FishermanCount++;
 			mGrapplingEnabled = true;
 
@@ -381,6 +399,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		}
 		else if (type == ECrewType::RocketEngineer)
 		{
+			TotalCrewMatesCount++;
 			RocketEngineerCount++;
 			mMaxSpeed *= pos;
 
@@ -394,6 +413,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		}
 		else if (type == ECrewType::Mechanic)
 		{
+			TotalCrewMatesCount++;
 			MechanicCount++;
 			mMaxHull *= pos;
 			mMaxSpeed /= neg;
@@ -405,6 +425,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		}
 		else if (type == ECrewType::Electrician)
 		{
+			TotalCrewMatesCount++;
 			ElectricianCount++;
 			mMaxShields *= pos;
 			mMaxSpeed /= neg;
@@ -418,13 +439,14 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		{
 			if(FirstMateCount > 0) return;
 
+			TotalCrewMatesCount++;
 			FirstMateCount++;
 			//Decrease power
 			//Comments about their luxurius life
 		}
 
 		mPowerUsage += cost;
-
+		DecreaseMoneyAmount(mMoneyCrewmateCostAmount);
 		UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(temp->GetCrew()));
 
 		mCrew.Add(temp);
@@ -635,7 +657,7 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 			float remainingDamage = 0.0 - mShields;
 			mShields = 0.0f;
 			mHull -= remainingDamage;
-			if (mHull < 0.0f) {
+			if (mHull <= 0.0f) {
 				FString message = TEXT("Player has Died, Please Restart");
 
 				while (playerBaseShip->mGuns.Num() > 0)
@@ -708,6 +730,34 @@ float ABaseShipController::GetStrafeCooldown()
 	else return GetWorld()->GetTimerManager().GetTimerRemaining(StrafeCooldownTimer);
 }
 
+float ABaseShipController::GetCurrentMoneyAmount()
+{
+	return mMoney;
+}
+
+float ABaseShipController::GetCurrentDrainAmount()
+{
+	return mMoneyBaseDrainAmount + mMoneyCrewDrainAmount * TotalCrewMatesCount;
+}
+
+void ABaseShipController::IncreaseMoneyAmount(float amount)
+{
+	mMoney += amount;
+}
+
+void ABaseShipController::DecreaseMoneyAmount(float amount)
+{
+	mMoney -= amount;
+}
+
+void ABaseShipController::mMoneyTimerElapsed()
+{
+	int moneyDrain = mMoneyBaseDrainAmount + mMoneyCrewDrainAmount * TotalCrewMatesCount;
+	DecreaseMoneyAmount(moneyDrain);
+	SetNotificationInfo(2);
+	GetWorld()->GetTimerManager().SetTimer(mMoneyTimer, this, &ABaseShipController::mMoneyTimerElapsed, mMoneyBaseDrainDelay, false);
+}
+
 float ABaseShipController::GetElectricianCount()
 {
 	return ElectricianCount;
@@ -736,6 +786,21 @@ float ABaseShipController::GetRocketEngineerCount()
 float ABaseShipController::GetWeaponsSpecialistCount()
 {
 	return WeaponsSpecialistCount;
+}
+
+int ABaseShipController::GetMissionInfo()
+{
+	return MissionInfo;
+}
+
+int ABaseShipController::GetNotificationInfo()
+{
+	return NotificationInfo;
+}
+
+void ABaseShipController::NotificationElapsed()
+{
+	NotificationInfo = -1;
 }
 
 void ABaseShipController::StrafeCooldownElapsed()
