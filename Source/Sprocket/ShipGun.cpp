@@ -11,7 +11,7 @@ AShipGun::AShipGun()
 	mGunMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Gun Mesh"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Engine/BasicShapes/Cube.Cube'"));
 	mGunMesh->SetStaticMesh(Mesh.Object);
-	mGunMesh->SetCollisionProfileName(TEXT("Player"));
+	mGunMesh->SetCollisionProfileName(TEXT("Enemy"));
 	mGunMesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 
 	static ConstructorHelpers::FObjectFinder<UMaterialInstance>Material(TEXT("MaterialInstanceConstant'/Game/PlayerShipAssets/M_Gun_Inst.M_Gun_Inst'"));
@@ -30,6 +30,9 @@ AShipGun::AShipGun()
 void AShipGun::BeginPlay()
 {
 	Super::BeginPlay();	
+
+	mGunMesh->SetCustomPrimitiveDataFloat(0, mGunCooldown);
+	mGunMesh->SetCustomPrimitiveDataFloat(1, mGunTimer);
 }
 
 void AShipGun::SetGunStats(float range, float damage, float force, float speed)
@@ -49,7 +52,7 @@ void AShipGun::Tick(float DeltaTime)
 	{
 		mGunTimer -= 1 * DeltaTime;
 
-		mGunMesh->SetCustomPrimitiveDataFloat(0, mGunTimer);
+		mGunMesh->SetCustomPrimitiveDataFloat(1, mGunTimer);
 
 		if (mGunTimer <= 0.0f)
 		{
@@ -65,7 +68,6 @@ void AShipGun::FireGun()
 		mProjectileSpawn = GetActorLocation() + FTransform(GetActorRotation()).TransformVector(FVector3d(100.0f, 0.0f, 0.0f));
 
 		FRotator projectileRotation = GetActorRotation();
-		//projectileRotation.Pitch += 10.0f;
 
 		FActorSpawnParameters spawnParams;
 		spawnParams.Owner = this;
@@ -74,6 +76,8 @@ void AShipGun::FireGun()
 		AShipProjectile* Projectile = GetWorld()->SpawnActor<AShipProjectile>(mProjectile, mProjectileSpawn, projectileRotation, spawnParams);
 		if (Projectile)
 		{
+			Projectile->SetIfEnemy(mEnemy);
+
 			// Set the projectile's initial trajectory.
 			FVector LaunchDirection = projectileRotation.Vector();
 			Projectile->FireInDirection(LaunchDirection, mProjectileSpeed, mGunForce, mGunDamage, mGunRange);
@@ -98,5 +102,19 @@ void AShipGun::AttachToShip(USceneComponent* parent, FVector offset, FQuat rotat
 	//mGunMesh->SetRelativeRotation(rotation);
 	mGunMesh->SetRelativeScale3D(scale);
 
+}
+
+void AShipGun::SetIfEnemy(bool newEnemy)
+{
+	mEnemy = newEnemy;
+
+	if (mEnemy)
+	{
+		mGunMesh->SetCollisionProfileName(TEXT("Enemy"));
+	}
+	else
+	{
+		mGunMesh->SetCollisionProfileName(TEXT("Player"));
+	}
 }
 

@@ -59,6 +59,7 @@ void AAIShipController::UpdateMovement(float DeltaTime)
 
 	FRotator facingRotator = dir.Rotation();
 
+	//Ai turning
 	FVector x = aiShip->GetActorRightVector();
 	x.Normalize();
 	FVector y = aiShip->GetActorUpVector();
@@ -94,14 +95,24 @@ void AAIShipController::UpdateMovement(float DeltaTime)
 	}
 
 
-	//aiShip->AddActorLocalRotation(facingRotator * DeltaTime);
+	//Alter Speed
+	if (distRemaining < 200)
+	{
+		speed -= acceleration;
+	}
+	else if (speed < maxSpeed)
+	{
+		speed += acceleration;
+	}
 
-	//aiShip->AddActorLocalRotation(FQuat(dir, turningRadius * DeltaTime));
-	//aiShip->FaceRotation(dir.Rotation());
-
-	if (speed < maxSpeed/* && (distRemaining > (speed))*/) speed += acceleration;// *DeltaTime;
-	//else if (distRemaining < (speed * 5)) speed -= acceleration * DeltaTime;
-	if (speed > maxSpeed) speed = maxSpeed;
+	if (speed > maxSpeed)
+	{
+		speed = maxSpeed;
+	}
+	else if(speed < 0)
+	{
+		speed = 0;
+	}
 
 	aiShip->ShipMesh->AddImpulse(aiShip->GetActorForwardVector() * speed * DeltaTime);
 	
@@ -167,6 +178,14 @@ void AAIShipController::RemoveRandomGun()
 			aiShip->mGuns[index]->Destroy();
 			aiShip->mGuns.RemoveAt(index);
 		}
+}
+
+void AAIShipController::ShootGuns()
+{
+	for (int i = 0; i < aiShip->mGuns.Num(); ++i)
+	{
+		aiShip->mGuns[i]->FireGun();
+	}
 }
 
 void AAIShipController::StoreMoveRequestId()

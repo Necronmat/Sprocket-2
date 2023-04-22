@@ -25,6 +25,7 @@ public:
 
 	void AddRandomGun();
 	void RemoveRandomGun();
+	void ShootGuns();
 	
 	const FAIRequestID GetMoveRequestId();
 

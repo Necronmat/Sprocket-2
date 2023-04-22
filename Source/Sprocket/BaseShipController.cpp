@@ -152,6 +152,7 @@ void ABaseShipController::AddRandomGun()
 		spawnParams.Instigator = GetInstigator();
 
 		AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(playerBaseShip->mBaseGun, playerBaseShip->GetActorLocation() + FTransform(playerBaseShip->GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), playerBaseShip->GetActorRotation(), spawnParams);
+		tempGun->SetIfEnemy(false);
 		tempGun->AttachToShip(playerBaseShip->mShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), playerBaseShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
 		tempGun->SetGunStats(FMath::RandRange(0.0f, 100.0f), 100.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(0.0f, 6000.0f));
 		playerBaseShip->mGuns.Add(tempGun);
@@ -518,10 +519,10 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 void ABaseShipController::Fire()
 {
 	if (playerBaseShip && !menuDisplayed) {
+		UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume);
 		for (AShipGun* gun : playerBaseShip->mGuns)
 		{
 			gun->FireGun();
-			UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume);
 		}
 	}
 }
@@ -630,7 +631,7 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 		mShields -= DamageAmount;
 		int index;
 		if (mShields <= 0.0f) {
-			index = FMath::RandRange(0, mHullSound.Num() - 1);
+			index = FMath::RandRange(0, mHullSound.Num());
 			UGameplayStatics::PlaySound2D(this, mHullSound[index], mSFXVolume);
 			float remainingDamage = 0.0 - mShields;
 			mShields = 0.0f;

@@ -3,14 +3,14 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "BehaviorTree/BTService.h"
-#include "BTService_ShootShip.generated.h"
+#include "BehaviorTree/Services/BTService_BlackboardBase.h"
+#include "BTService_ShootingCone.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class SPROCKET_API UBTService_ShootShip : public UBTService
+class SPROCKET_API UBTService_ShootingCone : public UBTService_BlackboardBase
 {
 	GENERATED_BODY()
 
