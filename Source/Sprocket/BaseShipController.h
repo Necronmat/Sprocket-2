@@ -9,6 +9,33 @@
 #include "Sound/SoundMix.h"
 #include "BaseShipController.generated.h"
 
+UENUM()
+enum class EShipUpgradeCatagory : uint8
+{
+	Hull UMETA(DisplayName = "Hull"),
+	Shield UMETA(DisplayName = "Shield"),
+	Speed UMETA(DisplayName = "Speed"),
+	Power UMETA(DisplayName = "Power"),
+};
+
+UENUM(BlueprintType)
+enum class EMissionInfoCatagory : uint8
+{
+	JobCollectionSuggestion UMETA(DisplayName = "Job Collection Suggestion"),
+	JobRequirementPickup UMETA(DisplayName = "Job Requirement Pickup"),
+	JobRequirementDelivery UMETA(DisplayName = "Job Requirement Delivery"),
+};
+
+UENUM(BlueprintType)
+enum class ENotificationInfoCatagory : uint8
+{
+	Dorment UMETA(DisplayName = "Dorment"),
+	ShipDefeated UMETA(DisplayName = "Ship Defeated"),
+	MissionCompleted UMETA(DisplayName = "Mission Completed"),
+	MaintainenceOccurred UMETA(DisplayName = "Maintainence Occurred"),
+};
+
+
 /**
  * 
  */
@@ -35,9 +62,9 @@ public:
 		ABaseShip* playerBaseShip;
 
 	UFUNCTION()
-		void SetNotificationInfo(int value);
+		void SetNotificationInfo(ENotificationInfoCatagory value);
 	UFUNCTION()
-		void SetMissionInfo(int value);
+		void SetMissionInfo(EMissionInfoCatagory value);
 
 private:
 
@@ -109,19 +136,43 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		float mMaxSpeed = 200000.0f;
+	UPROPERTY(EditAnywhere)
+		float mSpeedUpgradeAmount = 10000.0f;
 	float mThrusterSpeed = 0.0f;
 
 	UPROPERTY(EditAnywhere)
 		float mMaxHull = 100.0f;
+	UPROPERTY(EditAnywhere)
+		float mHullUpgradeAmount = 25.0; 
 	float mHull = 100.0f;
 
 	UPROPERTY(EditAnywhere)
 		float mMaxShields = 100.0f;
+	UPROPERTY(EditAnywhere)
+		float mShieldsUpgradeAmount = 25.0f; 
 	float mShields = 100.0f;
 
 	UPROPERTY(EditAnywhere)
 		float mMaxPower = 10.0f;
+	UPROPERTY(EditAnywhere)
+		float mPowerUpgradeAmount = 2.0f; 
 	float mPowerUsage = 0.0f;
+
+	UPROPERTY(EditAnywhere)
+		bool bShieldRecharging = false;
+	UPROPERTY(EditAnywhere)
+		float mShieldRechargeRate = 50.0f;
+	UPROPERTY()
+		FTimerHandle mShieldRechargeDelayTimer;
+	UPROPERTY(EditAnywhere)
+		float mShieldRechargeDelay = 30.0f;
+	UFUNCTION()
+		void ShieldRechargeDelayElapsed();
+
+	UFUNCTION(BlueprintCallable)
+		void HealShip();
+	UFUNCTION(BlueprintCallable)
+		void UpgradeShip(EShipUpgradeCatagory upgradeType);
 
 	UPROPERTY(EditAnywhere)
 		float mShipSize = 10.0f;
@@ -136,6 +187,10 @@ private:
 		float mMoneyCrewDrainAmount = 5.0f;
 	UPROPERTY(EditAnywhere)
 		float mMoneyCrewmateCostAmount = 5.0f;
+	UPROPERTY(EditAnywhere)
+		float mMoneyPermUpgradeCostAmount = 200.0f;
+	UPROPERTY(EditAnywhere)
+		float mMoneyHullHealCostAmount = 20.0f;
 	UPROPERTY()
 		FTimerHandle mMoneyTimer;
 	UPROPERTY(EditAnywhere)
@@ -143,7 +198,12 @@ private:
 	float mMoney = 0.0f;
 	UFUNCTION()
 		void mMoneyTimerElapsed();
-
+	UFUNCTION(BlueprintPure)
+		float GetShipPermUpgradeCost();
+	UFUNCTION(BlueprintPure)
+		float GetCrewmatePurchaseCost();
+	UFUNCTION(BlueprintPure)
+		float GetHullHealCost();
 
 	//Speed of the strafe thrusters
 	UPROPERTY(EditAnywhere)
@@ -176,9 +236,9 @@ private:
 	UFUNCTION(BlueprintPure)
 		float GetWeaponsSpecialistCount();
 	UFUNCTION(BlueprintPure)
-		int GetMissionInfo();
+		EMissionInfoCatagory GetMissionInfo();
 	UFUNCTION(BlueprintPure)
-		int GetNotificationInfo();
+		ENotificationInfoCatagory GetNotificationInfo();
 	void NotificationElapsed();
 
 	
@@ -243,9 +303,9 @@ private:
 		USoundMix* mMixer;
 
 	UPROPERTY(EditAnywhere)
-		int MissionInfo = -1;
+		EMissionInfoCatagory MissionInfo = EMissionInfoCatagory::JobCollectionSuggestion;
 	UPROPERTY(EditAnywhere)
-		int NotificationInfo = -1;
+		ENotificationInfoCatagory NotificationInfo = ENotificationInfoCatagory::Dorment;
 	UPROPERTY()
 		FTimerHandle NotificationTimer;
 	UPROPERTY(EditAnywhere)

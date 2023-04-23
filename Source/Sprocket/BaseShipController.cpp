@@ -35,6 +35,13 @@ void ABaseShipController::Tick(float DeltaTime)
 	if (playerBaseShip && !menuDisplayed) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mThrusterSpeed * DeltaTime);
 		//UE_LOG(LogTemp, Warning, TEXT("Volume is %f"), mThrusterSpeed / mMaxSpeed);
+		if (bShieldRecharging) {
+			mShields += mShieldRechargeRate * DeltaTime;
+			if (mShields >= mMaxShields) {
+				mShields = mMaxShields;
+				bShieldRecharging = false;
+			}
+		}
 
 		SetVolume();
 
@@ -70,8 +77,8 @@ void ABaseShipController::SetupInputComponent()
 	InputComponent->BindAction(TEXT("PrimaryFire"), IE_Pressed, this, &ABaseShipController::Fire);
 	InputComponent->BindAction(TEXT("Grapple"), IE_Pressed, this, &ABaseShipController::Grapple);
 	InputComponent->BindAction(TEXT("Grapple"), IE_Released, this, &ABaseShipController::ReleaseGrapple);
-	InputComponent->BindAction(TEXT("Pause"), IE_Pressed, this, &ABaseShipController::PauseGame);
-	InputComponent->BindAction(TEXT("ToggleCrewMenu"), IE_Pressed, this, &ABaseShipController::ToggleCrewMenu);
+	InputComponent->BindAction(TEXT("Pause"), IE_Pressed, this, &ABaseShipController::PauseGame).bExecuteWhenPaused = true;
+	InputComponent->BindAction(TEXT("ToggleCrewMenu"), IE_Pressed, this, &ABaseShipController::ToggleCrewMenu).bExecuteWhenPaused = true;
 	GameModeRef = Cast<AScenario1GameModeBase>(UGameplayStatics::GetGameMode(GetWorld()));
 }
 
@@ -80,13 +87,13 @@ float ABaseShipController::SetThrusterVolume_Implementation()
 	return mThrusterSpeed / mMaxSpeed;
 };
 
-void ABaseShipController::SetNotificationInfo(int value)
+void ABaseShipController::SetNotificationInfo(ENotificationInfoCatagory value)
 {
 	NotificationInfo = value;
 	GetWorld()->GetTimerManager().SetTimer(NotificationTimer, this, &ABaseShipController::NotificationElapsed, NotificationDuration, false);
 }
 
-void ABaseShipController::SetMissionInfo(int value)
+void ABaseShipController::SetMissionInfo(EMissionInfoCatagory value)
 {
 	MissionInfo = value;
 }
@@ -367,6 +374,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		{
 			return;
 		}
+		if (mMoney < mMoneyCrewmateCostAmount) return;
 
 		if (type == ECrewType::WeaponsSpecialist)
 		{
@@ -626,21 +634,23 @@ void ABaseShipController::PauseGame()
 void ABaseShipController::ToggleCrewMenu()
 {
 	if (GameModeRef) {
-		GameModeRef->ToggleCrewMatesMenu();
-		if (GameModeRef->IsCrewMateMenu()) {
-			menuDisplayed = true;
-			bShowMouseCursor = true;
-			bEnableClickEvents = true;
-			bEnableMouseOverEvents = true;
-			bCinematicMode = true;
-		}
-		else if(!GameModeRef->IsGamePaused()) {
-			bShowMouseCursor = false;
-			bEnableClickEvents = false;
-			bEnableMouseOverEvents = false;
-			bCinematicMode = false;
-			menuDisplayed = false;
+		if (GameModeRef->IsPlayerInsideInnerRing()) {
+			GameModeRef->ToggleCrewMatesMenu();
+			if (GameModeRef->IsCrewMateMenu()) {
+				menuDisplayed = true;
+				bShowMouseCursor = true;
+				bEnableClickEvents = true;
+				bEnableMouseOverEvents = true;
+				bCinematicMode = true;
+			}
+			else if (!GameModeRef->IsGamePaused()) {
+				bShowMouseCursor = false;
+				bEnableClickEvents = false;
+				bEnableMouseOverEvents = false;
+				bCinematicMode = false;
+				menuDisplayed = false;
 
+			}
 		}
 	}
 }
@@ -649,6 +659,13 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
 	if (!menuDisplayed) {
+		if (bShieldRecharging) bShieldRecharging = false;
+		if (GetWorld()->GetTimerManager().TimerExists(mShieldRechargeDelayTimer)) {
+			GetWorld()->GetTimerManager().ClearTimer(mShieldRechargeDelayTimer);
+			GetWorld()->GetTimerManager().SetTimer(mShieldRechargeDelayTimer, this, &ABaseShipController::ShieldRechargeDelayElapsed, mShieldRechargeDelay, false);
+		}
+		else GetWorld()->GetTimerManager().SetTimer(mShieldRechargeDelayTimer, this, &ABaseShipController::ShieldRechargeDelayElapsed, mShieldRechargeDelay, false);
+
 		mShields -= DamageAmount;
 		int index;
 		if (mShields <= 0.0f) {
@@ -750,12 +767,66 @@ void ABaseShipController::DecreaseMoneyAmount(float amount)
 	mMoney -= amount;
 }
 
+void ABaseShipController::ShieldRechargeDelayElapsed()
+{
+	bShieldRecharging = true;
+}
+
+void ABaseShipController::HealShip()
+{
+	if (mMoney < mMoneyHullHealCostAmount) return;
+
+	DecreaseMoneyAmount(mMoneyHullHealCostAmount);
+	mHull = mMaxHull;
+}
+
+void ABaseShipController::UpgradeShip(EShipUpgradeCatagory upgradeType)
+{
+	if (mMoney < mMoneyPermUpgradeCostAmount) return;
+	DecreaseMoneyAmount(mMoneyPermUpgradeCostAmount);
+
+	switch (upgradeType) {
+	case EShipUpgradeCatagory::Hull:
+		mMaxHull += mHullUpgradeAmount;
+		mHull = mMaxHull;
+		break;
+
+	case EShipUpgradeCatagory::Shield:
+		mMaxShields += mShieldsUpgradeAmount;
+		mShields = mMaxShields;
+		break;
+
+	case EShipUpgradeCatagory::Speed:
+		mMaxSpeed += mSpeedUpgradeAmount;
+		break;
+
+	case EShipUpgradeCatagory::Power:
+		mMaxPower += mPowerUpgradeAmount;
+		break;
+	}
+}
+
 void ABaseShipController::mMoneyTimerElapsed()
 {
 	int moneyDrain = mMoneyBaseDrainAmount + mMoneyCrewDrainAmount * TotalCrewMatesCount;
 	DecreaseMoneyAmount(moneyDrain);
-	SetNotificationInfo(2);
+	SetNotificationInfo(ENotificationInfoCatagory::MaintainenceOccurred);
 	GetWorld()->GetTimerManager().SetTimer(mMoneyTimer, this, &ABaseShipController::mMoneyTimerElapsed, mMoneyBaseDrainDelay, false);
+}
+
+float ABaseShipController::GetShipPermUpgradeCost()
+{
+	return mMoneyPermUpgradeCostAmount;
+}
+
+float ABaseShipController::GetCrewmatePurchaseCost()
+{
+	return mMoneyCrewmateCostAmount;
+}
+
+float ABaseShipController::GetHullHealCost()
+{
+	return mMoneyHullHealCostAmount;
 }
 
 float ABaseShipController::GetElectricianCount()
@@ -788,19 +859,19 @@ float ABaseShipController::GetWeaponsSpecialistCount()
 	return WeaponsSpecialistCount;
 }
 
-int ABaseShipController::GetMissionInfo()
+EMissionInfoCatagory ABaseShipController::GetMissionInfo()
 {
 	return MissionInfo;
 }
 
-int ABaseShipController::GetNotificationInfo()
+ENotificationInfoCatagory ABaseShipController::GetNotificationInfo()
 {
 	return NotificationInfo;
 }
 
 void ABaseShipController::NotificationElapsed()
 {
-	NotificationInfo = -1;
+	NotificationInfo = ENotificationInfoCatagory::Dorment;
 }
 
 void ABaseShipController::StrafeCooldownElapsed()

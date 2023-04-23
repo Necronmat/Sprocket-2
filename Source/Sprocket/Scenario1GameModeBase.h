@@ -24,6 +24,8 @@ public:
 		bool IsGamePaused();
 	UFUNCTION(BlueprintCallable)
 		bool IsCrewMateMenu();
+	UFUNCTION(BlueprintCallable)
+		bool IsPlayerInsideInnerRing();
 	UFUNCTION()
 		void StationSphereOverlap(bool bStart, int stationNo, int sphereNo);
 protected:
@@ -42,7 +44,7 @@ private:
 
 	UPROPERTY() bool bPaused = false;
 	UPROPERTY() bool bCrewMateMenu = false;
-
+	UPROPERTY() bool bStationInnerRing = false;
 	UPROPERTY() int ScenarioProgressTracker = 1;
 	UPROPERTY() int designatedStationTracker = -1;
 

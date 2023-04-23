@@ -10,6 +10,7 @@ void AScenario1GameModeBase::TogglePaused()
 	bPaused = !bPaused;
 	if (bPaused) {
 		if (!bCrewMateMenu) {
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
 			if (UIMenuCount) UIMenuCount->RemoveFromViewport();
 		}
 		else {
@@ -25,6 +26,7 @@ void AScenario1GameModeBase::TogglePaused()
 		if (!bCrewMateMenu) {
 			UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 			if (UIMenuCount) UIMenuCount->AddToViewport();
+			UGameplayStatics::SetGamePaused(GetWorld(), false);
 		}
 		else {
 			CrewMenuCount = CreateWidget(GetWorld(), CrewMenuClass);
@@ -41,11 +43,13 @@ void AScenario1GameModeBase::ToggleCrewMatesMenu()
 			if (UIMenuCount) UIMenuCount->RemoveFromViewport();
 			CrewMenuCount = CreateWidget(GetWorld(), CrewMenuClass);
 			if (CrewMenuCount) CrewMenuCount->AddToViewport();
+			UGameplayStatics::SetGamePaused(GetWorld(), true);
 		}
 		else {
 			if (CrewMenuCount) CrewMenuCount->RemoveFromViewport();
 			UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 			if (UIMenuCount) UIMenuCount->AddToViewport();
+			UGameplayStatics::SetGamePaused(GetWorld(), false);
 		}
 	}
 }
@@ -60,6 +64,11 @@ bool AScenario1GameModeBase::IsCrewMateMenu()
 	return bCrewMateMenu;
 }
 
+bool AScenario1GameModeBase::IsPlayerInsideInnerRing()
+{
+	return bStationInnerRing;
+}
+
 void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, int sphereNo)
 {
 	if (bStart) {
@@ -72,9 +81,11 @@ void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, in
 			break;
 		case 2:
 			TriggerLandingStationEvent(stationNo);
+			bStationInnerRing = true;
 			break;
 		}
 	}
+	else if (sphereNo == 2) bStationInnerRing = false;
 }
 
 void AScenario1GameModeBase::BeginPlay()
