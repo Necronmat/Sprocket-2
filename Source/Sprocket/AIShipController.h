@@ -29,12 +29,6 @@ public:
 	
 	const FAIRequestID GetMoveRequestId();
 
-private:
-
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-
-	void UpdateMovement(float DeltaTime);
-
 	UFUNCTION(BlueprintPure)
 		float GetCurrentHull();
 	UFUNCTION(BlueprintPure)
@@ -43,6 +37,12 @@ private:
 		float GetCurrentShield();
 	UFUNCTION(BlueprintPure)
 		float GetMaxShield();
+
+private:
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
+	void UpdateMovement(float DeltaTime);	
 
 	bool bMoving = false;
 	FVector targetPoint = { 0.0f, 0.0f, 0.0f };
@@ -73,4 +73,10 @@ private:
 
 	UPROPERTY() AAiShipPawn* aiShip;
 	UPROPERTY(EditAnywhere) UBehaviorTree* BT_HostileShipAI;
+
+	UPROPERTY()
+		FTimerHandle ShieldCooldownTimer;
+	float mShieldCooldownDuration = 5.0f;
+	bool mShieldCooldown = false;
+	void ShieldCooldownElapsed();
 };

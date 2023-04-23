@@ -82,6 +82,8 @@ private:
 		float GetStrafeMaxCooldown();
 	UFUNCTION(BlueprintPure)
 		float GetStrafeCooldown();
+	UFUNCTION(BlueprintPure)
+		float GetSheildCooldown();
 //********************************************************************************************************
 //********************************************************************************************************
 //Ship Stats
@@ -148,9 +150,14 @@ private:
 
 	UPROPERTY()
 		FTimerHandle StrafeCooldownTimer;
+	UPROPERTY()
+		FTimerHandle ShieldCooldownTimer;
 	float mStrafeCooldownDuration = 2.0f;
-	bool mCooldown = false;
+	float mShieldCooldownDuration = 5.0f;
+	bool mStrafeCooldown = false;
+	bool mShieldCooldown = false;
 	void StrafeCooldownElapsed();
+	void ShieldCooldownElapsed();
 
 	//********************************************************************************************************
 	//********************************************************************************************************

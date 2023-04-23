@@ -15,7 +15,7 @@ EBTNodeResult::Type UBTTask_GetRandomPoint::ExecuteTask(UBehaviorTreeComponent& 
 	AActor* AIActor = OwnerComp.GetAIOwner()->GetPawn();
 
 	FVector2D randResult = FMath::RandPointInCircle(randomRadius);
-	FVector Location = FVector(randResult, FMath::RandRange(-200.0f, 200.0f));
+	FVector Location = FVector(randResult, FMath::RandRange(-randomRadius, randomRadius));
 
 	OwnerComp.GetBlackboardComponent()->SetValueAsVector(TEXT("RandPosition"), Location);
 
