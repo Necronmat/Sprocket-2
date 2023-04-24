@@ -11,13 +11,13 @@ void UBTService_LineOfSightToPlayer::TickNode(UBehaviorTreeComponent& OwnerComp,
 	Super::TickNode(OwnerComp, NodeMemory, DeltaSeconds);
 	AAIController* aiController = OwnerComp.GetAIOwner();
 	APawn* playerShip = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
-	if (aiController->LineOfSightTo(playerShip)) {
+
+	if (aiController->LineOfSightTo(playerShip)) 
+	{
 		OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
 	}
 	else {
 		aiController->ClearFocus(EAIFocusPriority::Gameplay);
 		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
 	}
-
-
 }

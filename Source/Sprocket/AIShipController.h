@@ -20,19 +20,20 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 public:
+	UFUNCTION(BlueprintImplementableEvent)
+		void SetVolume();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		float SetThrusterVolume();
+
 	void SetMovementTarget(FVector point, float range);
 	bool GetMoving();
 
 	void AddRandomGun();
 	void RemoveRandomGun();
+	void ShootGuns();
 	
 	const FAIRequestID GetMoveRequestId();
-
-private:
-
-	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
-
-	void UpdateMovement(float DeltaTime);
 
 	UFUNCTION(BlueprintPure)
 		float GetCurrentHull();
@@ -43,12 +44,18 @@ private:
 	UFUNCTION(BlueprintPure)
 		float GetMaxShield();
 
+private:
+
+	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+
+	void UpdateMovement(float DeltaTime);	
+
 	bool bMoving = false;
 	FVector targetPoint = { 0.0f, 0.0f, 0.0f };
 	float distanceAllowance = 0.0f;
 
 	UPROPERTY(EditAnywhere)
-		float turningRadius = 40.0f;
+		float turningRadius = 80.0f;
 
 	UPROPERTY(EditAnywhere)
 		float acceleration = 200.0f;
@@ -72,4 +79,32 @@ private:
 
 	UPROPERTY() AAiShipPawn* aiShip;
 	UPROPERTY(EditAnywhere) UBehaviorTree* BT_HostileShipAI;
+
+	UPROPERTY()
+		FTimerHandle ShieldCooldownTimer;
+	float mShieldCooldownDuration = 5.0f;
+	bool mShieldCooldown = false;
+	void ShieldCooldownElapsed();
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Sounds
+
+	UPROPERTY(EditAnywhere)
+		TArray<USoundBase*> mHullSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mLaserSound;
+
+	UPROPERTY(EditAnywhere)
+		TArray<USoundBase*> mShieldSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mThrusterLoopSound;
+
+	UPROPERTY(EditAnywhere)
+		float mSFXVolume = 1.0f;
+
+	UPROPERTY(EditAnywhere)
+		USoundMix* mMixer;
 };

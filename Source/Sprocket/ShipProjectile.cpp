@@ -15,7 +15,7 @@ AShipProjectile::AShipProjectile()
 	// Set the sphere's collision radius.
 	mCollision->InitSphereRadius(15.0f);
 	// Set the sphere's collision profile name to "Projectile".
-	mCollision->BodyInstance.SetCollisionProfileName(TEXT("Projectiles"));
+	mCollision->BodyInstance.SetCollisionProfileName(TEXT("EnemyProjectiles"));
 	// Event called when component hits something.
 	mCollision->OnComponentHit.AddDynamic(this, &AShipProjectile::OnHit);
 	// Set the root component to be the collision component.
@@ -23,7 +23,7 @@ AShipProjectile::AShipProjectile()
 
 	mProjectileMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Projectile Mesh"));
 	static ConstructorHelpers::FObjectFinder<UStaticMesh>Mesh(TEXT("StaticMesh'/Engine/BasicShapes/Sphere.Sphere'"));
-	mProjectileMesh->SetCollisionProfileName(TEXT("Projectiles"));
+	mProjectileMesh->SetCollisionProfileName(TEXT("EnemyProjectiles"));
 	mProjectileMesh->SetStaticMesh(Mesh.Object);
 
 	// Use this component to drive this projectile's movement.
@@ -60,7 +60,7 @@ void AShipProjectile::Tick(float DeltaTime)
 
 void AShipProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
 {
-	if (OtherActor != this && OtherComponent->IsSimulatingPhysics())
+	if (OtherComponent->IsSimulatingPhysics())
 	{
 		OtherComponent->AddImpulseAtLocation(mMovementComp->Velocity * mForce, Hit.ImpactPoint);
 		UGameplayStatics::ApplyDamage(OtherActor, mDamage, UGameplayStatics::GetPlayerController(GetWorld(), 0), UGameplayStatics::GetPlayerPawn(GetWorld(), 0), UDamageType::StaticClass());
@@ -81,5 +81,21 @@ void AShipProjectile::FireInDirection(const FVector& ShootDirection, float speed
 	SetLifeSpan(range);
 
 	mMovementComp->Velocity = ShootDirection * mMovementComp->InitialSpeed;
+}
+
+void AShipProjectile::SetIfEnemy(bool newEnemy)
+{
+	mEnemy = newEnemy;
+
+	if (mEnemy)
+	{
+		mCollision->BodyInstance.SetCollisionProfileName(TEXT("EnemyProjectiles"));
+		mProjectileMesh->SetCollisionProfileName(TEXT("EnemyProjectiles"));
+	}
+	else
+	{
+		mCollision->BodyInstance.SetCollisionProfileName(TEXT("Projectiles"));
+		mProjectileMesh->SetCollisionProfileName(TEXT("Projectiles"));
+	}
 }
 

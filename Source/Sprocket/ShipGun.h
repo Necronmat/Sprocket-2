@@ -26,9 +26,11 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void FireGun();
+	bool FireGun();
 
 	void AttachToShip(USceneComponent* parent, FVector offset, FQuat rotation, FVector scale);
+
+	void SetIfEnemy(bool newEnemy);
 
 private:
 
@@ -63,6 +65,8 @@ private:
 	float mGunTimer = 0.0f;
 
 	bool mCanFire = true;
+
+	bool mEnemy = true;
 
 	//********************************************************************************************************
 	//********************************************************************************************************

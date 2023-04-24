@@ -31,6 +31,8 @@ public:
 
 	void FireInDirection(const FVector& ShootDirection, float speed, float force, float damage, float range);
 
+	void SetIfEnemy(bool newEnemy);
+
 private:
 
 	UPROPERTY(VisibleDefaultsOnly)
@@ -54,5 +56,7 @@ private:
 	float mForce = 100.0f;
 
 	float mDamage = 1.0f;
+
+	bool mEnemy = true;
 
 };

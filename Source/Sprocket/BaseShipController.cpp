@@ -43,6 +43,11 @@ void ABaseShipController::Tick(float DeltaTime)
 			}
 		}
 
+		if (!mShieldCooldown && mShields < mMaxShields)
+		{
+			mShields += 5 * DeltaTime;
+		}
+
 		SetVolume();
 
 		if (mGrappling)
@@ -135,9 +140,9 @@ void ABaseShipController::Roll(float AxisAmount)
 void ABaseShipController::StrafeHorizontal(float AxisAmount)
 {
 	if (playerBaseShip && !menuDisplayed) {
-		if (!mCooldown && abs(AxisAmount) > 0) {
+		if (!mStrafeCooldown && abs(AxisAmount) > 0) {
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorRightVector() * AxisAmount * mStrafeSpeed);
-			mCooldown = true;
+			mStrafeCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
 			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
 		}
@@ -147,10 +152,10 @@ void ABaseShipController::StrafeHorizontal(float AxisAmount)
 void ABaseShipController::StrafeVertical(float AxisAmount)
 {
 	if (playerBaseShip && !menuDisplayed) {
-		if (!mCooldown && abs(AxisAmount) > 0)
+		if (!mStrafeCooldown && abs(AxisAmount) > 0)
 		{
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorUpVector() * AxisAmount * mStrafeSpeed);
-			mCooldown = true;
+			mStrafeCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
 			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
 		}
@@ -174,9 +179,12 @@ void ABaseShipController::AddRandomGun()
 		spawnParams.Instigator = GetInstigator();
 
 		AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(playerBaseShip->mBaseGun, playerBaseShip->GetActorLocation() + FTransform(playerBaseShip->GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), playerBaseShip->GetActorRotation(), spawnParams);
+		tempGun->SetIfEnemy(false);
 		tempGun->AttachToShip(playerBaseShip->mShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), playerBaseShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
+
 		float rand = FMath::RandRange(0.001f, 20.0f);
 		tempGun->SetGunStats(5000.0f, (1/rand) * 240.f, rand * 0.5f, rand * 450.0f);
+
 		playerBaseShip->mGuns.Add(tempGun);
 	}
 }
@@ -550,8 +558,10 @@ void ABaseShipController::Fire()
 	if (playerBaseShip && !menuDisplayed) {
 		for (AShipGun* gun : playerBaseShip->mGuns)
 		{
-			gun->FireGun();
-			UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume);
+			if (gun->FireGun())
+			{
+				UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume / playerBaseShip->mGuns.Num());
+			}			
 		}
 	}
 }
@@ -659,6 +669,7 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
 	if (!menuDisplayed) {
+
 		if (bShieldRecharging) bShieldRecharging = false;
 		if (GetWorld()->GetTimerManager().TimerExists(mShieldRechargeDelayTimer)) {
 			GetWorld()->GetTimerManager().ClearTimer(mShieldRechargeDelayTimer);
@@ -827,6 +838,7 @@ float ABaseShipController::GetCrewmatePurchaseCost()
 float ABaseShipController::GetHullHealCost()
 {
 	return mMoneyHullHealCostAmount;
+
 }
 
 float ABaseShipController::GetElectricianCount()
@@ -876,5 +888,10 @@ void ABaseShipController::NotificationElapsed()
 
 void ABaseShipController::StrafeCooldownElapsed()
 {
-	mCooldown = false;
+	mStrafeCooldown = false;
+}
+
+void ABaseShipController::ShieldCooldownElapsed()
+{
+	mShieldCooldown = false;
 }

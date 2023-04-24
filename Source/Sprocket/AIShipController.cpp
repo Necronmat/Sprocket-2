@@ -3,6 +3,7 @@
 
 #include "AIShipController.h"
 #include "BrainComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "ShipGun.h"
 
 void AAIShipController::OnPossess(APawn* InPawn)
@@ -12,20 +13,39 @@ void AAIShipController::OnPossess(APawn* InPawn)
 	PrimaryActorTick.bCanEverTick = true;
 	aiShip = Cast<AAiShipPawn>(GetPawn());
 	AddRandomGun();
+	UGameplayStatics::PlaySoundAtLocation(this, mThrusterLoopSound, aiShip->GetActorLocation(), mSFXVolume);
 }
 
 void AAIShipController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (!mShieldCooldown && shields < maxShields)
+	{
+		shields += 5 * DeltaTime;
+	}
+
+	SetVolume();
+
 	if(bMoving) UpdateMovement(DeltaTime);
 }
+
+float AAIShipController::SetThrusterVolume_Implementation()
+{
+	return  speed / maxSpeed;
+};
 
 float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
 
 	shields -= DamageAmount;
+	GetWorld()->GetTimerManager().SetTimer(ShieldCooldownTimer, this, &AAIShipController::ShieldCooldownElapsed, mShieldCooldownDuration, false);
+	mShieldCooldown = true;
+	int index;
 	if (shields <= 0.0f) {
+		index = FMath::RandRange(0, mHullSound.Num() - 1);
+		UGameplayStatics::PlaySoundAtLocation(this, mHullSound[index], aiShip->GetActorLocation(), mSFXVolume);
 		float remainingDamage = 0.0 - shields;
 		shields = 0.0f;
 		hull -= remainingDamage;
@@ -40,6 +60,11 @@ float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 			aiShip->Destroy();
 
 		}
+	}
+	else
+	{
+		index = FMath::RandRange(0, mShieldSound.Num() - 1);
+		UGameplayStatics::PlaySoundAtLocation(this, mShieldSound[index], aiShip->GetActorLocation(), mSFXVolume);
 	}
 	return DamageAmount;
 }
@@ -56,12 +81,63 @@ void AAIShipController::UpdateMovement(float DeltaTime)
 	
 	FVector dir = targetPoint - aiShip->GetActorLocation();
 	dir.Normalize();
-	//aiShip->AddActorLocalRotation(FQuat(dir, turningRadius * DeltaTime));
-	aiShip->FaceRotation(dir.Rotation());
 
-	if (speed < maxSpeed/* && (distRemaining > (speed))*/) speed += acceleration;// *DeltaTime;
-	//else if (distRemaining < (speed * 5)) speed -= acceleration * DeltaTime;
-	if (speed > maxSpeed) speed = maxSpeed;
+	FRotator facingRotator = dir.Rotation();
+
+	//Ai turning
+	FVector x = aiShip->GetActorRightVector();
+	x.Normalize();
+	FVector y = aiShip->GetActorUpVector();
+	y.Normalize();
+	FVector z = aiShip->GetActorForwardVector();
+	z.Normalize();
+
+	if (dir.Dot(x) >= 0)
+	{		
+		aiShip->AddActorLocalRotation(FRotator(0, turningRadius, 0) * DeltaTime);		
+	}
+	else
+	{
+		aiShip->AddActorLocalRotation(FRotator(0, -turningRadius, 0) * DeltaTime);
+	}
+
+	if (dir.Dot(y) >= 0)
+	{
+		aiShip->AddActorLocalRotation(FRotator(turningRadius, 0, 0) * DeltaTime);
+	}
+	else
+	{
+		aiShip->AddActorLocalRotation(FRotator(-turningRadius, 0, 0) * DeltaTime);
+	}
+
+	if (FVector(0,1,0).Dot(y) >= 0)
+	{
+		aiShip->AddActorLocalRotation(FRotator(0, 0, turningRadius) * DeltaTime);
+	}
+	else
+	{
+		aiShip->AddActorLocalRotation(FRotator(0, 0, -turningRadius) * DeltaTime);
+	}
+
+
+	//Alter Speed
+	if (distRemaining < 200)
+	{
+		speed -= acceleration;
+	}
+	else if (speed < maxSpeed)
+	{
+		speed += acceleration;
+	}
+
+	if (speed > maxSpeed)
+	{
+		speed = maxSpeed;
+	}
+	else if(speed < 0)
+	{
+		speed = 0;
+	}
 
 	aiShip->ShipMesh->AddImpulse(aiShip->GetActorForwardVector() * speed * DeltaTime);
 	
@@ -115,7 +191,7 @@ void AAIShipController::AddRandomGun()
 
 		AShipGun* tempGun = GetWorld()->SpawnActor<AShipGun>(aiShip->mBaseGun, aiShip->GetActorLocation() + FTransform(aiShip->GetActorRotation()).TransformVector(FVector3d(0.0f, 0.0f, 0.0f)), aiShip->GetActorRotation(), spawnParams);
 		tempGun->AttachToShip(aiShip->ShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), aiShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
-		tempGun->SetGunStats(FMath::RandRange(0.0f, 100.0f), 100.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(0.0f, 6000.0f));
+		tempGun->SetGunStats(FMath::RandRange(0.0f, 3.0f), 100.f, FMath::RandRange(0.0f, 100.0f), FMath::RandRange(100.0f, 6000.0f));
 		aiShip->mGuns.Add(tempGun);
 }
 
@@ -129,9 +205,25 @@ void AAIShipController::RemoveRandomGun()
 		}
 }
 
+void AAIShipController::ShootGuns()
+{
+	for (int i = 0; i < aiShip->mGuns.Num(); ++i)
+	{
+		if (aiShip->mGuns[i]->FireGun())
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, mLaserSound, aiShip->GetActorLocation(), mSFXVolume / aiShip->mGuns.Num());
+		}		
+	}
+}
+
 void AAIShipController::StoreMoveRequestId()
 {
 	moveRequestId = nextRequestId++;
+}
+
+void AAIShipController::ShieldCooldownElapsed()
+{
+	mShieldCooldown = false;
 }
 
 const FAIRequestID AAIShipController::GetMoveRequestId()
