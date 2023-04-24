@@ -61,7 +61,7 @@ void AShipGun::Tick(float DeltaTime)
 	}
 }
 
-void AShipGun::FireGun()
+bool AShipGun::FireGun()
 {
 	if (mCanFire)
 	{
@@ -85,7 +85,10 @@ void AShipGun::FireGun()
 
 		mGunTimer = mGunCooldown;
 		mCanFire = false;
+		return true;
 	}
+
+	return false;
 }
 
 void AShipGun::AttachToShip(USceneComponent* parent, FVector offset, FQuat rotation, FVector scale)

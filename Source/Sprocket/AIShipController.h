@@ -20,6 +20,12 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 public:
+	UFUNCTION(BlueprintImplementableEvent)
+		void SetVolume();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		float SetThrusterVolume();
+
 	void SetMovementTarget(FVector point, float range);
 	bool GetMoving();
 
@@ -79,4 +85,26 @@ private:
 	float mShieldCooldownDuration = 5.0f;
 	bool mShieldCooldown = false;
 	void ShieldCooldownElapsed();
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Sounds
+
+	UPROPERTY(EditAnywhere)
+		TArray<USoundBase*> mHullSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mLaserSound;
+
+	UPROPERTY(EditAnywhere)
+		TArray<USoundBase*> mShieldSound;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mThrusterLoopSound;
+
+	UPROPERTY(EditAnywhere)
+		float mSFXVolume = 1.0f;
+
+	UPROPERTY(EditAnywhere)
+		USoundMix* mMixer;
 };

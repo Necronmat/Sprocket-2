@@ -26,7 +26,7 @@ public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
-	void FireGun();
+	bool FireGun();
 
 	void AttachToShip(USceneComponent* parent, FVector offset, FQuat rotation, FVector scale);
 

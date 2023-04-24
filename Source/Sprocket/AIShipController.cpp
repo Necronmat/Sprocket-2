@@ -3,6 +3,7 @@
 
 #include "AIShipController.h"
 #include "BrainComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "ShipGun.h"
 
 void AAIShipController::OnPossess(APawn* InPawn)
@@ -12,6 +13,7 @@ void AAIShipController::OnPossess(APawn* InPawn)
 	PrimaryActorTick.bCanEverTick = true;
 	aiShip = Cast<AAiShipPawn>(GetPawn());
 	AddRandomGun();
+	UGameplayStatics::PlaySoundAtLocation(this, mThrusterLoopSound, aiShip->GetActorLocation(), mSFXVolume);
 }
 
 void AAIShipController::Tick(float DeltaTime)
@@ -23,8 +25,15 @@ void AAIShipController::Tick(float DeltaTime)
 		shields += 5 * DeltaTime;
 	}
 
+	SetVolume();
+
 	if(bMoving) UpdateMovement(DeltaTime);
 }
+
+float AAIShipController::SetThrusterVolume_Implementation()
+{
+	return  speed / maxSpeed;
+};
 
 float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
@@ -33,7 +42,10 @@ float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	shields -= DamageAmount;
 	GetWorld()->GetTimerManager().SetTimer(ShieldCooldownTimer, this, &AAIShipController::ShieldCooldownElapsed, mShieldCooldownDuration, false);
 	mShieldCooldown = true;
+	int index;
 	if (shields <= 0.0f) {
+		index = FMath::RandRange(0, mHullSound.Num() - 1);
+		UGameplayStatics::PlaySoundAtLocation(this, mHullSound[index], aiShip->GetActorLocation(), mSFXVolume);
 		float remainingDamage = 0.0 - shields;
 		shields = 0.0f;
 		hull -= remainingDamage;
@@ -48,6 +60,11 @@ float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 			aiShip->Destroy();
 
 		}
+	}
+	else
+	{
+		index = FMath::RandRange(0, mShieldSound.Num() - 1);
+		UGameplayStatics::PlaySoundAtLocation(this, mShieldSound[index], aiShip->GetActorLocation(), mSFXVolume);
 	}
 	return DamageAmount;
 }
@@ -192,7 +209,10 @@ void AAIShipController::ShootGuns()
 {
 	for (int i = 0; i < aiShip->mGuns.Num(); ++i)
 	{
-		aiShip->mGuns[i]->FireGun();
+		if (aiShip->mGuns[i]->FireGun())
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, mLaserSound, aiShip->GetActorLocation(), mSFXVolume / aiShip->mGuns.Num());
+		}		
 	}
 }
 

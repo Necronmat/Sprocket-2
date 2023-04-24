@@ -524,10 +524,12 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 void ABaseShipController::Fire()
 {
 	if (playerBaseShip && !menuDisplayed) {
-		UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume);
 		for (AShipGun* gun : playerBaseShip->mGuns)
 		{
-			gun->FireGun();
+			if (gun->FireGun())
+			{
+				UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume / playerBaseShip->mGuns.Num());
+			}			
 		}
 	}
 }
