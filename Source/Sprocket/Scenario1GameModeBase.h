@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/GameModeBase.h"
 #include "Station.h"
+#include "AiShipPawn.h"
 #include "Scenario1GameModeBase.generated.h"
 
 
@@ -46,7 +47,8 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 		void RequestJob();
-
+	UFUNCTION()
+		void EnemyDefeated();
 	UFUNCTION()
 		void GameOver(bool pDied);
 
@@ -92,4 +94,18 @@ private:
 	UPROPERTY(EditAnywhere) TSubclassOf<AStation> StationClass;
 
 	UPROPERTY() ABaseShipController* playerControllerRef;
+
+	UPROPERTY()
+		FTimerHandle mCombatSpawnTimer;
+	UPROPERTY(EditAnywhere)
+		float mCombatSpawnMinDelay = 15.0f;
+	UPROPERTY(EditAnywhere)
+		float mCombatSpawnMaxDelay = 45.0f;
+	UFUNCTION()
+		void mCombatSpawnDelayElapsed();
+	UPROPERTY(EditAnywhere) TSubclassOf<AAiShipPawn> AiShipPawnClass;
+	UPROPERTY() int EnemiesAlive = 0;
+	UPROPERTY(EditAnywhere) int EnemyWaveSpawnCount = 4;
+	UPROPERTY(EditAnywhere) float EnemySpawnDistance = 10000.0f;
+	UPROPERTY(EditAnywhere) float EnemySpawnHeight = 2000.0f;
 };

@@ -24,6 +24,7 @@ enum class EMissionInfoCatagory : uint8
 	JobCollectionSuggestion UMETA(DisplayName = "Job Collection Suggestion"),
 	JobRequirementPickup UMETA(DisplayName = "Job Requirement Pickup"),
 	JobRequirementDelivery UMETA(DisplayName = "Job Requirement Delivery"),
+	DefendFromEnemies UMETA(DisplayName = "Defend from Enemies"),
 };
 
 UENUM(BlueprintType)
@@ -33,6 +34,7 @@ enum class ENotificationInfoCatagory : uint8
 	ShipDefeated UMETA(DisplayName = "Ship Defeated"),
 	MissionCompleted UMETA(DisplayName = "Mission Completed"),
 	MaintainenceOccurred UMETA(DisplayName = "Maintainence Occurred"),
+	EnemiesInbound UMETA(DisplayName = "Enemies Inbound"),
 };
 
 

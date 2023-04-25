@@ -111,6 +111,7 @@ void ABaseShipController::EnemyDefeated()
 {
 	IncreaseMoneyAmount(mMoneyEnemyDefeated);
 	SetNotificationInfo(ENotificationInfoCatagory::ShipDefeated);
+	if (GameModeRef) GameModeRef->EnemyDefeated();
 }
 
 void ABaseShipController::MissionComplete()
@@ -448,6 +449,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 			TotalCrewMatesCount++;
 			MechanicCount++;
 			mMaxHull *= pos;
+			mHull = mMaxHull;
 			mMaxSpeed /= neg;
 
 			if (mThrusterSpeed > mMaxSpeed)
@@ -460,6 +462,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 			TotalCrewMatesCount++;
 			ElectricianCount++;
 			mMaxShields *= pos;
+			mShields = mMaxShields;
 			mMaxSpeed /= neg;
 
 			if (mThrusterSpeed > mMaxSpeed)
@@ -473,11 +476,13 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 
 			TotalCrewMatesCount++;
 			FirstMateCount++;
+			mPowerUsage /= 2.0f;
 			//Decrease power
 			//Comments about their luxurius life
 		}
 
-		mPowerUsage += cost;
+		if (FirstMateCount > 0) mPowerUsage += cost / 2;
+		else mPowerUsage += cost;
 		DecreaseMoneyAmount(mMoneyCrewmateCostAmount);
 		UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(temp->GetCrew()));
 
@@ -561,9 +566,12 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 		FirstMateCount--;
 	}
 
+	if (FirstMateCount > 0) mPowerUsage -= mCrew[num]->GetCost() / 2;
+	else mPowerUsage -= mCrew[num]->GetCost();
 	mPowerUsage -= mCrew[num]->GetCost();
 
 	UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(mCrew[num]->GetCrew()));
+	IncreaseMoneyAmount(mMoneyCrewmateCostAmount);
 
 	playerBaseShip->RemoveInstanceComponent(mCrew[num]);
 	mCrew.RemoveAt(num);

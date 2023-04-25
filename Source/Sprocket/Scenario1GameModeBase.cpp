@@ -102,6 +102,14 @@ void AScenario1GameModeBase::RequestJob()
 	GenerateNewStationDestination();
 }
 
+void AScenario1GameModeBase::EnemyDefeated()
+{
+	EnemiesAlive--;
+	if (EnemiesAlive <= 0) {
+		if (playerControllerRef) playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobRequirementDelivery);
+	}
+}
+
 void AScenario1GameModeBase::GameOver(bool pDied)
 {
 	if (pDied) mGameState = EGameState::GameOverByDeath;
@@ -168,10 +176,13 @@ void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 			mGameState = EGameState::JobDeliveryStage;
 			playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobRequirementDelivery);
 			//Run delivery code.
+			float timerDelay = FMath::RandRange(mCombatSpawnMinDelay, mCombatSpawnMaxDelay);
+			GetWorld()->GetTimerManager().SetTimer(mCombatSpawnTimer, this, &AScenario1GameModeBase::mCombatSpawnDelayElapsed, timerDelay, false);
 		}
 		else if (mGameState == EGameState::JobDeliveryStage) {
 			message = TEXT("Delivery Complete");
 			stations[designatedStationTracker]->SetIsTarget(false);
+			if (GetWorld()->GetTimerManager().IsTimerActive(mCombatSpawnTimer)) GetWorld()->GetTimerManager().ClearTimer(mCombatSpawnTimer);
 			if (playerControllerRef) playerControllerRef->MissionComplete();
 			mGameState = EGameState::Jobless;
 			playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobCollectionSuggestion);
@@ -179,4 +190,19 @@ void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 	}
 
 	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Green, message);
+}
+
+void AScenario1GameModeBase::mCombatSpawnDelayElapsed()
+{
+	if (AiShipPawnClass && playerControllerRef) {
+		for (int i = 0; i < EnemyWaveSpawnCount; i++) {
+			FVector SpawnLocation = { playerControllerRef->playerBaseShip->GetActorLocation().X + FMath::FRandRange(-EnemySpawnDistance, EnemySpawnDistance), playerControllerRef->playerBaseShip->GetActorLocation().Y + FMath::FRandRange(-EnemySpawnDistance, EnemySpawnDistance), EnemySpawnHeight };
+			AAiShipPawn* tempShip = GetWorld()->SpawnActor<AAiShipPawn>(AiShipPawnClass, SpawnLocation, { 0.0f, 0.0f, 0.0f });
+			EnemiesAlive++;
+		}
+		if (playerControllerRef) {
+			playerControllerRef->SetNotificationInfo(ENotificationInfoCatagory::EnemiesInbound);
+			playerControllerRef->SetMissionInfo(EMissionInfoCatagory::DefendFromEnemies);
+		}
+	}
 }
