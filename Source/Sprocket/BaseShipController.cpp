@@ -43,9 +43,13 @@ void ABaseShipController::Tick(float DeltaTime)
 			}
 		}
 
-		if (!mShieldCooldown && mShields < mMaxShields)
-		{
-			mShields += 5 * DeltaTime;
+		if (mMoney < 0.0f && GameModeRef) {
+			GameModeRef->GameOver(false);
+			menuDisplayed = true;
+			bShowMouseCursor = true;
+			bEnableClickEvents = true;
+			bEnableMouseOverEvents = true;
+			bCinematicMode = true;
 		}
 
 		SetVolume();
@@ -101,6 +105,18 @@ void ABaseShipController::SetNotificationInfo(ENotificationInfoCatagory value)
 void ABaseShipController::SetMissionInfo(EMissionInfoCatagory value)
 {
 	MissionInfo = value;
+}
+
+void ABaseShipController::EnemyDefeated()
+{
+	IncreaseMoneyAmount(mMoneyEnemyDefeated);
+	SetNotificationInfo(ENotificationInfoCatagory::ShipDefeated);
+}
+
+void ABaseShipController::MissionComplete()
+{
+	IncreaseMoneyAmount(mMoneyJobComplete);
+	SetNotificationInfo(ENotificationInfoCatagory::MissionCompleted);
 }
 
 void ABaseShipController::Throttle(float AxisAmount)
@@ -693,6 +709,13 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 					playerBaseShip->mGuns[0]->Destroy();
 					playerBaseShip->mGuns.RemoveAt(0);
 				}
+
+				if (GameModeRef) GameModeRef->GameOver(true);
+				menuDisplayed = true;
+				bShowMouseCursor = true;
+				bEnableClickEvents = true;
+				bEnableMouseOverEvents = true;
+				bCinematicMode = true;
 
 				GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
 				playerBaseShip->Destroy();

@@ -14,6 +14,7 @@ void AAIShipController::OnPossess(APawn* InPawn)
 	aiShip = Cast<AAiShipPawn>(GetPawn());
 	AddRandomGun();
 	UGameplayStatics::PlaySoundAtLocation(this, mThrusterLoopSound, aiShip->GetActorLocation(), mSFXVolume);
+	playerControllerRef = Cast<ABaseShipController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 }
 
 void AAIShipController::Tick(float DeltaTime)
@@ -56,7 +57,8 @@ float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 				aiShip->mGuns[0]->Destroy();
 				aiShip->mGuns.RemoveAt(0);
 			}
-
+			playerControllerRef = Cast<ABaseShipController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+			if(playerControllerRef) playerControllerRef->EnemyDefeated();
 			aiShip->Destroy();
 
 		}

@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "AIController.h"
 #include "AiShipPawn.h"
+#include "BaseShipController.h"
 #include "AIShipController.generated.h"
 
 /**
@@ -79,6 +80,8 @@ private:
 
 	UPROPERTY() AAiShipPawn* aiShip;
 	UPROPERTY(EditAnywhere) UBehaviorTree* BT_HostileShipAI;
+
+	UPROPERTY() ABaseShipController* playerControllerRef;
 
 	UPROPERTY()
 		FTimerHandle ShieldCooldownTimer;

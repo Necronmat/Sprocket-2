@@ -3,6 +3,7 @@
 
 #include "Scenario1GameModeBase.h"
 #include "Blueprint/UserWidget.h"
+#include "BaseShipController.h"
 #include "Kismet/GameplayStatics.h"
 
 void AScenario1GameModeBase::TogglePaused()
@@ -69,6 +70,11 @@ bool AScenario1GameModeBase::IsPlayerInsideInnerRing()
 	return bStationInnerRing;
 }
 
+EGameState AScenario1GameModeBase::GetCurrentState()
+{
+	return mGameState;
+}
+
 void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, int sphereNo)
 {
 	if (bStart) {
@@ -78,19 +84,36 @@ void AScenario1GameModeBase::StationSphereOverlap(bool bStart, int stationNo, in
 			break;
 		case 1:
 			TriggerApproachStationEvent(stationNo);
+			bStationInnerRing = true;
 			break;
 		case 2:
 			TriggerLandingStationEvent(stationNo);
-			bStationInnerRing = true;
 			break;
 		}
 	}
 	else if (sphereNo == 2) bStationInnerRing = false;
 }
 
+void AScenario1GameModeBase::RequestJob()
+{
+	if (mGameState != EGameState::Jobless) return;
+
+	mGameState = EGameState::JobPickupStage;
+	GenerateNewStationDestination();
+}
+
+void AScenario1GameModeBase::GameOver(bool pDied)
+{
+	if (pDied) mGameState = EGameState::GameOverByDeath;
+	else mGameState = EGameState::GameOverByMoney;
+	TogglePaused();
+}
+
 void AScenario1GameModeBase::BeginPlay()
 {
 	Super::BeginPlay();
+	playerControllerRef = Cast<ABaseShipController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+
 	UPROPERTY() TArray<AActor*> temp;
 	int i = 0;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStation::StaticClass(), temp);
@@ -99,21 +122,16 @@ void AScenario1GameModeBase::BeginPlay()
 		Station->SetStationId(i);
 		i++;
 		stations.Emplace(Station);
-		//if (Station->GetStationId() == 1) station1 = Station;
-		//else if (Station->GetStationId() == 2) station2 = Station;
-		//else if (Station->GetStationId() == 3) station3 = Station;
 	}
 
-	GenerateNewStationDestination();
+	//GenerateNewStationDestination();
 
-	//if(station2) station2->SetIsTarget(true);
 	UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 	if (UIMenuCount) UIMenuCount->AddToViewport();
 }
 
 void AScenario1GameModeBase::GenerateNewStationDestination()
 {
-	//stations[designatedStationTracker]->SetIsTarget(false);
 	int prevTracker = designatedStationTracker;
 	designatedStationTracker = FMath::RandRange(0, stations.Num() - 1);
 	if (designatedStationTracker == prevTracker) {
@@ -121,6 +139,7 @@ void AScenario1GameModeBase::GenerateNewStationDestination()
 		else designatedStationTracker++;
 	}
 	if(stations.Num() > 0)stations[designatedStationTracker]->SetIsTarget(true);
+	playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobRequirementPickup);
 }
 
 void AScenario1GameModeBase::TriggerFarStationEvent(int stationId)
@@ -132,44 +151,32 @@ void AScenario1GameModeBase::TriggerFarStationEvent(int stationId)
 
 void AScenario1GameModeBase::TriggerApproachStationEvent(int stationId)
 {
-	FString message = TEXT("Landing Approved, please head to the marked dock");
+	FString message = TEXT("Press Tab to open the Station Menu");
 
 	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Green, message);
 }
 
 void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 {
-	FString message = TEXT("Error Message");
+	FString message = TEXT("Until authorised please leave the landing area.");
 
 	if (stationId == designatedStationTracker) {
-		message = TEXT("Delivery Made");
-		stations[designatedStationTracker]->SetIsTarget(false);
-
-		//Run delivery code.
-
-		GenerateNewStationDestination();
+		if (mGameState == EGameState::JobPickupStage) {
+			message = TEXT("Delivery Picked Up");
+			stations[designatedStationTracker]->SetIsTarget(false);
+			GenerateNewStationDestination();
+			mGameState = EGameState::JobDeliveryStage;
+			playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobRequirementDelivery);
+			//Run delivery code.
+		}
+		else if (mGameState == EGameState::JobDeliveryStage) {
+			message = TEXT("Delivery Complete");
+			stations[designatedStationTracker]->SetIsTarget(false);
+			if (playerControllerRef) playerControllerRef->MissionComplete();
+			mGameState = EGameState::Jobless;
+			playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobCollectionSuggestion);
+		}
 	}
 
-	/*switch (ScenarioProgressTracker) {
-	case 1:
-		if (stationId == 2) {
-			message = TEXT("Drop off these goods at Station 3.");
-			ScenarioProgressTracker++;
-			station2->SetIsTarget(false);
-			station3->SetIsTarget(true);
-
-		}
-		break;
-	case 2:
-		if (stationId == 3) {
-			message = TEXT("Scenario Over.");
-			ScenarioProgressTracker++;
-			station3->SetIsTarget(false);
-			station1->SetIsTarget(true);
-		}
-		break;
-	default:
-		break;
-	}*/
 	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Green, message);
 }

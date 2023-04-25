@@ -11,6 +11,10 @@ void UBTService_ShootingCone::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 	AAIController * aiController = OwnerComp.GetAIOwner();;
 	APawn* playerShip = UGameplayStatics::GetPlayerPawn(GetWorld(), 0);
 
+	if (!playerShip) {
+		OwnerComp.GetBlackboardComponent()->ClearValue(GetSelectedBlackboardKey());
+		return;
+	}
 	FVector facing = aiController->GetPawn()->GetActorForwardVector();
 	FVector dir = playerShip->GetActorLocation() - aiController->GetPawn()->GetActorLocation();
 

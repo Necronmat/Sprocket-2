@@ -65,6 +65,10 @@ public:
 		void SetNotificationInfo(ENotificationInfoCatagory value);
 	UFUNCTION()
 		void SetMissionInfo(EMissionInfoCatagory value);
+	UFUNCTION()
+		void EnemyDefeated();
+	UFUNCTION()
+		void MissionComplete();
 
 private:
 
@@ -191,6 +195,10 @@ private:
 		float mMoneyPermUpgradeCostAmount = 200.0f;
 	UPROPERTY(EditAnywhere)
 		float mMoneyHullHealCostAmount = 20.0f;
+	UPROPERTY(EditAnywhere)
+		float mMoneyJobComplete = 100.0f;
+	UPROPERTY(EditAnywhere)
+		float mMoneyEnemyDefeated = 25.0f;
 	UPROPERTY()
 		FTimerHandle mMoneyTimer;
 	UPROPERTY(EditAnywhere)
@@ -198,6 +206,7 @@ private:
 	float mMoney = 0.0f;
 	UFUNCTION()
 		void mMoneyTimerElapsed();
+
 	UFUNCTION(BlueprintPure)
 		float GetShipPermUpgradeCost();
 	UFUNCTION(BlueprintPure)

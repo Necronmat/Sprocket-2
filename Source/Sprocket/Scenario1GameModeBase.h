@@ -7,6 +7,19 @@
 #include "Station.h"
 #include "Scenario1GameModeBase.generated.h"
 
+
+class ABaseShipController;
+
+UENUM(BlueprintType)
+enum class EGameState : uint8
+{
+	Jobless UMETA(DisplayName = "Jobless"),
+	JobPickupStage UMETA(DisplayName = "Job Pickup Stage"),
+	JobDeliveryStage UMETA(DisplayName = "Job Delivery Stage"),
+	GameOverByDeath UMETA(DisplayName = "Game Over By Death"),
+	GameOverByMoney UMETA(DisplayName = "Game Over By Money"),
+};
+
 /**
  * 
  */
@@ -26,8 +39,17 @@ public:
 		bool IsCrewMateMenu();
 	UFUNCTION(BlueprintCallable)
 		bool IsPlayerInsideInnerRing();
+	UFUNCTION(BlueprintCallable)
+		EGameState GetCurrentState();
 	UFUNCTION()
 		void StationSphereOverlap(bool bStart, int stationNo, int sphereNo);
+
+	UFUNCTION(BlueprintCallable)
+		void RequestJob();
+
+	UFUNCTION()
+		void GameOver(bool pDied);
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -45,6 +67,7 @@ private:
 	UPROPERTY() bool bPaused = false;
 	UPROPERTY() bool bCrewMateMenu = false;
 	UPROPERTY() bool bStationInnerRing = false;
+	UPROPERTY() EGameState mGameState = EGameState::Jobless;
 	UPROPERTY() int ScenarioProgressTracker = 1;
 	UPROPERTY() int designatedStationTracker = -1;
 
@@ -67,4 +90,6 @@ private:
 	UPROPERTY() AStation* station2;
 	UPROPERTY() AStation* station3;
 	UPROPERTY(EditAnywhere) TSubclassOf<AStation> StationClass;
+
+	UPROPERTY() ABaseShipController* playerControllerRef;
 };
