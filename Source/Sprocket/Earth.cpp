@@ -11,6 +11,7 @@ AEarth::AEarth()
 	PrimaryActorTick.bCanEverTick = true;
 	EarthMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Earth Mesh"));
 	SetRootComponent(EarthMesh);
+
 	CloudMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Cloud Mesh"));
 	CloudMesh->SetupAttachment(RootComponent);
 }
@@ -26,6 +27,8 @@ void AEarth::BeginPlay()
 void AEarth::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	
+	//Allows earth and clouds to spin at different rates and directions
 	if(IsEarthSpinning) AddActorLocalRotation(FRotator(EarthRotationDirection.X * EarthRotationSpeed, EarthRotationDirection.Y * EarthRotationSpeed, EarthRotationDirection.Z * EarthRotationSpeed));
 	if(IsCloudSpinning) CloudMesh->AddLocalRotation(FRotator(CloudRotationDirection.X * CloudRotationSpeed, CloudRotationDirection.Y * CloudRotationSpeed, CloudRotationDirection.Z * CloudRotationSpeed));
 }

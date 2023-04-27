@@ -15,3 +15,6 @@ class SPROCKET_API UBaseShipMovementComponent : public UPawnMovementComponent
 	GENERATED_BODY()
 	
 };
+
+
+//Unused but attachment issues.

@@ -7,6 +7,8 @@
 #include "Math/UnrealMathUtility.h"
 #include "CrewComponent.generated.h"
 
+
+//Used for ease of functionality and additions/removal of crewmembers tidily
 UENUM()
 enum class ECrewType : uint8
 {

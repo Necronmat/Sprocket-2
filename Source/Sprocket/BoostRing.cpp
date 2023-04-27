@@ -12,6 +12,7 @@ ABoostRing::ABoostRing()
 	PrimaryActorTick.bCanEverTick = true;
 	RingMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ring Mesh"));
 	SetRootComponent(RingMesh);
+
 	RingCollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Ring Collision Sphere"));
 	RingCollisionSphere->SetupAttachment(RootComponent);
 }
@@ -21,13 +22,14 @@ void ABoostRing::BeginPlay()
 {
 	Super::BeginPlay();
 	RingCollisionSphere->OnComponentBeginOverlap.AddDynamic(this, &ABoostRing::OnOverlapBegin);
-	//RingCollisionSphere->OnComponentEndOverlap.AddDynamic(this, &ABoostRing::OnOverlapEnd);
+
 }
 
 // Called every frame
 void ABoostRing::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+	//Rotate ring if ticked
 	if (bRotating) {
 		rotationDirection.Normalize();
 		AddActorLocalRotation(FRotator(rotationDirection.X * rotationSpeed, rotationDirection.Y * rotationSpeed, rotationDirection.Z * rotationSpeed));
@@ -38,16 +40,14 @@ void ABoostRing::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* oth
 {
 	ABaseShip* other = Cast<ABaseShip>(otherActor);
 
-	if (other)
-	{
+	//Apply boost to players ship speed for a set time.
+	if (other){
 		ABaseShipController* controller = Cast<ABaseShipController>(other->Controller);
-		if (controller)
-		{
+
+		if (controller){
 			controller->SetCurrentSpeed(controller->GetMaxSpeed() * 10.0f);
 		}
 	}
-
-	//RootComp->AddImpulse(otherActor->GetActorForwardVector() * boostAmount * RootComp->GetMass());
 }
 
 

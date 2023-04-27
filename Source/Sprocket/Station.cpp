@@ -10,6 +10,8 @@ AStation::AStation()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	
+	//Standard Mesh setup
 	MainStationMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Primary Station Mesh"));
 	SetRootComponent(MainStationMesh);
 	SecondaryStationPartMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Secondary Station Part Mesh"));
@@ -17,6 +19,7 @@ AStation::AStation()
 	ThirdStationPartMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Third Station Part Mesh"));
 	ThirdStationPartMesh->SetupAttachment(RootComponent);
 	
+	//Sphere collision setup
 	FarSensorCollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Far Collision Sphere"));
 	ApproachSensorCollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Approach Collision Sphere"));
 	LandingSensorCollisionSphere = CreateDefaultSubobject<USphereComponent>(TEXT("Landing Collision Sphere"));

@@ -33,14 +33,15 @@ private:
 	UFUNCTION() void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 	UFUNCTION() void ExplodeMine();
 
-
+	//Base Actor Setup Related
 	UPROPERTY()
 		USprocketGameInstance* mGameInstancedRef;
-
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* MineMesh;
 	UPROPERTY(EditAnywhere)
 		USphereComponent* MineSphereComponent;
+
+	//Mine Functionality Related
 	UPROPERTY()
 		FTimerHandle MineTimer;
 	UPROPERTY(EditAnywhere)
@@ -56,11 +57,11 @@ private:
 	UPROPERTY(EditAnywhere)
 		float MineDamageFalloff = 2.0f;
 
+
+	//VFX and SFX related
 	UPROPERTY(EditAnywhere)
 		USoundBase* mExplosionSound;
-
 	UNiagaraComponent* mExplosionEffectSystem;
-
 	UPROPERTY(EditAnywhere)
 		UNiagaraSystem* mExplosionEffect;
 

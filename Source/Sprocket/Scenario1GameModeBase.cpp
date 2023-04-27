@@ -9,7 +9,9 @@
 void AScenario1GameModeBase::TogglePaused()
 {
 	bPaused = !bPaused;
+
 	if (bPaused) {
+		//Detects what UI to revoke and whether to pause the game
 		if (!bCrewMateMenu) {
 			UGameplayStatics::SetGamePaused(GetWorld(), true);
 			if (UIMenuCount) UIMenuCount->RemoveFromViewport();
@@ -24,6 +26,7 @@ void AScenario1GameModeBase::TogglePaused()
 	else {
 		if (PauseMenuCount) PauseMenuCount->RemoveFromViewport();
 
+		//Detects what UI to restore and whether to unpause the game
 		if (!bCrewMateMenu) {
 			UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 			if (UIMenuCount) UIMenuCount->AddToViewport();
@@ -130,6 +133,7 @@ void AScenario1GameModeBase::BeginPlay()
 	Super::BeginPlay();
 	playerControllerRef = Cast<ABaseShipController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
 
+	//Gathers all Stations to use in task distribution
 	UPROPERTY() TArray<AActor*> temp;
 	int i = 0;
 	UGameplayStatics::GetAllActorsOfClass(GetWorld(), AStation::StaticClass(), temp);
@@ -140,21 +144,23 @@ void AScenario1GameModeBase::BeginPlay()
 		stations.Emplace(Station);
 	}
 
-	//GenerateNewStationDestination();
-
+	//Adds player UI
 	UIMenuCount = CreateWidget(GetWorld(), UIMenuClass);
 	if (UIMenuCount) UIMenuCount->AddToViewport();
 }
 
 void AScenario1GameModeBase::GenerateNewStationDestination()
 {
+	//Generates random station that isn't the current station
 	int prevTracker = designatedStationTracker;
 	designatedStationTracker = FMath::RandRange(0, stations.Num() - 1);
+
 	if (designatedStationTracker == prevTracker) {
 		if (designatedStationTracker == stations.Num() - 1) designatedStationTracker--;
 		else designatedStationTracker++;
 	}
-	if(stations.Num() > 0)stations[designatedStationTracker]->SetIsTarget(true);
+
+	if(stations.Num() > 0) stations[designatedStationTracker]->SetIsTarget(true);
 	playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobRequirementPickup);
 }
 
@@ -180,17 +186,24 @@ void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 		if (mGameState == EGameState::JobPickupStage) {
 			message = TEXT("Delivery Picked Up");
 			stations[designatedStationTracker]->SetIsTarget(false);
+
+			//Game Loop Logic
 			GenerateNewStationDestination();
 			mGameState = EGameState::JobDeliveryStage;
 			playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobRequirementDelivery);
-			//Run delivery code.
+
+			//Triggering Combat Spawning Logic
 			float timerDelay = FMath::RandRange(mCombatSpawnMinDelay, mCombatSpawnMaxDelay);
 			GetWorld()->GetTimerManager().SetTimer(mCombatSpawnTimer, this, &AScenario1GameModeBase::mCombatSpawnDelayElapsed, timerDelay, false);
 		}
 		else if (mGameState == EGameState::JobDeliveryStage) {
 			message = TEXT("Delivery Complete");
 			stations[designatedStationTracker]->SetIsTarget(false);
+
+			//Stops combat occuring if not already started
 			if (GetWorld()->GetTimerManager().IsTimerActive(mCombatSpawnTimer)) GetWorld()->GetTimerManager().ClearTimer(mCombatSpawnTimer);
+			
+			//Game Loop Logic
 			if (playerControllerRef) playerControllerRef->MissionComplete();
 			mGameState = EGameState::Jobless;
 			playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobCollectionSuggestion);
@@ -205,6 +218,8 @@ void AScenario1GameModeBase::mCombatSpawnDelayElapsed()
 	if (AiShipPawnClass && playerControllerRef) {
 		mInCombat = true;
 		SetVolume();
+
+		//Spawns AI Ships in set ring around ship
 		for (int i = 0; i < EnemyWaveSpawnCount; i++) {
 			FVector SpawnLocation = { playerControllerRef->playerBaseShip->GetActorLocation().X + FMath::FRandRange(-EnemySpawnDistance, EnemySpawnDistance), playerControllerRef->playerBaseShip->GetActorLocation().Y + FMath::FRandRange(-EnemySpawnDistance, EnemySpawnDistance), EnemySpawnHeight };
 			AAiShipPawn* tempShip = GetWorld()->SpawnActor<AAiShipPawn>(AiShipPawnClass, SpawnLocation, { 0.0f, 0.0f, 0.0f });

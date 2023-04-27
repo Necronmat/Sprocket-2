@@ -102,7 +102,6 @@ void AShipGun::AttachToShip(USceneComponent* parent, FVector offset, FQuat rotat
 	mGunMesh->AttachToComponent(parent, rules);
 
 	mGunMesh->SetRelativeLocation(offset);
-	//mGunMesh->SetRelativeRotation(rotation);
 	mGunMesh->SetRelativeScale3D(scale);
 
 }

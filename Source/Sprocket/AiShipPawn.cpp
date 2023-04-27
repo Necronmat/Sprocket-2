@@ -38,6 +38,7 @@ void AAiShipPawn::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 float AAiShipPawn::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	//Forwards damage to controller to deal with its logic
 	GetController()->TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	return DamageAmount;
 }

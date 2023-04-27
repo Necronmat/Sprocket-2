@@ -11,6 +11,7 @@
 
 class ABaseShipController;
 
+//Used to control and track current stage of game.
 UENUM(BlueprintType)
 enum class EGameState : uint8
 {
@@ -29,6 +30,10 @@ class SPROCKET_API AScenario1GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 public:
+
+	//--------------------------------------------------
+	// UI Related
+	//--------------------------------------------------
 	UFUNCTION()
 		void TogglePaused();
 	UFUNCTION()
@@ -42,9 +47,13 @@ public:
 		bool IsPlayerInsideInnerRing();
 	UFUNCTION(BlueprintCallable)
 		EGameState GetCurrentState();
+
+
+	//--------------------------------------------------
+	// Gameplay functionality related
+	//--------------------------------------------------
 	UFUNCTION()
 		void StationSphereOverlap(bool bStart, int stationNo, int sphereNo);
-
 	UFUNCTION(BlueprintCallable)
 		void RequestJob();
 	UFUNCTION()
@@ -52,6 +61,10 @@ public:
 	UFUNCTION()
 		void GameOver(bool pDied);
 
+
+	//--------------------------------------------------
+	// SFX Related
+	//--------------------------------------------------
 	UFUNCTION(BlueprintImplementableEvent)
 		void SetVolume();
 
@@ -63,6 +76,9 @@ protected:
 
 private:
 
+	//--------------------------------------------------
+	// Scenario Progress Related
+	//--------------------------------------------------
 	void GenerateNewStationDestination();
 
 	UFUNCTION()
@@ -72,10 +88,18 @@ private:
 	UFUNCTION()
 		void TriggerLandingStationEvent(int stationId);
 
+	UPROPERTY()
+		TArray<AStation*> stations;
+
 	UPROPERTY() bool bPaused = false;
 	UPROPERTY() bool bCrewMateMenu = false;
 	UPROPERTY() bool bStationInnerRing = false;
 	UPROPERTY() EGameState mGameState = EGameState::Jobless;
+
+
+	//--------------------------------------------------
+	// UI Related
+	//--------------------------------------------------
 	UPROPERTY() int ScenarioProgressTracker = 1;
 	UPROPERTY() int designatedStationTracker = -1;
 
@@ -92,15 +116,22 @@ private:
 	UPROPERTY()
 		UUserWidget* CrewMenuCount;
 
-	UPROPERTY()
-		TArray<AStation*> stations;
+	UPROPERTY() ABaseShipController* playerControllerRef;
+
+	//--------------------------------------------------
+	// Old Scenario Remnants
+	//--------------------------------------------------
+
+	UPROPERTY(EditAnywhere) TSubclassOf<AStation> StationClass;
 	UPROPERTY() AStation* station1;
 	UPROPERTY() AStation* station2;
 	UPROPERTY() AStation* station3;
-	UPROPERTY(EditAnywhere) TSubclassOf<AStation> StationClass;
 
-	UPROPERTY() ABaseShipController* playerControllerRef;
-
+	//--------------------------------------------------
+	// Enemy Spawning Related
+	//--------------------------------------------------
+	
+	//Spawn delay functionality
 	UPROPERTY()
 		FTimerHandle mCombatSpawnTimer;
 	UPROPERTY(EditAnywhere)
@@ -109,10 +140,19 @@ private:
 		float mCombatSpawnMaxDelay = 45.0f;
 	UFUNCTION()
 		void mCombatSpawnDelayElapsed();
+
+	//Template of enemy to spawn
 	UPROPERTY(EditAnywhere) TSubclassOf<AAiShipPawn> AiShipPawnClass;
+
+	//Spawn Configs
+	UPROPERTY(EditAnywhere) 
+		int EnemyWaveSpawnCount = 4;
+	UPROPERTY(EditAnywhere) 
+		float EnemySpawnDistance = 10000.0f;
+	UPROPERTY(EditAnywhere) 
+		float EnemySpawnHeight = 2000.0f;
+
+	//Combat Tracking
 	UPROPERTY() int EnemiesAlive = 0;
-	UPROPERTY(EditAnywhere) int EnemyWaveSpawnCount = 4;
-	UPROPERTY(EditAnywhere) float EnemySpawnDistance = 10000.0f;
-	UPROPERTY(EditAnywhere) float EnemySpawnHeight = 2000.0f;
 	bool mInCombat = false;
 };

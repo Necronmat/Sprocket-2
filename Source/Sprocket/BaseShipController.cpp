@@ -11,11 +11,28 @@
 
 void ABaseShipController::BeginPlay()
 {
+	//--------------------------------------------------
+	// Standard Controller Setup
+	//--------------------------------------------------
 	Super::BeginPlay();
 	PrimaryActorTick.bCanEverTick = true;
 	playerBaseShip = Cast<ABaseShip>(GetPawn());
+
+	//--------------------------------------------------
+	// Ship Stats Setup
+	//--------------------------------------------------
 	mHull = mMaxHull;
 	mShields = mMaxShields;
+
+	//--------------------------------------------------
+	// Money Setup
+	//--------------------------------------------------
+	mMoney = mMoneyStartingAmount;
+	GetWorld()->GetTimerManager().SetTimer(mMoneyTimer, this, &ABaseShipController::mMoneyTimerElapsed, mMoneyBaseDrainDelay, false);
+
+	//--------------------------------------------------
+	// Crew Setup
+	//--------------------------------------------------
 	MechanicCount = 0;
 	WeaponsSpecialistCount = 0;
 	FishermanCount = 0;
@@ -23,11 +40,12 @@ void ABaseShipController::BeginPlay()
 	ElectricianCount = 0;
 	FirstMateCount = 0;
 	TotalCrewMatesCount = 0;
-	mMoney = mMoneyStartingAmount;
-	mGameInstancedRef = Cast<USprocketGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 
+	//--------------------------------------------------
+	// SFX & VFX Setup
+	//--------------------------------------------------
+	mGameInstancedRef = Cast<USprocketGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 	UGameplayStatics::PlaySound2D(this, mThrusterLoopSound, mGameInstancedRef->GetSoundVolume());
-	GetWorld()->GetTimerManager().SetTimer(mMoneyTimer, this, &ABaseShipController::mMoneyTimerElapsed, mMoneyBaseDrainDelay, false);
 
 	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, playerBaseShip->mShipMesh, NAME_None, FVector(-25.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
 	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, playerBaseShip->mShipMesh, NAME_None, FVector(-10.0f, 25.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
@@ -45,14 +63,17 @@ void ABaseShipController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//Booster Deceleration Logic
 	if (mThrusterSpeed > mMaxSpeed)
 	{
 		mThrusterSpeed -= mBoostDeselerationScale * mAcceleration * DeltaTime;
 	}
 
+	//Ship Movement Logic
 	if (playerBaseShip && !menuDisplayed) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mThrusterSpeed * DeltaTime);
-		//UE_LOG(LogTemp, Warning, TEXT("Volume is %f"), mThrusterSpeed / mMaxSpeed);
+		
+		//Shield Recharges after delay from last damage until full again
 		if (bShieldRecharging) {
 			mShields += mShieldRechargeRate * DeltaTime;
 			if (mShields >= mMaxShields) {
@@ -61,6 +82,7 @@ void ABaseShipController::Tick(float DeltaTime)
 			}
 		}
 
+		//Bankruptcy Loss Trigger and Control Change
 		if (mMoney < 0.0f && GameModeRef) {
 			GameModeRef->GameOver(false);
 			menuDisplayed = true;
@@ -70,6 +92,7 @@ void ABaseShipController::Tick(float DeltaTime)
 			bCinematicMode = true;
 		}
 
+		//SFX related
 		SetVolume();
 		for (int i = 0; i < mThrusterEffectSystem.Num(); ++i)
 		{
@@ -77,6 +100,7 @@ void ABaseShipController::Tick(float DeltaTime)
 			mThrusterEffectSystem[i]->SetNiagaraVariableLinearColor(FString("TrailColour"), { FMath::Lerp(0.3f, 0.0f, (mThrusterSpeed / mMaxSpeed)), FMath::Lerp(0.1f, 0.2f, (mThrusterSpeed / mMaxSpeed)), FMath::Lerp(0.0f, 0.3f, (mThrusterSpeed / mMaxSpeed))});
 		}
 
+		//Grapple Logic
 		if (mGrappling)
 		{
 			playerBaseShip->mCable->EndLocation = mGrapplePoint->GetActorLocation();
@@ -154,11 +178,6 @@ void ABaseShipController::MissionComplete()
 void ABaseShipController::Throttle(float AxisAmount)
 {
 	if (playerBaseShip && !menuDisplayed) {
-		//if (mThrusterSpeed <= 0 && AxisAmount > 0) {
-		//	playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
-		//	mThrusterSpeed = mMaxSpeed / 3;
-		//}
-
 		mThrusterSpeed += AxisAmount * mAcceleration;
 
 		if (mThrusterSpeed < 0) {
@@ -187,8 +206,10 @@ void ABaseShipController::StrafeHorizontal(float AxisAmount)
 	if (playerBaseShip && !menuDisplayed) {
 		if (!mStrafeCooldown && abs(AxisAmount) > 0) {
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorRightVector() * AxisAmount * mStrafeSpeed);
+			
 			mStrafeCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
+			
 			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mGameInstancedRef->GetSoundVolume());
 		}
 	}
@@ -200,8 +221,10 @@ void ABaseShipController::StrafeVertical(float AxisAmount)
 		if (!mStrafeCooldown && abs(AxisAmount) > 0)
 		{
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorUpVector() * AxisAmount * mStrafeSpeed);
+			
 			mStrafeCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
+			
 			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mGameInstancedRef->GetSoundVolume());
 		}
 	}
@@ -212,6 +235,7 @@ void ABaseShipController::Nitro()
 	if (mThrusterSpeed <= mMaxSpeed / 3) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
 		mThrusterSpeed = mMaxSpeed / 3;
+		
 		UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mGameInstancedRef->GetSoundVolume());
 	}
 }
@@ -227,6 +251,7 @@ void ABaseShipController::AddRandomGun()
 		tempGun->SetIfEnemy(false);
 		tempGun->AttachToShip(playerBaseShip->mShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), playerBaseShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
 
+		//Ensures stats of projectile from gun are related to its size
 		float rand = FMath::RandRange(0.001f, 20.0f);
 		tempGun->SetGunStats(5000.0f, (1/rand) * 240.f, rand * 0.1f, rand * 450.0f);
 
@@ -237,8 +262,7 @@ void ABaseShipController::AddRandomGun()
 void ABaseShipController::RemoveRandomGun()
 {
 	if (playerBaseShip) {
-		if (playerBaseShip->mGuns.Num() > 0)
-		{
+		if (playerBaseShip->mGuns.Num() > 0){
 			int index = FMath::RandRange(0, playerBaseShip->mGuns.Num() - 1);
 			playerBaseShip->mGuns[index]->Destroy();
 			playerBaseShip->mGuns.RemoveAt(index);
@@ -246,6 +270,7 @@ void ABaseShipController::RemoveRandomGun()
 	}
 }
 
+//Function is not being used any longer and was used for debug only
 void ABaseShipController::AddRandomCrew()
 {
 	if (playerBaseShip && !menuDisplayed)
@@ -255,13 +280,11 @@ void ABaseShipController::AddRandomCrew()
 		AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
 
 		//Do nothing if the crew made is too expensive to add
-		if (temp->GetCost() + mPowerUsage > mMaxPower)
-		{
+		if (temp->GetCost() + mPowerUsage > mMaxPower){
 			return;
 		}
 
-		if (temp->GetCrew() == ECrewType::WeaponsSpecialist)
-		{
+		if (temp->GetCrew() == ECrewType::WeaponsSpecialist){
 			int num = std::round(temp->GetPositive());
 
 			for (int i = 0; i < num; ++i)
@@ -338,6 +361,7 @@ void ABaseShipController::AddRandomCrew()
 	}
 }
 
+//Function is not being used any longer and was used for debug only
 void ABaseShipController::RemoveRandomCrew()
 {
 	if (mCrew.Num() == 0)
@@ -411,16 +435,12 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 	{
 		UCrewComponent* temp = NewObject<UCrewComponent>(this, UCrewComponent::StaticClass(), NAME_None, RF_Transient);
 		temp->RegisterComponent();
-		//AActor::AddComponentByClass(playerBaseShip->mBaseCrew, false, playerBaseShip->GetTransform(), false);
-		//AActor::FinishAddComponent(temp, false, playerBaseShip->GetTransform());
 
 		//Set crew stats to the given ones
 		temp->SetCrew(type);
 		temp->SetPositive(pos);
 		temp->SetNegative(neg);
 		temp->SetCost(cost);
-		//temp->SetDialog(dialog);
-
 
 		//Do nothing if the crew made is too expensive to add
 		if (cost + mPowerUsage > mMaxPower)
@@ -433,6 +453,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		{
 			WeaponsSpecialistCount++;
 			TotalCrewMatesCount++;
+
 			int num = std::round(pos);
 
 			for (int i = 0; i < num; ++i)
@@ -454,14 +475,15 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 
 			TotalCrewMatesCount++;
 			FishermanCount++;
+
 			mGrapplingEnabled = true;
 
-			//Negative is increased event chance
 		}
 		else if (type == ECrewType::RocketEngineer)
 		{
 			TotalCrewMatesCount++;
 			RocketEngineerCount++;
+
 			mMaxSpeed *= pos;
 
 			mMaxShields /= neg;
@@ -470,12 +492,12 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 			{
 				mShields = mMaxShields;
 			}
-			//Decrease gun damage
 		}
 		else if (type == ECrewType::Mechanic)
 		{
 			TotalCrewMatesCount++;
 			MechanicCount++;
+
 			mMaxHull *= pos;
 			mHull = mMaxHull;
 			mMaxSpeed /= neg;
@@ -489,6 +511,7 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 		{
 			TotalCrewMatesCount++;
 			ElectricianCount++;
+
 			mMaxShields *= pos;
 			mShields = mMaxShields;
 			mMaxSpeed /= neg;
@@ -504,14 +527,15 @@ void ABaseShipController::AddCrew(ECrewType type, float pos, float neg, int cost
 
 			TotalCrewMatesCount++;
 			FirstMateCount++;
+
 			mPowerUsage /= 2.0f;
-			//Decrease power
-			//Comments about their luxurius life
 		}
 
 		if (FirstMateCount > 0) mPowerUsage += cost / 2;
 		else mPowerUsage += cost;
+
 		DecreaseMoneyAmount(mMoneyCrewmateCostAmount);
+
 		UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(temp->GetCrew()));
 
 		mCrew.Add(temp);
@@ -523,17 +547,14 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 {
 	int num = -1;
 
-	for (int i = 0; i < mCrew.Num(); ++i)
-	{
-		if (mCrew[i]->GetCrew() == type)
-		{
+	for (int i = 0; i < mCrew.Num(); ++i) {
+		if (mCrew[i]->GetCrew() == type) {
 			num = i;
 			break;
 		}
 	}
 
-	if (num == -1)
-	{
+	if (num == -1){
 		UE_LOG(LogTemp, Warning, TEXT("No crew of that type to remove"));
 		return;
 	}
@@ -541,10 +562,10 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 	if (mCrew[num]->GetCrew() == ECrewType::WeaponsSpecialist)
 	{
 		WeaponsSpecialistCount--;
+
 		int gunNum = std::round(mCrew[num]->GetPositive());
 
-		for (int i = 0; i < num; ++i)
-		{
+		for (int i = 0; i < num; ++i){
 			RemoveRandomGun();
 		}
 
@@ -553,52 +574,54 @@ void ABaseShipController::RemoveCrew(ECrewType type)
 	else if (mCrew[num]->GetCrew() == ECrewType::Fisherman)
 	{
 		FishermanCount--;
+
 		mGrapplingEnabled = false;
 	}
 	else if (mCrew[num]->GetCrew() == ECrewType::RocketEngineer)
 	{
 		RocketEngineerCount--;
+
 		mMaxSpeed /= mCrew[num]->GetPositive();
 		mMaxHull *= mCrew[num]->GetNegative();
 
-		if (mThrusterSpeed > mMaxSpeed)
-		{
+		if (mThrusterSpeed > mMaxSpeed){
 			mThrusterSpeed = mMaxSpeed;
 		}
 	}
 	else if (mCrew[num]->GetCrew() == ECrewType::Mechanic)
 	{
 		MechanicCount--;
+
 		mMaxHull /= mCrew[num]->GetPositive();
 		mMaxSpeed *= mCrew[num]->GetNegative();
 
-		if (mHull > mMaxHull)
-		{
+		if (mHull > mMaxHull){
 			mHull = mMaxHull;
 		}
 	}
 	else if (mCrew[num]->GetCrew() == ECrewType::Electrician)
 	{
 		ElectricianCount--;
+
 		mMaxShields /= mCrew[num]->GetPositive();
 		mMaxSpeed *= mCrew[num]->GetNegative();
 
 
-		if (mShields > mMaxShields)
-		{
+		if (mShields > mMaxShields){
 			mShields = mMaxShields;
 		}
 	}
-	else if (mCrew[num]->GetCrew() == ECrewType::FirstMate)
-	{
+	else if (mCrew[num]->GetCrew() == ECrewType::FirstMate){
 		FirstMateCount--;
 	}
 
 	if (FirstMateCount > 0) mPowerUsage -= mCrew[num]->GetCost() / 2;
 	else mPowerUsage -= mCrew[num]->GetCost();
+
 	mPowerUsage -= mCrew[num]->GetCost();
 
 	UE_LOG(LogTemp, Warning, TEXT("Crew is %f"), float(mCrew[num]->GetCrew()));
+
 	IncreaseMoneyAmount(mMoneyCrewmateCostAmount);
 
 	playerBaseShip->RemoveInstanceComponent(mCrew[num]);
@@ -623,7 +646,6 @@ void ABaseShipController::Grapple()
 	if (playerBaseShip && !menuDisplayed) {
 		if (mGrapplingEnabled)
 		{
-			//AController* ControllerRef = GetController();
 			FVector CameraLocation;
 			FRotator CameraRotation;
 
@@ -631,11 +653,6 @@ void ABaseShipController::Grapple()
 
 			//Gets the end of the raycast
 			FVector End = CameraLocation + CameraRotation.Vector() * mGrappleLength;
-
-			/*FVector ShipLocation = GetActorLocation();
-			FRotator ShipRotation = GetActorRotation();
-
-			FVector End = ShipLocation + ShipRotation.Vector() * mGrappleLength;*/
 
 			FCollisionQueryParams CollisionParams;
 			CollisionParams.AddIgnoredActor(this);
@@ -649,6 +666,7 @@ void ABaseShipController::Grapple()
 			if (Cast<AActor>(Hit.GetActor()))
 			{
 				UGameplayStatics::PlaySound2D(this, mGrappleSound, mGameInstancedRef->GetSoundVolume());
+				
 				mGrappling = true;
 				mGrapplePoint = Hit.GetActor();
 				playerBaseShip->mCable->SetVisibility(true);
@@ -674,6 +692,7 @@ void ABaseShipController::ReleaseGrapple()
 
 void ABaseShipController::PauseGame()
 {
+	//Controls whether input should be in ship or cursor mode
 	if (GameModeRef) {
 		GameModeRef->TogglePaused();
 		if (GameModeRef->IsGamePaused()) {
@@ -695,6 +714,7 @@ void ABaseShipController::PauseGame()
 
 void ABaseShipController::ToggleCrewMenu()
 {
+	//Controls whether input should be in ship or cursor mode
 	if (GameModeRef) {
 		if (GameModeRef->IsPlayerInsideInnerRing()) {
 			GameModeRef->ToggleCrewMatesMenu();
@@ -722,6 +742,7 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 	UE_LOG(LogTemp, Warning, TEXT("Damage dealt is %f"), DamageAmount);
 	if (!menuDisplayed) {
 
+		//Resets timer for shield recharge, disabling it if in progress
 		if (bShieldRecharging) bShieldRecharging = false;
 		if (GetWorld()->GetTimerManager().TimerExists(mShieldRechargeDelayTimer)) {
 			GetWorld()->GetTimerManager().ClearTimer(mShieldRechargeDelayTimer);
@@ -729,27 +750,32 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 		}
 		else GetWorld()->GetTimerManager().SetTimer(mShieldRechargeDelayTimer, this, &ABaseShipController::ShieldRechargeDelayElapsed, mShieldRechargeDelay, false);
 
+
 		mShields -= DamageAmount;
 		int index;
 		if (mShields <= 0.0f) {
+			//SFX and VFX related
 			mHullEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mHullEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 			index = FMath::RandRange(0, mHullSound.Num() - 1);
 			UGameplayStatics::PlaySound2D(this, mHullSound[index], mGameInstancedRef->GetSoundVolume());
+			
+			//Calculates hull damage based on shield over damage
 			float remainingDamage = 0.0 - mShields;
 			mShields = 0.0f;
 			mHull -= remainingDamage;
 			if (mHull <= 0.0f) {
+				//Triggers death explosion and then removes player after short time amount.
 				mExplosionEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mExplosionEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 				DisableInput(this);
 
-				if (!GetWorld()->GetTimerManager().IsTimerActive(DeathTimer))
-				{
+				if (!GetWorld()->GetTimerManager().IsTimerActive(DeathTimer)){
 					GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &ABaseShipController::Die, 1.0f, false);
 				}				
 			}
 		}
 		else
 		{
+			//SFX and VFX related
 			mShieldEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mShieldEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 			index = FMath::RandRange(0, mShieldSound.Num() - 1);
 			UGameplayStatics::PlaySound2D(this, mShieldSound[index], mGameInstancedRef->GetSoundVolume());
@@ -849,6 +875,7 @@ void ABaseShipController::HealShip()
 
 void ABaseShipController::UpgradeShip(EShipUpgradeCatagory upgradeType)
 {
+	//If player cant afford upgrade, no upgrade occurs
 	if (mMoney < mMoneyPermUpgradeCostAmount) return;
 	DecreaseMoneyAmount(mMoneyPermUpgradeCostAmount);
 
@@ -956,12 +983,14 @@ void ABaseShipController::Die()
 {
 	FString message = TEXT("Player has Died, Please Restart");
 
+	//Remove guns to stop floating corpse remnant issue
 	while (playerBaseShip->mGuns.Num() > 0)
 	{
 		playerBaseShip->mGuns[0]->Destroy();
 		playerBaseShip->mGuns.RemoveAt(0);
 	}
 
+	//Trigger game over menu and control scheme
 	if (GameModeRef) GameModeRef->GameOver(true);
 	menuDisplayed = true;
 	bShowMouseCursor = true;
@@ -969,6 +998,7 @@ void ABaseShipController::Die()
 	bEnableMouseOverEvents = true;
 	bCinematicMode = true;
 
+	//Remove player ship from existance
 	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
 	playerBaseShip->Destroy();
 }

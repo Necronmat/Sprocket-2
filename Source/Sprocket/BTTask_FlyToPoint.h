@@ -20,12 +20,13 @@ class SPROCKET_API UBTTask_FlyToPoint : public UBTTask_BlackboardBase
 {
 	GENERATED_BODY()
 	
-	UBTTask_FlyToPoint(const FObjectInitializer& ObjectInitializer);
+	UBTTask_FlyToPoint(const FObjectInitializer& ObjectInitializer); //Links task to relevant blackboard info needed
 	virtual uint16 GetInstanceMemorySize() const override;
 	EBlackboardNotificationResult OnBlackboardValueChange(const UBlackboardComponent& Blackboard, FBlackboard::FKey ChangedKeyID);
 
 protected:
 	virtual EBTNodeResult::Type ExecuteTask(UBehaviorTreeComponent& OwnerComp, uint8* NodeMemory) override;
+
 
 	UPROPERTY(EditAnywhere)
 		float acceptableRadius;

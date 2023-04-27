@@ -23,6 +23,11 @@ protected:
 	virtual void BeginPlay() override;
 
 public:	
+
+	//--------------------------------------------------
+	// Base Actor Setup
+	//--------------------------------------------------
+	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -32,18 +37,27 @@ public:
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* ShipMesh;
 
+	//--------------------------------------------------
+	// Spawn Templates
+	//--------------------------------------------------
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class AShipGun> mBaseGun;
 
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class AMine> mMine;
 
+	//--------------------------------------------------
+	// Ship Gun Storage
+	//--------------------------------------------------
 	UPROPERTY(EditAnywhere)
 		TArray<AShipGun*> mGuns;
 
 private:
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 	
+	//--------------------------------------------------
+	// Ship Stats
+	//--------------------------------------------------
 	UPROPERTY(EditAnywhere)
 	float BaseHull = 100.0f;
 	float Hull = BaseHull;

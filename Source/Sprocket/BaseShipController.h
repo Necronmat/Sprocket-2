@@ -13,6 +13,7 @@
 class UNiagaraComponent;
 class UNiagaraSystem;
 
+//Used to simplify ui and function interaction for Ship Upgrades
 UENUM()
 enum class EShipUpgradeCatagory : uint8
 {
@@ -22,6 +23,7 @@ enum class EShipUpgradeCatagory : uint8
 	Power UMETA(DisplayName = "Power"),
 };
 
+//Governs Mission Info Text on Player UI
 UENUM(BlueprintType)
 enum class EMissionInfoCatagory : uint8
 {
@@ -31,6 +33,7 @@ enum class EMissionInfoCatagory : uint8
 	DefendFromEnemies UMETA(DisplayName = "Defend from Enemies"),
 };
 
+//Governs Notification Info Text on Player UI
 UENUM(BlueprintType)
 enum class ENotificationInfoCatagory : uint8
 {
@@ -54,35 +57,53 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-
+	//--------------------------------------------------
+	// Base Controller relevant Stuff
+	//--------------------------------------------------
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupInputComponent();
 
+	UPROPERTY(EditAnywhere)
+		ABaseShip* playerBaseShip;
+
+	//--------------------------------------------------
+	// SFX Related
+	//--------------------------------------------------
 	UFUNCTION(BlueprintImplementableEvent)
 		void SetVolume();
 
 	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
 		float SetThrusterVolume();
 
-	UPROPERTY(EditAnywhere)
-		ABaseShip* playerBaseShip;
 
+	//--------------------------------------------------
+	// UI Info Related
+	//--------------------------------------------------
 	UFUNCTION()
 		void SetNotificationInfo(ENotificationInfoCatagory value);
 	UFUNCTION()
 		void SetMissionInfo(EMissionInfoCatagory value);
+
+	//--------------------------------------------------
+	// Money Reward Related
+	//--------------------------------------------------
 	UFUNCTION()
 		void EnemyDefeated();
 	UFUNCTION()
 		void MissionComplete();
 
+	//--------------------------------------------------
+	// Booster Rings Funcitonality
+	//--------------------------------------------------
 	void SetCurrentSpeed(float newSpeed);
 
 	UFUNCTION(BlueprintPure)
 		float GetMaxSpeed();
 
 private:
-
+	//--------------------------------------------------
+	// Input Functions
+	//--------------------------------------------------
 	void Throttle(float AxisAmount);
 	void Pitch(float AxisAmount);
 	void Yaw(float AxisAmount);
@@ -97,7 +118,7 @@ private:
 	void AddRandomCrew();
 	void RemoveRandomCrew();
 	UFUNCTION(BlueprintCallable)
-		void AddCrew(ECrewType type, float pos, float neg, int cost);// TArray<FString> dialog);
+		void AddCrew(ECrewType type, float pos, float neg, int cost);
 	UFUNCTION(BlueprintCallable)
 		void RemoveCrew(ECrewType type);
 
@@ -108,8 +129,14 @@ private:
 	void PauseGame();
 	void ToggleCrewMenu();
 
+	//--------------------------------------------------
+	// Standard Controller Functionality
+	//--------------------------------------------------
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
+	//--------------------------------------------------
+	// UI Functionality
+	//--------------------------------------------------
 	UFUNCTION(BlueprintPure)
 		float GetCurrentSpeed();
 	UFUNCTION(BlueprintPure)
@@ -133,10 +160,15 @@ private:
 		float GetCurrentMoneyAmount();
 	UFUNCTION(BlueprintPure)
 		float GetCurrentDrainAmount();
+
+	//--------------------------------------------------
+	// Money Management Functionality
+	//--------------------------------------------------
 	UFUNCTION()
 		void IncreaseMoneyAmount(float amount);
 	UFUNCTION()
 		void DecreaseMoneyAmount(float amount);
+
 //********************************************************************************************************
 //********************************************************************************************************
 //Ship Stats
@@ -146,15 +178,14 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		float mAcceleration = 200.0f;
+	UPROPERTY(EditAnywhere)
+		float mBoostDeselerationScale = 750.0f;
 
 	UPROPERTY(EditAnywhere)
 		float mMaxSpeed = 200000.0f;
 	UPROPERTY(EditAnywhere)
 		float mSpeedUpgradeAmount = 10000.0f;
 	float mThrusterSpeed = 0.0f;
-
-	UPROPERTY(EditAnywhere)
-		float mBoostDeselerationScale = 750.0f;
 
 	UPROPERTY(EditAnywhere)
 		float mMaxHull = 100.0f;
@@ -174,6 +205,9 @@ private:
 		float mPowerUpgradeAmount = 2.0f; 
 	float mPowerUsage = 0.0f;
 
+	//--------------------------------------------------
+	// Shield Recharge Functionality
+	//--------------------------------------------------
 	UPROPERTY(EditAnywhere)
 		bool bShieldRecharging = false;
 	UPROPERTY(EditAnywhere)
@@ -185,6 +219,7 @@ private:
 	UFUNCTION()
 		void ShieldRechargeDelayElapsed();
 
+
 	UFUNCTION(BlueprintCallable)
 		void HealShip();
 	UFUNCTION(BlueprintCallable)
@@ -195,6 +230,9 @@ private:
 	UPROPERTY(EditAnywhere)
 		float mShipWeight = 10.0f;
 
+	//--------------------------------------------------
+	// Money Related
+	//--------------------------------------------------
 	UPROPERTY(EditAnywhere)
 		float mMoneyStartingAmount = 100.0f;
 	UPROPERTY(EditAnywhere)
@@ -226,6 +264,7 @@ private:
 	UFUNCTION(BlueprintPure)
 		float GetHullHealCost();
 
+
 	//Speed of the strafe thrusters
 	UPROPERTY(EditAnywhere)
 		float mStrafeSpeed = 200000.0f;
@@ -235,6 +274,9 @@ private:
 	UPROPERTY(EditAnywhere)
 		float mGrappleLength = 100000;
 
+	//--------------------------------------------------
+	// UI relevant
+	//--------------------------------------------------
 	//CrewMate trackers
 	int ElectricianCount = 0;
 	int FirstMateCount = 0;
@@ -261,6 +303,15 @@ private:
 	UFUNCTION(BlueprintPure)
 		ENotificationInfoCatagory GetNotificationInfo();
 	void NotificationElapsed();
+
+	UPROPERTY(EditAnywhere)
+		EMissionInfoCatagory MissionInfo = EMissionInfoCatagory::JobCollectionSuggestion;
+	UPROPERTY(EditAnywhere)
+		ENotificationInfoCatagory NotificationInfo = ENotificationInfoCatagory::Dorment;
+	UPROPERTY()
+		FTimerHandle NotificationTimer;
+	UPROPERTY(EditAnywhere)
+		float NotificationDuration = 3.0f;
 
 	
 	//********************************************************************************************************
@@ -327,15 +378,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		USoundMix* mMixer;
-
-	UPROPERTY(EditAnywhere)
-		EMissionInfoCatagory MissionInfo = EMissionInfoCatagory::JobCollectionSuggestion;
-	UPROPERTY(EditAnywhere)
-		ENotificationInfoCatagory NotificationInfo = ENotificationInfoCatagory::Dorment;
-	UPROPERTY()
-		FTimerHandle NotificationTimer;
-	UPROPERTY(EditAnywhere)
-		float NotificationDuration = 3.0f;
 
 	//********************************************************************************************************
 	//********************************************************************************************************

@@ -25,13 +25,15 @@ public:
 	virtual void Tick(float DeltaTime) override;
 
 private:
+
+	//--------------------------------------------------
+	// Base Actor Setup and movement
+	//--------------------------------------------------
 	UFUNCTION()
 		void OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* RingMesh;
-	UPROPERTY(EditAnywhere)
-		USphereComponent* RingCollisionSphere;
 
 	UPROPERTY(EditAnywhere)
 		bool bRotating = false;
@@ -39,6 +41,13 @@ private:
 		float rotationSpeed = 0.0f;
 	UPROPERTY(EditAnywhere)
 		FVector3f rotationDirection = FVector3f(0.0f, 0.0f, 0.0f);
+
+
+	//--------------------------------------------------
+	// Boost functionality Setup
+	//--------------------------------------------------
+	UPROPERTY(EditAnywhere)
+		USphereComponent* RingCollisionSphere;
 
 	UPROPERTY(EditAnywhere)
 		float boostAmount = 100.0f;

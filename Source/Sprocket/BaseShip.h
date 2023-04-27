@@ -32,7 +32,7 @@ public:
 
 	//********************************************************************************************************
 	//********************************************************************************************************
-	//BLueprint componenets
+	//BLueprint components
 
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* mShipMesh;
@@ -52,6 +52,38 @@ private:
 
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
 
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Grappling Hook
+
+	bool mGrappling = false;
+
+	AActor* mGrapplePoint;
+	
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Damage Forwarding
+	UPROPERTY()
+		AScenario1GameModeBase* GameModeRef;
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Shooting
+public:
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class AShipGun> mBaseGun;
+
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class UCrewComponent> mBaseCrew;
+
+	UPROPERTY(EditAnywhere)
+		TArray<AShipGun*> mGuns;
+	
+
+	// Functions And Variables under this point are not used and are remnants
+	// Of the Player control logic being here originally before being refitted
+	// To the player controller
+private:	
 
 	//********************************************************************************************************
 	//********************************************************************************************************
@@ -108,32 +140,4 @@ private:
 
 	bool mCooldown = false;
 
-	//********************************************************************************************************
-	//********************************************************************************************************
-	//Grappling Hook
-
-	bool mGrappling = false;
-
-	AActor* mGrapplePoint;
-
-	//********************************************************************************************************
-	//********************************************************************************************************
-	//Shooting
-public:
-	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<class AShipGun> mBaseGun;
-
-	UPROPERTY(EditDefaultsOnly)
-		TSubclassOf<class UCrewComponent> mBaseCrew;
-
-	UPROPERTY(EditAnywhere)
-		TArray<AShipGun*> mGuns;
-	
-	//********************************************************************************************************
-	//********************************************************************************************************
-	//Player control funtions
-private:	
-	
-	UPROPERTY()
-		AScenario1GameModeBase* GameModeRef;
 };

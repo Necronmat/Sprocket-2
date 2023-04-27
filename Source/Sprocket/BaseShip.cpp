@@ -16,7 +16,6 @@ ABaseShip::ABaseShip()
 	PrimaryActorTick.bCanEverTick = true;	
 
 	mShipMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Ship Mesh"));
-	//mShipMesh->SetupAttachment(mCable);
 	SetRootComponent(mShipMesh);
 
 	//Setiting up the spring arm
@@ -34,14 +33,11 @@ ABaseShip::ABaseShip()
 	rules.RotationRule = EAttachmentRule::KeepWorld;
 	rules.ScaleRule = EAttachmentRule::KeepWorld;
 	rules.bWeldSimulatedBodies = true;
-	//SetRootComponent(mCable);
 	mCable->SetupAttachment(RootComponent);
-	//mCable->AttachToComponent(mShipMesh, rules);
 	mCable->CableLength = mGrappleLength;
 
 	mHook = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Hook"));
 	mHook->SetupAttachment(RootComponent);
-	//mHook->AttachToComponent(mCable, rules);
 
 	//Have the player automatically possess this character
 	AutoPossessPlayer = EAutoReceiveInput::Player0;
@@ -62,6 +58,7 @@ void ABaseShip::Tick(float DeltaTime)
 
 float ABaseShip::TakeDamage(float DamageAmount, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser)
 {
+	//Forwards damage To controller to deal with its logic
 	GetController()->TakeDamage(DamageAmount, DamageEvent, EventInstigator, DamageCauser);
 	return DamageAmount;
 }

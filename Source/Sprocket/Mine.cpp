@@ -44,6 +44,8 @@ void AMine::ExplodeMine()
 {
 	TArray<AActor*> ignoredActors;
 	UGameplayStatics::ApplyRadialDamageWithFalloff(this, MineDamage, MineMinDamage, this->GetActorLocation(), MineInnerRadius, MineOuterRadius, MineDamageFalloff, UDamageType::StaticClass(), ignoredActors, this, UGameplayStatics::GetPlayerController(GetWorld(), 0), ECC_WorldDynamic);
+	
+	//SFX and VFX related
 	UGameplayStatics::PlaySoundAtLocation(this, mExplosionSound, GetActorLocation(), mGameInstancedRef->GetSoundVolume(), 0.3f);
 	mExplosionEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mExplosionEffect, MineMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 	GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AMine::Die, 1.0f, false);	

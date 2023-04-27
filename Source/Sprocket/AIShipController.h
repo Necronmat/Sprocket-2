@@ -25,24 +25,40 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 
 public:
-	UFUNCTION(BlueprintImplementableEvent)
-		void SetVolume();
+	//--------------------------------------------------
+	// AI Movement Related Functions
+	//--------------------------------------------------
 
-	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
-		float SetThrusterVolume();
+	void SetMovementTarget(FVector point, float range); //Stores message id and movement information relevant to FlyToPoint task.
+	bool GetMoving();									
+	const FAIRequestID GetMoveRequestId();				//Iterates message id to ensure constantly moving and informing about latest point.
 
-	void SetMovementTarget(FVector point, float range);
-	bool GetMoving();
+	//--------------------------------------------------
+	// AI Combat Related Functions
+	//--------------------------------------------------
 
 	void AddRandomGun();
 	void RemoveRandomGun();
 	void ShootGuns();
 
 	void SpawnMine();
-	
-	const FAIRequestID GetMoveRequestId();
 
-	UFUNCTION(BlueprintPure)
+	//--------------------------------------------------
+	// SFX Related Functions
+	//--------------------------------------------------
+
+	UFUNCTION(BlueprintImplementableEvent)
+		void SetVolume();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		float SetThrusterVolume();
+
+	//--------------------------------------------------
+	// UI Related Functions
+	//--------------------------------------------------
+
+	//Used to calculate percent of health and shield bars above ship
+	UFUNCTION(BlueprintPure)							
 		float GetCurrentHull();
 	UFUNCTION(BlueprintPure)
 		float GetMaxHull();
@@ -52,18 +68,42 @@ public:
 		float GetMaxShield();
 
 private:
-
+	//--------------------------------------------------
+	// Standard AI Pawn Inclusions
+	//--------------------------------------------------
 	virtual float TakeDamage(float DamageAmount, struct FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	
+	UPROPERTY()
+		AAiShipPawn* aiShip;
+	UPROPERTY(EditAnywhere)
+		UBehaviorTree* BT_HostileShipAI;				//Wanted Behaviour of Ship
 
-	void UpdateMovement(float DeltaTime);	
+	UPROPERTY() 
+		ABaseShipController* playerControllerRef;		//Used to inform about ships being defeated
+	UPROPERTY()
+		USprocketGameInstance* mGameInstancedRef;		//Used to grab SFX volume
 
-	bool bMoving = false;
+	//--------------------------------------------------
+	// AI Movement Related
+	//--------------------------------------------------
+	void UpdateMovement(float DeltaTime);				//Checks and updates bt on if reached destination, then rotates and moves desired amount
+	
+	bool bMoving = false;								//Allows movement code to occur each tick
 	FVector targetPoint = { 0.0f, 0.0f, 0.0f };
 	float distanceAllowance = 0.0f;
 
 	UPROPERTY(EditAnywhere)
 		float turningRadius = 80.0f;
 
+	void StoreMoveRequestId();							//Stores message id to send messages to BT
+
+	uint32 nextRequestId;
+	FAIRequestID moveRequestId;
+
+	//--------------------------------------------------
+	// AI Ship Stats 
+	//--------------------------------------------------
+	
 	UPROPERTY(EditAnywhere)
 		float acceleration = 200.0f;
 	float speed = 0.0f;
@@ -79,24 +119,12 @@ private:
 		float maxShields = 100.0f;
 	float shields = maxShields;
 
-	void StoreMoveRequestId();
-
-	uint32 nextRequestId;
-	FAIRequestID moveRequestId;
-
-	UPROPERTY() AAiShipPawn* aiShip;
-	UPROPERTY(EditAnywhere) UBehaviorTree* BT_HostileShipAI;
-
-	UPROPERTY() ABaseShipController* playerControllerRef;
-
-	UPROPERTY()
-		USprocketGameInstance* mGameInstancedRef;
-
 	UPROPERTY()
 		FTimerHandle ShieldCooldownTimer;
 	float mShieldCooldownDuration = 5.0f;
 	bool mShieldCooldown = false;
 	void ShieldCooldownElapsed();
+
 
 	//********************************************************************************************************
 	//********************************************************************************************************
