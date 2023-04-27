@@ -216,7 +216,7 @@ void AAIShipController::AddRandomGun()
 	tempGun->AttachToShip(aiShip->ShipMesh, FVector(FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f), FMath::RandRange(-30.0f, 30.0f)), aiShip->GetActorRotation().Quaternion(), FVector(0.03f, 0.03f, 0.03f));
 
 	float rand = FMath::RandRange(0.001f, 20.0f);
-	tempGun->SetGunStats(5000.0f, (1 / rand) * 240.f, rand * 0.5f, rand * 450.0f);
+	tempGun->SetGunStats(5000.0f, (1 / rand) * 240.f, rand * 0.1f, rand * 450.0f);
 
 	aiShip->mGuns.Add(tempGun);
 }
