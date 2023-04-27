@@ -6,6 +6,7 @@
 #include "AIController.h"
 #include "AiShipPawn.h"
 #include "BaseShipController.h"
+#include "SprocketGameInstance.h"
 #include "AIShipController.generated.h"
 
 class UNiagaraComponent;
@@ -87,6 +88,9 @@ private:
 	UPROPERTY(EditAnywhere) UBehaviorTree* BT_HostileShipAI;
 
 	UPROPERTY() ABaseShipController* playerControllerRef;
+
+	UPROPERTY()
+		USprocketGameInstance* mGameInstancedRef;
 
 	UPROPERTY()
 		FTimerHandle ShieldCooldownTimer;

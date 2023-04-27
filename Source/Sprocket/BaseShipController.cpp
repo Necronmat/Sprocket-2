@@ -24,8 +24,9 @@ void ABaseShipController::BeginPlay()
 	FirstMateCount = 0;
 	TotalCrewMatesCount = 0;
 	mMoney = mMoneyStartingAmount;
+	mGameInstancedRef = Cast<USprocketGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
 
-	UGameplayStatics::PlaySound2D(this, mThrusterLoopSound, mSFXVolume);
+	UGameplayStatics::PlaySound2D(this, mThrusterLoopSound, mGameInstancedRef->GetSoundVolume());
 	GetWorld()->GetTimerManager().SetTimer(mMoneyTimer, this, &ABaseShipController::mMoneyTimerElapsed, mMoneyBaseDrainDelay, false);
 
 	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, playerBaseShip->mShipMesh, NAME_None, FVector(-25.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
@@ -46,7 +47,7 @@ void ABaseShipController::Tick(float DeltaTime)
 
 	if (mThrusterSpeed > mMaxSpeed)
 	{
-		mThrusterSpeed -= 2.0f * mAcceleration;
+		mThrusterSpeed -= mBoostDeselerationScale * mAcceleration * DeltaTime;
 	}
 
 	if (playerBaseShip && !menuDisplayed) {
@@ -115,7 +116,15 @@ void ABaseShipController::SetupInputComponent()
 
 float ABaseShipController::SetThrusterVolume_Implementation()
 {
-	return mThrusterSpeed / mMaxSpeed;
+	if (mThrusterSpeed > mMaxSpeed)
+	{
+		return mThrusterSpeed / (mThrusterSpeed - mMaxSpeed);
+	}
+	else
+	{
+		return mThrusterSpeed / mMaxSpeed;
+	}
+	
 };
 
 void ABaseShipController::SetNotificationInfo(ENotificationInfoCatagory value)
@@ -180,7 +189,7 @@ void ABaseShipController::StrafeHorizontal(float AxisAmount)
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorRightVector() * AxisAmount * mStrafeSpeed);
 			mStrafeCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
-			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
+			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mGameInstancedRef->GetSoundVolume());
 		}
 	}
 }
@@ -193,7 +202,7 @@ void ABaseShipController::StrafeVertical(float AxisAmount)
 			playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorUpVector() * AxisAmount * mStrafeSpeed);
 			mStrafeCooldown = true;
 			GetWorld()->GetTimerManager().SetTimer(StrafeCooldownTimer, this, &ABaseShipController::StrafeCooldownElapsed, mStrafeCooldownDuration, false);
-			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
+			UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mGameInstancedRef->GetSoundVolume());
 		}
 	}
 }
@@ -203,7 +212,7 @@ void ABaseShipController::Nitro()
 	if (mThrusterSpeed <= mMaxSpeed / 3) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mMaxSpeed);
 		mThrusterSpeed = mMaxSpeed / 3;
-		UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mSFXVolume);
+		UGameplayStatics::PlaySound2D(this, mThrusterBoostSound, mGameInstancedRef->GetSoundVolume());
 	}
 }
 
@@ -603,7 +612,7 @@ void ABaseShipController::Fire()
 		{
 			if (gun->FireGun())
 			{
-				UGameplayStatics::PlaySound2D(this, mLaserSound, mSFXVolume / playerBaseShip->mGuns.Num());
+				UGameplayStatics::PlaySound2D(this, mLaserSound, mGameInstancedRef->GetSoundVolume() / playerBaseShip->mGuns.Num());
 			}			
 		}
 	}
@@ -639,7 +648,7 @@ void ABaseShipController::Grapple()
 
 			if (Cast<AActor>(Hit.GetActor()))
 			{
-				UGameplayStatics::PlaySound2D(this, mGrappleSound, mSFXVolume);
+				UGameplayStatics::PlaySound2D(this, mGrappleSound, mGameInstancedRef->GetSoundVolume());
 				mGrappling = true;
 				mGrapplePoint = Hit.GetActor();
 				playerBaseShip->mCable->SetVisibility(true);
@@ -725,7 +734,7 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 		if (mShields <= 0.0f) {
 			mHullEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mHullEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 			index = FMath::RandRange(0, mHullSound.Num() - 1);
-			UGameplayStatics::PlaySound2D(this, mHullSound[index], mSFXVolume);
+			UGameplayStatics::PlaySound2D(this, mHullSound[index], mGameInstancedRef->GetSoundVolume());
 			float remainingDamage = 0.0 - mShields;
 			mShields = 0.0f;
 			mHull -= remainingDamage;
@@ -743,7 +752,7 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 		{
 			mShieldEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mShieldEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 			index = FMath::RandRange(0, mShieldSound.Num() - 1);
-			UGameplayStatics::PlaySound2D(this, mShieldSound[index], mSFXVolume);
+			UGameplayStatics::PlaySound2D(this, mShieldSound[index], mGameInstancedRef->GetSoundVolume());
 		}
 	}
 	return DamageAmount;

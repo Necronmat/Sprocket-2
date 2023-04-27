@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/Actor.h"
+#include "SprocketGameInstance.h"
 #include "Mine.generated.h"
 
 
@@ -31,6 +32,10 @@ public:
 private:
 	UFUNCTION() void OnOverlapBegin(UPrimitiveComponent* OverlappedComp, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& sweepResult);
 	UFUNCTION() void ExplodeMine();
+
+
+	UPROPERTY()
+		USprocketGameInstance* mGameInstancedRef;
 
 	UPROPERTY(EditAnywhere)
 		UStaticMeshComponent* MineMesh;

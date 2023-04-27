@@ -15,9 +15,10 @@ void AAIShipController::OnPossess(APawn* InPawn)
 	if (BT_HostileShipAI) RunBehaviorTree(BT_HostileShipAI);
 	PrimaryActorTick.bCanEverTick = true;
 	aiShip = Cast<AAiShipPawn>(GetPawn());
-	AddRandomGun();
-	UGameplayStatics::PlaySoundAtLocation(this, mThrusterLoopSound, aiShip->GetActorLocation(), mSFXVolume);
+	AddRandomGun();	
 	playerControllerRef = Cast<ABaseShipController>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	mGameInstancedRef = Cast<USprocketGameInstance>(UGameplayStatics::GetGameInstance(GetWorld()));
+	UGameplayStatics::PlaySoundAtLocation(this, mThrusterLoopSound, aiShip->GetActorLocation(), mGameInstancedRef->GetSoundVolume());
 
 	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, aiShip->ShipMesh, NAME_None, FVector(-35.0f, -5.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
 	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, aiShip->ShipMesh, NAME_None, FVector(-35.0f, 5.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
@@ -71,7 +72,7 @@ float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	if (shields <= 0.0f) {
 		mHullEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mHullEffect, aiShip->ShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 		index = FMath::RandRange(0, mHullSound.Num() - 1);
-		UGameplayStatics::PlaySoundAtLocation(this, mHullSound[index], aiShip->GetActorLocation(), mSFXVolume);
+		UGameplayStatics::PlaySoundAtLocation(this, mHullSound[index], aiShip->GetActorLocation(), mGameInstancedRef->GetSoundVolume());
 		float remainingDamage = 0.0 - shields;
 		shields = 0.0f;
 		hull -= remainingDamage;
@@ -87,7 +88,7 @@ float AAIShipController::TakeDamage(float DamageAmount, FDamageEvent const& Dama
 	{
 		mShieldEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mShieldEffect, aiShip->ShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 		index = FMath::RandRange(0, mShieldSound.Num() - 1);
-		UGameplayStatics::PlaySoundAtLocation(this, mShieldSound[index], aiShip->GetActorLocation(), mSFXVolume);
+		UGameplayStatics::PlaySoundAtLocation(this, mShieldSound[index], aiShip->GetActorLocation(), mGameInstancedRef->GetSoundVolume());
 	}
 	return DamageAmount;
 }
@@ -237,7 +238,7 @@ void AAIShipController::ShootGuns()
 	{
 		if (aiShip->mGuns[i]->FireGun())
 		{
-			UGameplayStatics::PlaySoundAtLocation(this, mLaserSound, aiShip->GetActorLocation(), mSFXVolume / aiShip->mGuns.Num());
+			UGameplayStatics::PlaySoundAtLocation(this, mLaserSound, aiShip->GetActorLocation(), mGameInstancedRef->GetSoundVolume() / aiShip->mGuns.Num());
 		}		
 	}
 }

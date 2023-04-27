@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerController.h"
 #include "CrewComponent.h"
 #include "Sound/SoundMix.h"
+#include "SprocketGameInstance.h"
 #include "BaseShipController.generated.h"
 
 class UNiagaraComponent;
@@ -153,6 +154,9 @@ private:
 	float mThrusterSpeed = 0.0f;
 
 	UPROPERTY(EditAnywhere)
+		float mBoostDeselerationScale = 750.0f;
+
+	UPROPERTY(EditAnywhere)
 		float mMaxHull = 100.0f;
 	UPROPERTY(EditAnywhere)
 		float mHullUpgradeAmount = 25.0; 
@@ -287,6 +291,9 @@ private:
 	UPROPERTY()
 		AScenario1GameModeBase* GameModeRef;
 
+	UPROPERTY()
+		USprocketGameInstance* mGameInstancedRef;
+
 	//********************************************************************************************************
 	//********************************************************************************************************
 	//Sounds
@@ -317,9 +324,6 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		USoundBase* mWarningSound;
-
-	UPROPERTY(EditAnywhere)
-		float mSFXVolume = 1.0f;
 
 	UPROPERTY(EditAnywhere)
 		USoundMix* mMixer;
