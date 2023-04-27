@@ -8,6 +8,9 @@
 #include "BaseShipController.h"
 #include "AIShipController.generated.h"
 
+class UNiagaraComponent;
+class UNiagaraSystem;
+
 /**
  * 
  */
@@ -33,6 +36,8 @@ public:
 	void AddRandomGun();
 	void RemoveRandomGun();
 	void ShootGuns();
+
+	void SpawnMine();
 	
 	const FAIRequestID GetMoveRequestId();
 
@@ -110,4 +115,32 @@ private:
 
 	UPROPERTY(EditAnywhere)
 		USoundMix* mMixer;
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Particles
+
+	TArray<UNiagaraComponent*> mThrusterEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mThrusterEffect;
+
+	UNiagaraComponent* mShieldEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mShieldEffect;
+
+	UNiagaraComponent* mHullEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mHullEffect;
+
+	UNiagaraComponent* mExplosionEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mExplosionEffect;
+
+	UPROPERTY()
+		FTimerHandle DeathTimer;
+	void Die();
 };

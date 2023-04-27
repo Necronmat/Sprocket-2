@@ -35,6 +35,9 @@ public:
 	UPROPERTY(EditDefaultsOnly)
 		TSubclassOf<class AShipGun> mBaseGun;
 
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class AMine> mMine;
+
 	UPROPERTY(EditAnywhere)
 		TArray<AShipGun*> mGuns;
 

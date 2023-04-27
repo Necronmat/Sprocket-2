@@ -3,6 +3,7 @@
 
 #include "AiShipPawn.h"
 #include "ShipGun.h"
+#include "Mine.h"
 
 // Sets default values
 AAiShipPawn::AAiShipPawn()

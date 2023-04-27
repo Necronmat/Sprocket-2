@@ -9,6 +9,9 @@
 #include "Sound/SoundMix.h"
 #include "BaseShipController.generated.h"
 
+class UNiagaraComponent;
+class UNiagaraSystem;
+
 UENUM()
 enum class EShipUpgradeCatagory : uint8
 {
@@ -72,6 +75,11 @@ public:
 	UFUNCTION()
 		void MissionComplete();
 
+	void SetCurrentSpeed(float newSpeed);
+
+	UFUNCTION(BlueprintPure)
+		float GetMaxSpeed();
+
 private:
 
 	void Throttle(float AxisAmount);
@@ -103,8 +111,6 @@ private:
 
 	UFUNCTION(BlueprintPure)
 		float GetCurrentSpeed();
-	UFUNCTION(BlueprintPure)
-		float GetMaxSpeed();
 	UFUNCTION(BlueprintPure)
 		float GetCurrentHull();
 	UFUNCTION(BlueprintPure)
@@ -326,4 +332,32 @@ private:
 		FTimerHandle NotificationTimer;
 	UPROPERTY(EditAnywhere)
 		float NotificationDuration = 3.0f;
+
+	//********************************************************************************************************
+	//********************************************************************************************************
+	//Particles
+
+	TArray<UNiagaraComponent*> mThrusterEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mThrusterEffect;
+
+	UNiagaraComponent* mShieldEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mShieldEffect;
+
+	UNiagaraComponent* mHullEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mHullEffect;
+
+	UNiagaraComponent* mExplosionEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mExplosionEffect;
+
+	UPROPERTY()
+		FTimerHandle DeathTimer;
+	void Die();
 };

@@ -23,7 +23,7 @@ void UBTService_ShootingCone::TickNode(UBehaviorTreeComponent& OwnerComp, uint8*
 		float a = sqrt((facing.X * facing.X) + (facing.Y * facing.Y) + (facing.Z * facing.Z));
 		float b = sqrt((dir.X * dir.X) + (dir.Y * dir.Y) + (dir.Z * dir.Z));
 
-		if (FMath::Acos(facing.Dot(dir) / (a * b)) < 45.0f * (PI / 180.0f))
+		if (facing.Dot(dir) >= 0 && FMath::Acos(facing.Dot(dir) / (a * b)) < 30.0f * (PI / 180.0f))
 		{
 			OwnerComp.GetBlackboardComponent()->SetValueAsBool(GetSelectedBlackboardKey(), true);
 		}

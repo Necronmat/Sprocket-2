@@ -7,6 +7,10 @@
 #include "GameFramework/Actor.h"
 #include "Mine.generated.h"
 
+
+class UNiagaraComponent;
+class UNiagaraSystem;
+
 UCLASS()
 class SPROCKET_API AMine : public AActor
 {
@@ -46,4 +50,16 @@ private:
 		float MineOuterRadius = 1000.0f;
 	UPROPERTY(EditAnywhere)
 		float MineDamageFalloff = 2.0f;
+
+	UPROPERTY(EditAnywhere)
+		USoundBase* mExplosionSound;
+
+	UNiagaraComponent* mExplosionEffectSystem;
+
+	UPROPERTY(EditAnywhere)
+		UNiagaraSystem* mExplosionEffect;
+
+	UPROPERTY()
+		FTimerHandle DeathTimer;
+	void Die();
 };

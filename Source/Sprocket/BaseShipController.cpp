@@ -6,6 +6,8 @@
 #include "Kismet/GameplayStatics.h"
 #include "CableComponent.h"
 #include "ShipGun.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 void ABaseShipController::BeginPlay()
 {
@@ -26,12 +28,27 @@ void ABaseShipController::BeginPlay()
 	UGameplayStatics::PlaySound2D(this, mThrusterLoopSound, mSFXVolume);
 	GetWorld()->GetTimerManager().SetTimer(mMoneyTimer, this, &ABaseShipController::mMoneyTimerElapsed, mMoneyBaseDrainDelay, false);
 
+	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, playerBaseShip->mShipMesh, NAME_None, FVector(-25.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
+	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, playerBaseShip->mShipMesh, NAME_None, FVector(-10.0f, 25.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
+	mThrusterEffectSystem.Add(UNiagaraFunctionLibrary::SpawnSystemAttached(mThrusterEffect, playerBaseShip->mShipMesh, NAME_None, FVector(-10.0f, -25.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true));
+
+	for (int i = 0; i < mThrusterEffectSystem.Num(); ++i)
+	{
+		mThrusterEffectSystem[i]->SetNiagaraVariableVec3(FString("TrailLength"), {0.0f, 0.0f, 0.0f});
+		mThrusterEffectSystem[i]->SetNiagaraVariableLinearColor(FString("TrailColour"), {0.0f, 0.0f, 0.0f});
+	}
 }
 
 
 void ABaseShipController::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+	if (mThrusterSpeed > mMaxSpeed)
+	{
+		mThrusterSpeed -= 2.0f * mAcceleration;
+	}
+
 	if (playerBaseShip && !menuDisplayed) {
 		playerBaseShip->mShipMesh->AddImpulse(playerBaseShip->GetActorForwardVector() * mThrusterSpeed * DeltaTime);
 		//UE_LOG(LogTemp, Warning, TEXT("Volume is %f"), mThrusterSpeed / mMaxSpeed);
@@ -53,6 +70,11 @@ void ABaseShipController::Tick(float DeltaTime)
 		}
 
 		SetVolume();
+		for (int i = 0; i < mThrusterEffectSystem.Num(); ++i)
+		{
+			mThrusterEffectSystem[i]->SetNiagaraVariableVec3(FString("TrailLength"), { (mThrusterSpeed / mMaxSpeed) * -100.0f , 0.0f, 0.0f });
+			mThrusterEffectSystem[i]->SetNiagaraVariableLinearColor(FString("TrailColour"), { FMath::Lerp(0.3f, 0.0f, (mThrusterSpeed / mMaxSpeed)), FMath::Lerp(0.1f, 0.2f, (mThrusterSpeed / mMaxSpeed)), FMath::Lerp(0.0f, 0.3f, (mThrusterSpeed / mMaxSpeed))});
+		}
 
 		if (mGrappling)
 		{
@@ -130,10 +152,7 @@ void ABaseShipController::Throttle(float AxisAmount)
 
 		mThrusterSpeed += AxisAmount * mAcceleration;
 
-		if (mThrusterSpeed > mMaxSpeed) {
-			mThrusterSpeed = mMaxSpeed;
-		}
-		else if (mThrusterSpeed < 0) {
+		if (mThrusterSpeed < 0) {
 			mThrusterSpeed = 0.0f;
 		}
 	}
@@ -704,33 +723,25 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 		mShields -= DamageAmount;
 		int index;
 		if (mShields <= 0.0f) {
+			mHullEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mHullEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 			index = FMath::RandRange(0, mHullSound.Num() - 1);
 			UGameplayStatics::PlaySound2D(this, mHullSound[index], mSFXVolume);
 			float remainingDamage = 0.0 - mShields;
 			mShields = 0.0f;
 			mHull -= remainingDamage;
 			if (mHull <= 0.0f) {
-				FString message = TEXT("Player has Died, Please Restart");
+				mExplosionEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mExplosionEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
+				DisableInput(this);
 
-				while (playerBaseShip->mGuns.Num() > 0)
+				if (!GetWorld()->GetTimerManager().IsTimerActive(DeathTimer))
 				{
-					playerBaseShip->mGuns[0]->Destroy();
-					playerBaseShip->mGuns.RemoveAt(0);
-				}
-
-				if (GameModeRef) GameModeRef->GameOver(true);
-				menuDisplayed = true;
-				bShowMouseCursor = true;
-				bEnableClickEvents = true;
-				bEnableMouseOverEvents = true;
-				bCinematicMode = true;
-
-				GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
-				playerBaseShip->Destroy();
+					GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &ABaseShipController::Die, 1.0f, false);
+				}				
 			}
 		}
 		else
 		{
+			mShieldEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mShieldEffect, playerBaseShip->mShipMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
 			index = FMath::RandRange(0, mShieldSound.Num() - 1);
 			UGameplayStatics::PlaySound2D(this, mShieldSound[index], mSFXVolume);
 		}
@@ -741,6 +752,11 @@ float ABaseShipController::TakeDamage(float DamageAmount, FDamageEvent const& Da
 float ABaseShipController::GetCurrentSpeed()
 {
 	return mThrusterSpeed;
+}
+
+void ABaseShipController::SetCurrentSpeed(float newSpeed)
+{
+	mThrusterSpeed = newSpeed;
 }
 
 float ABaseShipController::GetMaxSpeed()
@@ -925,4 +941,25 @@ void ABaseShipController::StrafeCooldownElapsed()
 void ABaseShipController::ShieldCooldownElapsed()
 {
 	mShieldCooldown = false;
+}
+
+void ABaseShipController::Die()
+{
+	FString message = TEXT("Player has Died, Please Restart");
+
+	while (playerBaseShip->mGuns.Num() > 0)
+	{
+		playerBaseShip->mGuns[0]->Destroy();
+		playerBaseShip->mGuns.RemoveAt(0);
+	}
+
+	if (GameModeRef) GameModeRef->GameOver(true);
+	menuDisplayed = true;
+	bShowMouseCursor = true;
+	bEnableClickEvents = true;
+	bEnableMouseOverEvents = true;
+	bCinematicMode = true;
+
+	GEngine->AddOnScreenDebugMessage(0, 10, FColor::Yellow, message);
+	playerBaseShip->Destroy();
 }

@@ -105,8 +105,11 @@ void AScenario1GameModeBase::RequestJob()
 void AScenario1GameModeBase::EnemyDefeated()
 {
 	EnemiesAlive--;
-	if (EnemiesAlive <= 0) {
+	if (EnemiesAlive <= 0) 
+	{
 		if (playerControllerRef) playerControllerRef->SetMissionInfo(EMissionInfoCatagory::JobRequirementDelivery);
+		mInCombat = false;
+		SetVolume();
 	}
 }
 
@@ -115,6 +118,11 @@ void AScenario1GameModeBase::GameOver(bool pDied)
 	if (pDied) mGameState = EGameState::GameOverByDeath;
 	else mGameState = EGameState::GameOverByMoney;
 	TogglePaused();
+}
+
+bool AScenario1GameModeBase::SetMusicVolume_Implementation()
+{
+	return mInCombat;
 }
 
 void AScenario1GameModeBase::BeginPlay()
@@ -195,6 +203,8 @@ void AScenario1GameModeBase::TriggerLandingStationEvent(int stationId)
 void AScenario1GameModeBase::mCombatSpawnDelayElapsed()
 {
 	if (AiShipPawnClass && playerControllerRef) {
+		mInCombat = true;
+		SetVolume();
 		for (int i = 0; i < EnemyWaveSpawnCount; i++) {
 			FVector SpawnLocation = { playerControllerRef->playerBaseShip->GetActorLocation().X + FMath::FRandRange(-EnemySpawnDistance, EnemySpawnDistance), playerControllerRef->playerBaseShip->GetActorLocation().Y + FMath::FRandRange(-EnemySpawnDistance, EnemySpawnDistance), EnemySpawnHeight };
 			AAiShipPawn* tempShip = GetWorld()->SpawnActor<AAiShipPawn>(AiShipPawnClass, SpawnLocation, { 0.0f, 0.0f, 0.0f });

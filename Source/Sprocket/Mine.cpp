@@ -3,6 +3,8 @@
 
 #include "Mine.h"
 #include "Kismet/GameplayStatics.h"
+#include "NiagaraFunctionLibrary.h"
+#include "NiagaraComponent.h"
 
 // Sets default values
 AMine::AMine()
@@ -40,6 +42,13 @@ void AMine::ExplodeMine()
 {
 	TArray<AActor*> ignoredActors;
 	UGameplayStatics::ApplyRadialDamageWithFalloff(this, MineDamage, MineMinDamage, this->GetActorLocation(), MineInnerRadius, MineOuterRadius, MineDamageFalloff, UDamageType::StaticClass(), ignoredActors, this, UGameplayStatics::GetPlayerController(GetWorld(), 0), ECC_WorldDynamic);
+	UGameplayStatics::PlaySoundAtLocation(this, mExplosionSound, GetActorLocation(), 1.0f, 0.3f);
+	mExplosionEffectSystem = UNiagaraFunctionLibrary::SpawnSystemAttached(mExplosionEffect, MineMesh, NAME_None, FVector(0.0f, 0.0f, 0.0f), FRotator(0.f), EAttachLocation::Type::KeepRelativeOffset, true);
+	GetWorld()->GetTimerManager().SetTimer(DeathTimer, this, &AMine::Die, 1.0f, false);	
+}
+
+void AMine::Die()
+{
 	Destroy();
 }
 

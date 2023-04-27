@@ -52,6 +52,12 @@ public:
 	UFUNCTION()
 		void GameOver(bool pDied);
 
+	UFUNCTION(BlueprintImplementableEvent)
+		void SetVolume();
+
+	UFUNCTION(BlueprintNativeEvent, BlueprintCallable)
+		bool SetMusicVolume();
+
 protected:
 	virtual void BeginPlay() override;
 
@@ -108,4 +114,5 @@ private:
 	UPROPERTY(EditAnywhere) int EnemyWaveSpawnCount = 4;
 	UPROPERTY(EditAnywhere) float EnemySpawnDistance = 10000.0f;
 	UPROPERTY(EditAnywhere) float EnemySpawnHeight = 2000.0f;
+	bool mInCombat = false;
 };

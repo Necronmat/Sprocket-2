@@ -2,6 +2,8 @@
 
 
 #include "BoostRing.h"
+#include "BaseShip.h"
+#include "BaseShipController.h"
 
 // Sets default values
 ABoostRing::ABoostRing()
@@ -34,9 +36,18 @@ void ABoostRing::Tick(float DeltaTime)
 
 void ABoostRing::OnOverlapBegin(UPrimitiveComponent* overlappedComp, AActor* otherActor, UPrimitiveComponent* otherComp, int32 otherBodyIndex, bool bFromSweep, const FHitResult& sweepResult)
 {
-	UPrimitiveComponent* RootComp = Cast<UPrimitiveComponent>(otherActor->GetRootComponent());
+	ABaseShip* other = Cast<ABaseShip>(otherActor);
 
-	RootComp->AddImpulse(otherActor->GetActorForwardVector() * boostAmount * RootComp->GetMass());
+	if (other)
+	{
+		ABaseShipController* controller = Cast<ABaseShipController>(other->Controller);
+		if (controller)
+		{
+			controller->SetCurrentSpeed(controller->GetMaxSpeed() * 10.0f);
+		}
+	}
+
+	//RootComp->AddImpulse(otherActor->GetActorForwardVector() * boostAmount * RootComp->GetMass());
 }
 
 
